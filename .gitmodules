@@ -1,0 +1,3 @@
+[submodule "src/includes/log-xpc-lib"]
+	path = src/includes/log-xpc-lib
+	url = git@github.com:daliboris/log-xpc-lib.git
