@@ -25,9 +25,32 @@ At this time, `Librari augmenti` only supports digital libraries provided by [Mo
 
 ## How to use it
 
-Run command from the [run](run) folder
+Clone the repository using Git
+
+```
+git clone https://github.com/moravianlibrary/libri-augmentati.git
+```
+
+or download [zipped](https://github.com/moravianlibrary/libri-augmentati/archive/refs/heads/main.zip) version of the repository.
+
+Go to the [run](run) folder of this project and run one of the following command:
 
 - [sample-book.cmd](run/sample-book.cmd) uses [sample-book.xpl](src/tests/xproc/sample-book.xpl) pipeline for downloading and processing [digital book](https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-643b-11ea-a744-005056827e51) from Moravian Library in Brno.
 - in the [client.cmd](run/client.cmd) file you can set parameters of the book to be processed; this batch file uses [client.xpl](src/tests/xproc/client.xpl) pipeline
 - in the [client-mzk.cmd](run/client-mzk.cmd) file change `-option:document-id` and `-option:nickname` argument and download (meta)data from Moravian Library in Brno
 - in the [client-nkp.cmd](run/client-nkp.cmd) file change `-option:document-id` and `-option:nickname` argument and download (meta)data from National Library
+- [test-samples.cmd](run/test-samples.cmd) uses [test-samples.xpl](src/tests/xproc/test-samples.xpl) pipeline for downloading and processing all used as a sample in the [libraries.xml](src/settings/libraries.xml) settings file
+
+After the data processing, a report (`report.html`) is generated in the selected folder from which you can access all the data locally or online in the original digital library.
+
+<img src="doc/images/sample-book-report.png" title="Sample book report" width="641" height="434">
+
+When viewing a [title](https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-643b-11ea-a744-005056827e51?page=uuid:73648039-1b21-4921-9b08-13161ae6d239 "First page of the sample book") in a digital library, you can find the `document-id` of the publication in the URL. For example, the sample book is accessible via <https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-643b-11ea-a744-005056827e51?page=uuid:73648039-1b21-4921-9b08-13161ae6d239>. For the `document-id` use the first unique identifier, UUID, after `/view/`, in this case `uuid:de87a0e0-643b-11ea-a744-005056827e51`.
+
+Or you can go through the sharing dialog where you have to select the `book` to share:
+
+<img src="doc/images/sample-book-share-uuid.png" title="document-id via Share dialog" width="624" height="407">
+
+## Acknowledgment
+
+The software was funded by the Institutional support for long term conceptual development of a research organization (The Moravian Library) by the Czech Ministry of Culture.
