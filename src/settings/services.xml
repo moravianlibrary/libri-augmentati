@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<digital-services xmlns="https://www.mzk.cz/ns/libri-augmenti/settings/1.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <apis>
+    <api xml:id="api.nametag.2" common-name="NameTag" version="2.0" documentation="">
+      <resource type="models" method="get" url="/models" />
+      <resource type="models" method="post" url="/models" />
+      <feature type="entities" method="post" url="/recognize">
+        <param name="data" place="body" />
+      </feature>
+      <feature type="entities" method="get" url="/recognize?data={$data}&amp;model={$model}&amp;input={$input}&amp;output={$output}" />
+      <feature type="tokens" method="get" url="/tokenize?data={$data}&amp;model={$model}&amp;output={$output}" />
+      <feature type="tokens" method="post" url="/tokenize?data={$data}&amp;model={$model}&amp;&amp;output={$output}" />
+    </api>
+    <api xml:id="api.udpipe.2">
+      <resource type="models" method="get" url="/models" />
+      <resource type="models" method="post" url="/models" />
+      <resource type="models" method="get" url="/process?data={$data}&amp;model={$model}&amp;tokenizer={$tokenizer}&amp;input={$input}&amp;tagger={$tagger}&amp;parser={$parser}&amp;output={$output}" />
+      <resource type="models" method="post" url="/process?data={$data}&amp;model={$model}&amp;tokenizer={$tokenizer}&amp;input={$input}&amp;tagger={$tagger}&amp;parser={$parser}&amp;output={$output}" />
+    </api>
+  </apis>
+  <services>
+    <service code="nametag">
+      <api ref="#api.nametag.2" url="https://lindat.mff.cuni.cz/services/nametag/api" />
+    </service>
+    <service code="udpipe">
+      <api ref="#api.udpipe.2" url="https://lindat.mff.cuni.cz/services/udpipe/api" />
+    </service>
+  </services>
+</digital-services>

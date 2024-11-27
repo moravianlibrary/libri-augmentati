@@ -1,0 +1,1 @@
+Morgana.bat -config=config.xml ../src/tests/xproc/sample-book.xpl

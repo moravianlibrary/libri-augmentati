@@ -1,0 +1,44 @@
+<!-- This is just a demo on how to do it -->
+<morgana-config xmlns="http://www.xml-project.com/morganaxproc">
+	<!-- Relative paths are resolved by uri of this file -->
+	
+<!--
+	<path_to_iso_skeleton_schematron_1>ISO_SKELETON_SCHEMATRON_1</path_to_iso_skeleton_schematron_1>
+	<path_to_iso_skeleton_schematron_2>ISO_SKELETON_SCHEMATRON_2</path_to_iso_skeleton_schematron_2>
+-->
+	<path_to_SchXSLT_1>../Schematron/latest/xslt/1.0</path_to_SchXSLT_1>
+	<path_to_SchXSLT_2>../Schematron/latest/xslt/2.0</path_to_SchXSLT_2>		
+		
+	<XSLTValidationMode>LAX</XSLTValidationMode>
+
+	<!--
+	<xslt-connector>saxon12</xslt-connector>
+	<xquery-connector>saxon12</xquery-connector>
+	-->
+	
+	
+	<xslt-connector>saxon12-3</xslt-connector>
+	<xquery-connector>saxon12-3</xquery-connector>
+
+ <!--
+	<xslt-connector>com.xml_project.morganaxproc3.saxon12_3connector.Saxon12_3XSLTConnector</xslt-connector>
+	<xquery-connector>com.xml_project.morganaxproc3.saxon12_3connector.Saxon12_3XSLTConnector</xquery-connector>
+	--> 
+	
+	<ixml-connector>com.xml_project.morganaxproc3.ninemlConnector.NineMLConnector</ixml-connector>
+	
+	<!--
+	<xslt-connector>Saxon10</xslt-connector>
+	<xquery-connector>Saxon10</xquery-connector>
+	<xslt-config>saxon-config.xml</xslt-config>
+	<schematron-connector>SchXSLT</schematron-connector>
+
+	<fo-connector>com.xml_project.morganaxproc3.fop2x.ApacheFOP2xConnector</fo-connector>
+	<fo-connector>com.xml_project.fosupport.AHFormatterV65.AHF65Connector</fo-connector>
+	
+	<mediatype-mapping>
+		<map file-extension="123" media-type="application/xml" />
+	</mediatype-mapping>
+	-->
+	<mediatype-mapping><map file-extension="rels" media-type="application/xml" /></mediatype-mapping>
+</morgana-config>

@@ -1,0 +1,1 @@
+Morgana.bat -config=config.xml ../src/tests/xproc/client.xpl  -option:library-code=nkp -option:api-version=5 -option:document-resources="MODS DC FOXML" -option:page-resources="ALTO TEXT FOXML DC MODS IMAGE" -option:document-id=uuid:de87a0e0-643b-11ea-a744-005056827e51 -option:nickname=postural-defects

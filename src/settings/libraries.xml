@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<digital-libraries xmlns="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"
+  xmlns:marc="http://www.loc.gov/MARC21/slim"
+  xmlns:mets="http://www.loc.gov/METS/"
+  xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+  <apis>
+    <api xml:id="api.kramerius.5" common-name="Kramerius" version="5" documentation="https://github.com/ceskaexpedice/kramerius/wiki/ClientAPIDEV">
+      <resource type="item" method="get" url="/search/api/v5.0/item/{pid}" />
+      <resource type="children" method="get" url="/search/api/v5.0/item/{pid}/children" />
+      <resource type="siblings" method="get" url="/search/api/v5.0/item/{pid}/siblings" />
+      <resource type="ALTO" level="page" method="get" url="/search/api/v5.0/item/{pid}/streams/ALTO" />
+      <resource type="TEXT" level="page" method="get" url="/search/api/v5.0/item/{pid}/streams/TEXT_OCR" />
+      <resource type="DC" level="document page" method="get" url="/search/api/v5.0/item/{pid}/streams/DC" />
+      <resource type="MODS" level="document page" method="get" url="/search/api/v5.0/item/{pid}/streams/BIBLIO_MODS" />
+      <resource type="FOXML" level="document page" method="get" url="/search/api/v5.0/item/{pid}/foxml" />
+      <resource type="IMAGE" level="page" method="get" url="/search/api/v5.0/item/{pid}/full" />
+      <resource type="IMAGE" level="page" method="get" url="/search//img?{pid}&amp;stream=IMG_FULL&amp;action=GETRAW" />
+    </api>
+    <api xml:id="api.kramerius.7" common-name="Kramerius" version="7" documentation="https://github.com/ceskaexpedice/kramerius/wiki/API-v7">
+      <resource type="api-info" level="site" method="get" url="/search/api/client/v7.0/info" />
+      <resource type="info" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/info" />
+      <resource type="DC" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/metadata/dc" />
+      <resource type="MODS" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/metadata/mods" />
+      <resource type="FOXML" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/foxml" />
+      <resource type="ALTO" level="page" method="get" url="/search/api/client/v7.0/items/{pid}/ocr/alto" />
+      <resource type="TEXT" level="page" method="get" url="/search/api/client/v7.0/items/{pid}/ocr/text" />
+      <resource type="IMAGE-info" method="get" url="/search/api/client/v7.0/items/{pid}/image" />
+      <resource type="IMAGE" level="page" method="get" url="/search/iiif/{pid}/full/max/0/default.jpg" />
+    </api>
+  </apis>
+  <samples>
+    <sample xml:id="nespravny-postoj" name="Nesprávný postoj u dětí a jeho náprava = Postural defects in childern and their correction" url="https://ndk.cz/view/uuid:de87a0e0-643b-11ea-a744-005056827e51?page=uuid:2d666ced-fea9-4823-ac8e-b26641da6e35" nickname="nespravny-postoj">
+      <document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" />
+      <page id="uuid:2d666ced-fea9-4823-ac8e-b26641da6e35" />
+    </sample>
+    <sample xml:id="nespravny-postoj.mzk" name="Nesprávný postoj u dětí a jeho náprava = Postural defects in childern and their correction" url="https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-643b-11ea-a744-005056827e51?page=uuid:2d666ced-fea9-4823-ac8e-b26641da6e35"  nickname="nespravny-postoj">
+      <document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" />
+      <page id="uuid:2d666ced-fea9-4823-ac8e-b26641da6e35" />
+    </sample>
+    <sample xml:id="jadro-otazky" name="Jádro otázky nastávajícího rakousko-uherského vyrovnání" url="https://ndk.cz/view/uuid:07f3a620-e276-11ed-b3f4-005056827e51?page=uuid:16478654-e95b-4bd4-98e6-ef720f275ec8" nickname="jadro-otazky">
+      <document id="uuid:07f3a620-e276-11ed-b3f4-005056827e51" />
+      <page id="uuid:16478654-e95b-4bd4-98e6-ef720f275ec8" />
+    </sample>
+    <sample xml:id="jadro-otazky.mzk" name="Jádro otázky nastávajícího rakousko-uherského vyrovnání" url="https://www.digitalniknihovna.cz/mzk/view/uuid:07f3a620-e276-11ed-b3f4-005056827e51?page=uuid:16478654-e95b-4bd4-98e6-ef720f275ec8" nickname="jadro-otazky">
+      <document id="uuid:07f3a620-e276-11ed-b3f4-005056827e51" />
+      <page id="uuid:16478654-e95b-4bd4-98e6-ef720f275ec8" />
+    </sample>
+    <sample xml:id="blaise-pascal" name="Blaise Pascal, jeho život a filosofie" url="https://www.ndk.cz/view/uuid:be35c7c0-ce3d-11e4-8565-005056827e52?page=uuid:c8f67430-e9fd-11e4-b834-005056827e51"  nickname="blaise-pascal">
+      <document id="uuid:be35c7c0-ce3d-11e4-8565-005056827e52" />
+      <page id="uuid:c8f67430-e9fd-11e4-b834-005056827e51" />
+    </sample>
+  </samples>
+  <libraries>
+    <library code="mzk" sigla="BOA001" logo="https://api.registr.digitalniknihovna.cz/libraries/mzk/logo">
+      <institution>
+        <name xml:lang="cs">Moravská zemská knihovna v Brně</name>
+        <name xml:lang="en">Moravian Library in Brno</name>
+        <web>https://www.mzk.cz</web>
+        <address>
+          <street>Kounicova 65a</street>
+          <city>Brno</city>
+          <zip>601 87</zip>
+          <state>Česko</state>
+        </address>
+      </institution>
+      <api ref="#api.kramerius.7" version="7.0.29" url="https://api.kramerius.mzk.cz" client-url-pattern="https://www.digitalniknihovna.cz/mzk/view/{document-id}?page={page-id}" client-url-regex="https://www.digitalniknihovna.cz/mzk/view/uuid\:(.[^\?]*)">
+        <samples ref="#nespravny-postoj.mzk #jadro-otazky.mzk" />  
+      </api>
+    </library>
+    <library code="nkp" sigla="ABA000" logo="https://api.registr.digitalniknihovna.cz/libraries/nkp/logo">
+      <institution>
+        <name xml:lang="cs">Národní knihovna České republiky</name>
+        <name xml:lang="en">National Library of the Czech Republic</name>
+        <web>https://www.nkp.cz</web>
+        <address>
+          <street>Klementinum 190</street>
+          <city>Praha 1</city>
+          <zip>110 00</zip>
+          <state>Česko</state>
+        </address>
+      </institution>
+      <api ref="#api.kramerius.5" version="5.8.4.3" url="https://ndk.cz/search/api/v5.0" client-url-pattern="https://ndk.cz/view/{document-id}?page={page-id}" client-url-regex="https://ndk.cz/view/uuid\:(.[^\?]*)">
+        <samples ref="#nespravny-postoj #jadro-otazky #blaise-pascal" />
+      </api>
+    </library>
+  </libraries>
+</digital-libraries>
+
