@@ -6,7 +6,10 @@
  xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
  xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
  xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+ xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"
+ xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
  xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+ xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
  xmlns:xhtml="http://www.w3.org/1999/xhtml"
  version="3.0">
  
@@ -14,6 +17,7 @@
  <p:import href="udpipe.xpl"/>
  <p:import href="alto.xpl"/>
  <p:import href="tei.xpl"/>
+ <p:import href="text.xpl"/>
  
  <p:documentation>
   <xhtml:section xml:lang="en">
@@ -26,8 +30,18 @@
   </xhtml:section>
  </p:documentation>
 
- 
+ <!-- STEP -->
  <p:declare-step type="lae:enrich-data" name="enriching-data">
+  <p:documentation>
+   <xhtml:section xml:lang="en">
+    <xhtml:h2>Enrich available data</xhtml:h2>
+    <xhtml:p>Enriches available (textual) data by selected fetures.</xhtml:p>
+   </xhtml:section>
+   <xhtml:section xml:lang="cs">
+    <xhtml:h2>Obohacení o entity</xhtml:h2>
+    <xhtml:p>Obohatí dostupná (textová) data o vybrané vlastnosti.</xhtml:p>
+   </xhtml:section>
+  </p:documentation>
   <!-- INPUT PORTS -->
   <p:input port="source" primary="true" sequence="true">
    <p:documentation>
@@ -90,23 +104,30 @@
    </lae:enrich-by-morphology>
   </p:if>
   
+  <p:if test="$output-format = 'TEI'">
+   <lae:convert-to-tei
+    output-directory="{$output-directory}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}">
+    <p:with-input port="settings" pipe="settings@enriching-data" />
+    <p:with-input port="report-in" pipe="report-in@enriching-data" />
+   </lae:convert-to-tei>
+  </p:if>
   
-  <!--
-  <lax:enrich-document-data p:use-when="true()"
-   output-format="TEXT TEI"
-   output-directory="{$main-output-directory}" 
-   debug-path="{$debug-path}" 
-   base-uri="{$base-uri}"
-   pause-before-request="0"
-   >
-   <p:with-option name="enrichment" select="('ENTITIES', 'MORPHOLOGY')"></p:with-option>
-   <p:with-input port="report-in" pipe="report@download-data" />
-   <p:with-input port="settings" href="../settings/services.xml" />
-  </lax:enrich-document-data>-->
-  
+  <p:if test="$output-format = 'TEXT'">
+   <lae:combine-text-pages
+    output-directory="{$output-directory}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}"
+    >
+    <p:with-input port="settings" pipe="settings@enriching-data" />
+    <p:with-input port="report-in" pipe="report-in@enriching-data" />
+   </lae:combine-text-pages>
+  </p:if>
   
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lae:enrich-by-entities" name="enriching-by-entities">
   <p:documentation>
    <xhtml:section xml:lang="en">
@@ -158,7 +179,6 @@
   <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
     
   <!-- PIPELINE BODY -->
-  
   <p:insert position="last-child" name="report-start">
    <p:with-input port="source" pipe="report-in@enriching-by-entities" />
    <p:with-input port="insertion">
@@ -166,15 +186,24 @@
    </p:with-input>
   </p:insert>
   
-  <lant:get-nametag-analyses 
-   output-directory="{$output-directory}" 
-   debug-path="{$debug-path}" 
-   base-uri="{$base-uri}">
-   <p:with-input port="source" pipe="source@enriching-by-entities" />
-   <p:with-input port="settings" pipe="settings@enriching-by-entities" />
-   <p:with-input port="report-in" pipe="result@report-start" />
-  </lant:get-nametag-analyses>
-  
+  <p:viewport match="lad:document">
+   <p:with-input pipe="source@enriching-by-entities" />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
+   
+   <lant:get-nametag-analyses 
+    output-directory="{$output-directory}/{$document-id}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}"
+    p:message="get-nametag-analyses">
+    <p:with-input port="settings" pipe="settings@enriching-by-entities" />
+    <p:with-input port="report-in" pipe="result@report-start" />
+   </lant:get-nametag-analyses>
+  </p:viewport>
+  <p:namespace-delete prefixes="lant xs xhtml" />
   <p:identity name="final" />
   
   <p:add-attribute match="lax:step[@type='lae:enrich-by-entities'][not(@end)]" 
@@ -186,6 +215,7 @@
  
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lae:enrich-by-morphology" name="enriching-by-morphology">
   
   <p:documentation>
@@ -241,10 +271,28 @@
    </p:with-input>
   </p:insert>
   
-  <p:identity>
+  <!--<p:identity message="enriching morphology">
    <p:with-input port="source" pipe="source@enriching-by-morphology" />
-  </p:identity>
+  </p:identity>-->
   
+  <p:viewport match="lad:document">
+   <p:with-input pipe="source@enriching-by-morphology" />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
+   
+   <laud:get-udpipe-analyses 
+    output-directory="{$output-directory}/{$document-id}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}">
+    <p:with-input port="settings" pipe="settings@enriching-by-morphology" />
+    <p:with-input port="report-in" pipe="result@report-start" />
+   </laud:get-udpipe-analyses>
+   
+  </p:viewport>
+  <p:namespace-delete prefixes="laud xs xhtml" />
   <p:identity name="final" />
   
   <p:add-attribute match="lax:step[@type='lae:enrich-by-morphology'][not(@end)]" 
@@ -254,6 +302,184 @@
    <p:with-input port="source" pipe="result@report-start" />
   </p:add-attribute>
 
+ </p:declare-step>
+ 
+ <!-- STEP -->
+ <p:declare-step type="lae:convert-to-tei" name="converting-to-tei">
+  <p:documentation>
+   <xhtml:section xml:lang="en">
+    <xhtml:h2>Convert to TEI</xhtml:h2>
+    <xhtml:p>Converts available (enriched textual) data to TEI P5 format.</xhtml:p>
+   </xhtml:section>
+   <xhtml:section xml:lang="cs">
+    <xhtml:h2>Konverze do TEI</xhtml:h2>
+    <xhtml:p>Zkonvertuje dostupná (obohacená textová) data do formátu TEI P5.</xhtml:p>
+   </xhtml:section>
+  </p:documentation>
+  
+  <!-- INPUT PORTS -->
+  <p:input  port="source" primary="true" sequence="true">
+   <p:documentation>
+    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
+    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+   </p:documentation>   
+  </p:input>
+  
+  <p:input  port="settings" primary="false">
+   <p:documentation>
+    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
+    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+   </p:documentation>
+  </p:input>
+  
+  <p:input  port="report-in">
+   <lar:report />
+  </p:input>
+  
+  <!-- OUTPUT PORTS -->
+  <p:output port="result" primary="true" sequence="true"  pipe="result@final">
+   <p:documentation>
+    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
+    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+   </p:documentation>   
+  </p:output>
+  
+  <p:output port="report" pipe="result@report-final" />
+  
+  <!-- OPTIONS -->
+  <p:option name="debug-path" select="()" as="xs:string?" />
+  <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="output-directory" required="true" as="xs:string" />
+  
+  <!-- VARIABLES -->
+  <p:variable name="debug" select="$debug-path || '' ne ''" />
+  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  
+  <!-- PIPELINE BODY -->
+  <p:insert position="last-child" name="report-start">
+   <p:with-input port="source" pipe="report-in@converting-to-tei" />
+   <p:with-input port="insertion">
+    <p:inline><lax:step type="lae:convert-to-tei" start="{current-dateTime()}" /></p:inline>
+   </p:with-input>
+  </p:insert>
+   
+  <p:viewport match="lad:document">
+   <p:with-input pipe="source@converting-to-tei" />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
+
+   <lat:convert-to-tei 
+    output-directory="{$output-directory}/{$document-id}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}"
+    p:message="convert-to-tei; output-directory: {$output-directory}/{$document-id}">
+    <p:with-input port="report-in" pipe="result@report-start" />
+   </lat:convert-to-tei>
+
+  </p:viewport>
+  
+  <p:namespace-delete prefixes="lat xs xhtml" />
+  <p:identity name="final" />
+  
+  <p:add-attribute match="lax:step[@type='lae:enrich-by-entities'][not(@end)]" 
+   attribute-name="end" 
+   attribute-value="{current-dateTime()}"
+   name="report-final">
+   <p:with-input port="source" pipe="result@report-start" />
+  </p:add-attribute>
+  
+ </p:declare-step>
+ 
+ <!-- STEP -->
+ <p:declare-step type="lae:combine-text-pages" name="combining-text-pages">
+  <p:documentation>
+   <xhtml:section xml:lang="en">
+    <xhtml:h2>Combine text pages</xhtml:h2>
+    <xhtml:p>Combines available pages to one document.</xhtml:p>
+   </xhtml:section>
+   <xhtml:section xml:lang="cs">
+    <xhtml:h2>Sloučení textových stránek</xhtml:h2>
+    <xhtml:p>Sloučí text dostupných stránek do jednoho dokumentu.</xhtml:p>
+   </xhtml:section>
+  </p:documentation>
+  
+  <!-- INPUT PORTS -->
+  <p:input  port="source" primary="true" sequence="true">
+   <p:documentation>
+    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
+    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+   </p:documentation>   
+  </p:input>
+  
+  <p:input  port="settings" primary="false">
+   <p:documentation>
+    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
+    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+   </p:documentation>
+  </p:input>
+  
+  <p:input  port="report-in">
+   <lar:report />
+  </p:input>
+  
+  <!-- OUTPUT PORTS -->
+  <p:output port="result" primary="true" sequence="true"  pipe="result@final">
+   <p:documentation>
+    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
+    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+   </p:documentation>   
+  </p:output>
+  
+  <p:output port="report" pipe="result@report-final" />
+  
+  <!-- OPTIONS -->
+  <p:option name="debug-path" select="()" as="xs:string?" />
+  <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="output-directory" required="true" as="xs:string" />
+  
+  <!-- VARIABLES -->
+  <p:variable name="debug" select="$debug-path || '' ne ''" />
+  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  
+  <!-- PIPELINE BODY -->
+  <p:insert position="last-child" name="report-start">
+   <p:with-input port="source" pipe="report-in@combining-text-pages" />
+   <p:with-input port="insertion">
+    <p:inline><lax:step type="lae:convert-to-tei" start="{current-dateTime()}" /></p:inline>
+   </p:with-input>
+  </p:insert>
+  
+  <p:viewport match="lad:document">
+   <p:with-input pipe="source@combining-text-pages" />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
+   
+   <latx:combine-text-pages 
+    output-directory="{$output-directory}/{$document-id}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}"
+    >
+    <p:with-input port="report-in" pipe="result@report-start" />
+   </latx:combine-text-pages>
+   
+  </p:viewport>
+  
+  <p:namespace-delete prefixes="lat xs xhtml" />
+  <p:identity name="final" />
+  
+  <p:add-attribute match="lax:step[@type='lae:enrich-by-entities'][not(@end)]" 
+   attribute-name="end" 
+   attribute-value="{current-dateTime()}"
+   name="report-final">
+   <p:with-input port="source" pipe="result@report-start" />
+  </p:add-attribute>
+  
  </p:declare-step>
  
 </p:library>
