@@ -13,7 +13,7 @@
   </xhtml:section>
  </p:documentation>
  
- <p:declare-step type="lac:convert" name="fist-function">
+ <p:declare-step type="lac:convert-conllu-to-tei" name="converting-conllu-to-tei">
   <p:documentation>
    <xhtml:section>
     <xhtml:h2></xhtml:h2>
@@ -30,8 +30,47 @@
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
   <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
-  <p:option name="source-format" as="xs:string" values="('djvu')"></p:option>
-  <p:option name="target-format" as="xs:string" values="('pdf', 'tiff')"></p:option>
+ 
+  <!-- VARIABLES -->
+  <p:variable name="debug" select="$debug-path || '' ne ''" />
+  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  
+  
+  <!-- PIPELINE BODY -->
+  <p:variable name="udpipe-text" select="." />
+  
+  <p:xslt parameters="map{'input': $udpipe-text}">
+   <p:with-input port="stylesheet" href="../xslt/conversion/conllu-to-xml.xsl" />
+  </p:xslt>
+  
+  <p:xslt>
+   <p:with-input port="stylesheet" href="../xslt/conversion/conllu-xml-to-hierarchy.xsl"/>
+  </p:xslt>
+  
+  <p:xslt>
+   <p:with-input port="stylesheet" href="../xslt/conversion/conllu-xml-hierarchy-to-tei.xsl"/>
+  </p:xslt>
+  
+  
+ </p:declare-step>
+ 
+ <p:declare-step type="lac:convert-nametag-xml-to-tei" name="converting-nametag-xml-to-tei">
+  <p:documentation>
+   <xhtml:section>
+    <xhtml:h2></xhtml:h2>
+    <xhtml:p></xhtml:p>
+   </xhtml:section>
+  </p:documentation>
+  
+  <!-- INPUT PORTS -->
+  <p:input  port="source" primary="true" />
+  
+  <!-- OUTPUT PORTS -->
+  <p:output port="result" primary="true" />
+  
+  <!-- OPTIONS -->
+  <p:option name="debug-path" select="()" as="xs:string?" />
+  <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
@@ -39,15 +78,12 @@
   
   
   <!-- PIPELINE BODY -->
+  <p:variable name="udpipe-text" select="." />
+  
   <p:xslt>
-   <p:with-input port="stylesheet" href="../Xslt/?.xsl" />
-   <p:with-option name="parameters" select="map {'parameter' : 'value' }" />
+   <p:with-input port="stylesheet" href="../xslt/namegtag/nametag-xml-to-tei.xsl" />
   </p:xslt>
   
-  <p:if test="$debug">
-   <p:store href="{$debug-path-uri}/?.?" />
-  </p:if>
- 
  </p:declare-step>
  
  <p:declare-step type="lac:convert-djvu" visibility="public">
