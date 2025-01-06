@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<digital-services xmlns="https://www.mzk.cz/ns/libri-augmenti/settings/1.0"
+<digital-services xmlns="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"
   xmlns:xlink="http://www.w3.org/1999/xlink">
   <apis>
     <api xml:id="api.nametag.2" common-name="NameTag" version="2.0" documentation="https://lindat.mff.cuni.cz/services/nametag/api-reference.php">
@@ -15,8 +15,14 @@
     <api xml:id="api.udpipe.2" common-name="UDPipe" version="2.0" documentation="https://lindat.mff.cuni.cz/services/udpipe/api-reference.php">
       <resource type="models" method="get" url="/models" />
       <resource type="models" method="post" url="/models" />
-      <resource type="models" method="get" url="/process?data={$data}&amp;model={$model}&amp;tokenizer={$tokenizer}&amp;input={$input}&amp;tagger={$tagger}&amp;parser={$parser}&amp;output={$output}" />
-      <resource type="models" method="post" url="/process?data={$data}&amp;model={$model}&amp;tokenizer={$tokenizer}&amp;input={$input}&amp;tagger={$tagger}&amp;parser={$parser}&amp;output={$output}" />
+      <resource type="process" method="get" url="/process?data={$data}&amp;model={$model}&amp;tokenizer={$tokenizer}&amp;input={$input}&amp;tagger={$tagger}&amp;parser={$parser}&amp;output={$output}" />
+      <resource type="process" method="post" url="/process?data={$data}&amp;model={$model}&amp;tokenizer={$tokenizer}&amp;input={$input}&amp;tagger={$tagger}&amp;parser={$parser}&amp;output={$output}" />
+      <feature type="process" method="post" url="/process">
+        <param name="tokenizer" place="body" />
+        <param name="tagger" place="body" />
+        <param name="parser" place="body" />
+        <param name="data" place="body" />
+      </feature>
     </api>
   </apis>
   <services>
