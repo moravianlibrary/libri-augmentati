@@ -5,6 +5,7 @@
  xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
  xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0" 
  xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"
+ xmlns:c="http://www.w3.org/ns/xproc-step"
  exclude-result-prefixes="xs math xd lad las"
  version="3.0">
  <xd:doc scope="stylesheet">
@@ -128,9 +129,13 @@
  
  <xsl:template match="lad:resource" mode="body">
   <td>
-   <a href="{@url}">on-line</a>
+   <xsl:if test="@url">
+    <a href="{@url}">on-line</a> 
+   </xsl:if>
+   <xsl:if test="@url and @local-file-exists = 'true'">
+    <xsl:text> | </xsl:text>    
+   </xsl:if>
    <xsl:if test="@local-file-exists = 'true'">
-    <xsl:text> | </xsl:text>
     <a href="{@local-uri}">local</a>      
    </xsl:if>
   </td>
@@ -273,6 +278,16 @@
     </td>
    </xsl:for-each>
   </tr>
+ </xsl:template>
+ 
+ <xsl:template match="c:result">
+  <ul>
+   <xsl:apply-templates />
+  </ul>
+ </xsl:template>
+ 
+ <xsl:template match="c:file">
+  <li><a href="{@full-path}"><xsl:value-of select="@name"/></a></li>
  </xsl:template>
  
 </xsl:stylesheet>
