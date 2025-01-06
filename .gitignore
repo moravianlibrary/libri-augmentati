@@ -1,3 +1,7 @@
 # directories with temporary files
 _debug
 _temp
+
+# editor settings directories
+.vscode
+.vs
