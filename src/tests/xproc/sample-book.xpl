@@ -10,9 +10,13 @@
 	<p:import href="../../xproc/libri-augmentati.xpl" />
 	
 	<p:documentation>
-		<xhtml:section>
-			<xhtml:h2></xhtml:h2>
-			<xhtml:p></xhtml:p>
+		<xhtml:section xml:lang="en">
+			<xhtml:h2>Pipeline for processing sample book</xhtml:h2>
+			<xhtml:p>Creates a virtual document, saves data from a digital library, and enriches text data for a single book.</xhtml:p>
+		</xhtml:section>
+		<xhtml:section xml:lang="cs">
+			<xhtml:h2>Linka pro zpracování vzorové knihy</xhtml:h2>
+			<xhtml:p>Vytvoří virtuální dokument, uloží data z digitální knihovny a obohatí textová data pro jednu knihu.</xhtml:p>
 		</xhtml:section>
 	</p:documentation>
    
@@ -24,8 +28,8 @@
 		to disable debug messages and files 
 		uncomment following option and comment next one 
 	-->
-		<p:option name="debug-path" select="()" as="xs:string?" />
-<!--	<p:option name="debug-path" as="xs:string" select="'../../_debug/sample-book'" />-->
+<!--		<p:option name="debug-path" select="()" as="xs:string?" />-->
+	<p:option name="debug-path" as="xs:string" select="'../../_debug/sample-book'" />
 	<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
 	
 	<p:option name="output-directory" as="xs:string" select="'../../_temp/sample-book'" />

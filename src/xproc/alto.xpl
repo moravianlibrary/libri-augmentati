@@ -5,19 +5,27 @@
  version="3.0">
  
  <p:documentation>
-  <xhtml:section>
-   <xhtml:h1></xhtml:h1>
-   <xhtml:p></xhtml:p>
+  <xhtml:section xml:lang="en">
+   <xhtml:h1>Library for ALTO documents processing</xhtml:h1>
+   <xhtml:p>Steps for standalone operations with ALTO documents.</xhtml:p>
+  </xhtml:section>
+  <xhtml:section xml:lang="cs">
+   <xhtml:h1>Kihovna pro zpracování dokumentů ALTO</xhtml:h1>
+   <xhtml:p>Kroky pro samostatné operace s dokumenty ALTO.</xhtml:p>
   </xhtml:section>
  </p:documentation>
  
  <p:declare-step type="xf:first-function-alto" name="fist-function">
-  <p:documentation>
-   <xhtml:section>
+  <!--<p:documentation>
+   <xhtml:section xml:lang="en">
     <xhtml:h2></xhtml:h2>
     <xhtml:p></xhtml:p>
    </xhtml:section>
-  </p:documentation>
+   <xhtml:section xml:lang="cs">
+    <xhtml:h2></xhtml:h2>
+    <xhtml:p></xhtml:p>
+   </xhtml:section>
+  </p:documentation>-->
   
   <!-- INPUT PORTS -->
   <p:input  port="source" primary="true" />

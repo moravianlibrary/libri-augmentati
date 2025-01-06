@@ -38,23 +38,23 @@
     <xhtml:p>Enriches available (textual) data by selected fetures.</xhtml:p>
    </xhtml:section>
    <xhtml:section xml:lang="cs">
-    <xhtml:h2>Obohacení o entity</xhtml:h2>
+    <xhtml:h2>Obohacení dostupných dat</xhtml:h2>
     <xhtml:p>Obohatí dostupná (textová) data o vybrané vlastnosti.</xhtml:p>
    </xhtml:section>
   </p:documentation>
   <!-- INPUT PORTS -->
   <p:input port="source" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
   
   <p:input port="settings" primary="false">
    <p:documentation>
-    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
-    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
@@ -66,8 +66,8 @@
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:output>
   
@@ -143,15 +143,15 @@
   <!-- INPUT PORTS -->
   <p:input  port="source" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>   
   </p:input>
   
   <p:input  port="settings" primary="false">
    <p:documentation>
-    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
-    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
@@ -162,8 +162,8 @@
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true"  pipe="result@final">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>   
   </p:output>
   
@@ -232,15 +232,15 @@
   <!-- INPUT PORTS -->
   <p:input  port="source" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
-   </p:documentation>   
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>
   </p:input>
   
   <p:input  port="settings" primary="false">
    <p:documentation>
-    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
-    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
@@ -320,15 +320,15 @@
   <!-- INPUT PORTS -->
   <p:input  port="source" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
-   </p:documentation>   
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>
   </p:input>
   
   <p:input  port="settings" primary="false">
    <p:documentation>
-    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
-    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
@@ -339,9 +339,9 @@
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true"  pipe="result@final">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
-   </p:documentation>   
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>
   </p:output>
   
   <p:output port="report" pipe="result@report-final" />
@@ -409,15 +409,15 @@
   <!-- INPUT PORTS -->
   <p:input  port="source" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>   
   </p:input>
   
   <p:input  port="settings" primary="false">
    <p:documentation>
-    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
-    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
@@ -428,8 +428,8 @@
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true"  pipe="result@final">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>   
   </p:output>
   

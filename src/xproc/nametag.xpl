@@ -8,12 +8,12 @@
  
  <p:documentation>
   <xhtml:section xml:lang="en">
-   <xhtml:h1></xhtml:h1>
-   <xhtml:p></xhtml:p>
+   <xhtml:h1>Library for NameTag data processing</xhtml:h1>
+   <xhtml:p>Steps for standalone operations with NameTag service and data.</xhtml:p>
   </xhtml:section>
   <xhtml:section xml:lang="cs">
-   <xhtml:h1></xhtml:h1>
-   <xhtml:p></xhtml:p>
+   <xhtml:h1>Kihovna pro zpracování dat NameTag</xhtml:h1>
+   <xhtml:p>Kroky pro samostatné operace se službou a daty NameTag.</xhtml:p>
   </xhtml:section>
  </p:documentation>
  
@@ -104,10 +104,10 @@
   <p:variable name="service-url" select="$service/las:api/@url">
    <p:documentation>
     <xhtml:section xml:lang="en">
-     <xhtml:p>URL of the REST service</xhtml:p>
+     <xhtml:p>URL of the REST service.</xhtml:p>
     </xhtml:section>
     <xhtml:section xml:lang="cs">
-     <xhtml:p>URL RESTové služby</xhtml:p>
+     <xhtml:p>URL RESTové služby.</xhtml:p>
     </xhtml:section>
    </p:documentation>
   </p:variable>
@@ -115,10 +115,10 @@
   <p:variable name="api-id" select="substring-after($service/las:api/@ref, '#')">
    <p:documentation>
     <xhtml:section xml:lang="en">
-     <xhtml:p>Identifier of the REST service</xhtml:p>
+     <xhtml:p>Identifier of the REST service.</xhtml:p>
     </xhtml:section>
     <xhtml:section xml:lang="cs">
-     <xhtml:p>Identifikátor RESTové služby</xhtml:p>
+     <xhtml:p>Identifikátor RESTové služby.</xhtml:p>
     </xhtml:section>
    </p:documentation>
   </p:variable>
@@ -171,10 +171,10 @@
   <p:input port="source" primary="true" content-types="application/json">
    <p:documentation>
     <xhtml:section xml:lang="en">
-     <xhtml:p>Analysis output in JSON</xhtml:p>
+     <xhtml:p>Analysis output in JSON.</xhtml:p>
     </xhtml:section>
     <xhtml:section xml:lang="cs">
-     <xhtml:p>Výstup analýzy ve formátu JSON</xhtml:p>
+     <xhtml:p>Výstup analýzy ve formátu JSON.</xhtml:p>
     </xhtml:section>
    </p:documentation>
   </p:input>
@@ -183,10 +183,10 @@
   <p:output port="result" primary="true" content-types="application/xml">
    <p:documentation>
     <xhtml:section xml:lang="en">
-     <xhtml:p>Analysis in the XML format</xhtml:p>
+     <xhtml:p>Analysis in the XML format.</xhtml:p>
     </xhtml:section>
     <xhtml:section xml:lang="cs">
-     <xhtml:p>Analýza ve formátu XML</xhtml:p>
+     <xhtml:p>Analýza ve formátu XML.</xhtml:p>
     </xhtml:section>
    </p:documentation>
   </p:output>
@@ -237,7 +237,7 @@
   <p:input port="source" primary="true">
    <p:documentation>
     <xhtml:section xml:lang="en">
-     <xhtml:p>Virtual document with resources informations</xhtml:p>
+     <xhtml:p>Virtual document with resources informations.</xhtml:p>
     </xhtml:section>
     <xhtml:section xml:lang="cs">
      <xhtml:p>Virtuální dokument s informacemi o zdrojích.</xhtml:p>
@@ -290,16 +290,6 @@
    </p:documentation>
   </p:output>
   
-  <p:output port="data" serialization="map{'indent' : true()}" sequence="true">
-   <p:documentation>
-    <xhtml:section xml:lang="en">
-     <xhtml:p></xhtml:p>
-    </xhtml:section>
-    <xhtml:section xml:lang="cs">
-     <xhtml:p>Data ve formátu XML s rozpoznanými entitami pro jednotlivé strany.</xhtml:p>
-    </xhtml:section>
-   </p:documentation>
-  </p:output>
   
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
@@ -398,7 +388,6 @@
   <p:identity name="metadata" />
   
   <p:insert match="lant:report/lant:result" position="last-child" name="final-report">
-   <p:documentation>Doplnění zprávy o zpracovaných prvcích.</p:documentation>
    <p:with-input port="source" pipe="source@getting-nametag-analyses" />
    <p:with-input port="insertion" pipe="@metadata" />
   </p:insert>

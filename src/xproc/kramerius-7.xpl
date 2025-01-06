@@ -201,12 +201,12 @@
          <xhtml:section xml:lang="en">
              <xhtml:h2>Get virtual document pages</xhtml:h2>
              <xhtml:p>Creates element for each page of the document that contains basic data: identifier, type and (page) number.</xhtml:p>
-             <xhtml:p>Returns element <xhtml:code>&lt;lad:pages&gt;</xhtml:code> </xhtml:p>
+             <xhtml:p>Returns element <xhtml:code>&lt;lad:pages&gt;</xhtml:code>.</xhtml:p>
          </xhtml:section>
          <xhtml:section xml:lang="cs">
              <xhtml:h2>Získání stránek virtuálního dokumentu</xhtml:h2>
              <xhtml:p>Pro každou stránku dokumentu vytvoří element se základními údaji: identifikátor, typ a číslo (strany).</xhtml:p>
-             <xhtml:p>Vrací element <xhtml:code>&lt;lad:pages&gt;</xhtml:code></xhtml:p>
+             <xhtml:p>Vrací element <xhtml:code>&lt;lad:pages&gt;</xhtml:code>.</xhtml:p>
          </xhtml:section>
      </p:documentation>
      

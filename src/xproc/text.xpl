@@ -7,19 +7,23 @@
  version="3.0">
  
  <p:documentation>
-  <xhtml:section>
-   <xhtml:h1></xhtml:h1>
-   <xhtml:p></xhtml:p>
+  <xhtml:section xml:lang="en">
+   <xhtml:h1>Library for plain text data processing</xhtml:h1>
+   <xhtml:p>Steps for standalone operations with plain text data.</xhtml:p>
+  </xhtml:section>
+  <xhtml:section xml:lang="cs">
+   <xhtml:h1>Kihovna pro zpracování textových dat</xhtml:h1>
+   <xhtml:p>Kroky pro samostatné operace s daty ve formátu prostého textu.</xhtml:p>
   </xhtml:section>
  </p:documentation>
  
  <p:declare-step type="latx:combine-text-pages" name="combining-text-pages">
   <p:documentation>
-   <xhtml:section>
+   <xhtml:section  xml:lang="en">
     <xhtml:h2>Combine TEI pages</xhtml:h2>
     <xhtml:p>Combines available TEI pages to one document.</xhtml:p>
    </xhtml:section>
-   <xhtml:section>
+   <xhtml:section xml:lang="cs">
     <xhtml:h2>Sloučení stránek TEI</xhtml:h2>
     <xhtml:p>Sloučí dostupné TEI stránky do jednoho TEI dokumentu.</xhtml:p>
    </xhtml:section>

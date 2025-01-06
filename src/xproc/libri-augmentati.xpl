@@ -210,7 +210,10 @@
   
   <!-- INPUT PORTS -->
   <p:input port="source" primary="true" sequence="true">
-   <p:documentation>Sekvence virtuálních dokumentů.</p:documentation>
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>
   </p:input>
   <p:input port="report-in" sequence="true">
    <lar:report />
@@ -219,7 +222,10 @@
   
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true">
-   <p:documentation>Sekvence virtuálních dokumentů.</p:documentation>
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>
   </p:output>
   <p:output port="report" primary="false" sequence="false" pipe="report-in@downloading-document-data"/>
   
@@ -403,11 +409,11 @@
   <p:documentation>
    <xhtml:section xml:lang="en">
     <xhtml:h2>Download document data items</xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:p>Downloads all data of the virtual document.</xhtml:p>
    </xhtml:section>
    <xhtml:section xml:lang="cs">
-    <xhtml:h2></xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:h2>Stáhnout všechna data dokumentu</xhtml:h2>
+    <xhtml:p>Stáhne všechna data virtuálního dokumentu.</xhtml:p>
    </xhtml:section>
   </p:documentation>
   
@@ -453,11 +459,11 @@
   <p:documentation>
    <xhtml:section xml:lang="en">
     <xhtml:h2>Download document</xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:p>Downloads one document from the web.</xhtml:p>
    </xhtml:section>
    <xhtml:section xml:lang="cs">
-    <xhtml:h2></xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:h2>Stáhnout dokument</xhtml:h2>
+    <xhtml:p>Stáhne z webu jeden dokument.</xhtml:p>
    </xhtml:section>
   </p:documentation>
   
@@ -526,16 +532,16 @@
   <!-- INPUT PORTS -->
   <p:input port="source" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
   
   <p:input port="settings" primary="false">
    <p:documentation>
-    <xhtml:p xml:lang="en">Settings for web services for enrichement.</xhtml:p>
-    <xhtml:p xml:lang="cs">Nastavení webových služeb pro obohacení.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:input>
   
@@ -546,8 +552,8 @@
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true">
    <p:documentation>
-    <xhtml:p xml:lang="en">Sequence of virtual documents.</xhtml:p>
-    <xhtml:p xml:lang="cs">Sekvence virtuálních dokumentů.</xhtml:p>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
    </p:documentation>
   </p:output>
   
@@ -610,11 +616,11 @@
   <p:documentation>
    <xhtml:section xml:lang="en">
     <xhtml:h2>Create report</xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:p>Creates report with links to original, downloaded and enriched data.</xhtml:p>
    </xhtml:section>
    <xhtml:section xml:lang="cs">
-    <xhtml:h2></xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:h2>Vytvořit přehled</xhtml:h2>
+    <xhtml:p>Vytvoří přehled s odkazy na původní, stažená a obohacená data.</xhtml:p>
    </xhtml:section>
   </p:documentation>
   
@@ -680,11 +686,11 @@
   <p:documentation>
    <xhtml:section xml:lang="en">
     <xhtml:h2>Get document id</xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:p>Gets nickname or id of the document (without leading 'uuid:') in plain text.</xhtml:p>
    </xhtml:section>
    <xhtml:section xml:lang="cs">
-    <xhtml:h2></xhtml:h2>
-    <xhtml:p></xhtml:p>
+    <xhtml:h2>Získat id dokumentu</xhtml:h2>
+    <xhtml:p>Získá uživatelské jméno nedo identifikátor dokumentu (bez úvodního 'uuid:') ve formátu prostého textu.</xhtml:p>
    </xhtml:section>
   </p:documentation>
   

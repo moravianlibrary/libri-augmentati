@@ -8,9 +8,13 @@
  version="3.0">
  
  <p:documentation>
-  <xhtml:section>
-   <xhtml:h1></xhtml:h1>
-   <xhtml:p></xhtml:p>
+  <xhtml:section xml:lang="en">
+   <xhtml:h1>Library for UDPipe data processing</xhtml:h1>
+   <xhtml:p>Steps for standalone operations with UDPipe service and data.</xhtml:p>
+  </xhtml:section>
+  <xhtml:section xml:lang="cs">
+   <xhtml:h1>Kihovna pro zpracování dat UDPipe</xhtml:h1>
+   <xhtml:p>Kroky pro samostatné operace se službou a daty UDPipe.</xhtml:p>
   </xhtml:section>
  </p:documentation>
  
@@ -310,16 +314,6 @@
    </p:documentation>
   </p:output>
   
-  <p:output port="data" serialization="map{'indent' : true()}" sequence="true">
-   <p:documentation>
-    <xhtml:section xml:lang="en">
-     <xhtml:p></xhtml:p>
-    </xhtml:section>
-    <xhtml:section xml:lang="cs">
-     <xhtml:p>Data ve formátu XML s rozpoznanými entitami pro jednotlivé strany.</xhtml:p>
-    </xhtml:section>
-   </p:documentation>
-  </p:output>
   
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
