@@ -16,12 +16,6 @@
 		</xhtml:section>
 	</p:documentation>
    
-	<!-- INPUT PORTS -->
-<!--  <p:input port="source" primary="true">
-  	<p:document href="" />
-  </p:input>
-	-->
-   
 	<!-- OUTPUT PORTS -->
 	<p:output port="result" primary="true" serialization="map{'indent' : true()}" />
 	
@@ -30,8 +24,8 @@
 		to disable debug messages and files 
 		uncomment following option and comment next one 
 	-->
-	<!--	<p:option name="debug-path" select="()" as="xs:string?" />-->
-	<p:option name="debug-path" as="xs:string" select="'../../_debug/sample-book'" />
+		<p:option name="debug-path" select="()" as="xs:string?" />
+<!--	<p:option name="debug-path" as="xs:string" select="'../../_debug/sample-book'" />-->
 	<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
 	
 	<p:option name="output-directory" as="xs:string" select="'../../_temp/sample-book'" />
@@ -46,7 +40,7 @@
 			name="virtual-document"
 			library-code="mzk" 
 			api-version="7" 
-			document-resources="MODS DC"
+			document-resources="MODS DC FOXML"
 			page-resources="ALTO TEXT FOXML DC MODS IMAGE"
 			debug-path="{$debug-path}"
 			base-uri="{$base-uri}">
@@ -79,7 +73,7 @@
 	
 	<p:store href="{$output-directory}/virtual-document-02-downloaded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
-	<lax:enrich-document-data p:use-when="false()"
+	<lax:enrich-document-data p:use-when="true()"
 		output-directory="{$output-directory}" 
 		debug-path="{$debug-path}" 
 		base-uri="{$base-uri}"
@@ -93,7 +87,7 @@
 	<p:store href="{$output-directory}/virtual-document-03-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
 	<lax:create-report output-directory="{output-directory}"/>
-	<p:store href="{$output-directory}/report.html" />
+	<p:store href="{$output-directory}/report.html" message="Storing report to {$output-directory}/report.html" />
 	<p:identity>
 		<p:with-input port="source" pipe="result-uri" />
 	</p:identity>
