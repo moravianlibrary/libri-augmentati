@@ -18,12 +18,12 @@ At this time, `Librari augmentati` only supports digital libraries provided by [
 - [Saxon-HE 12.3](https://github.com/Saxonica/Saxon-HE/releases/tag/SaxonHE12-3 "Download SaxonHE12-3J")
 - [MorganaXProc-IIIse 1.4.5](https://sourceforge.net/projects/morganaxproc-iiise/files/MorganaXProc-IIIse-1.4.5/ "Donwload MorganaXProc-IIIse 1.4.5")
 
-### Enviroment setting
+### Setting up the environment
 
 - [ ] Install Java JDK 11
 - [ ] Extract content of the [MorganaXProc-IIIse-1.4.5.zip](https://sourceforge.net/projects/morganaxproc-iiise/files/MorganaXProc-IIIse-1.4.5/MorganaXProc-IIIse-1.4.5.zip/download "Donwload MorganaXProc-IIIse 1.4.5.zip file")
 - [ ] Extract content of the [SaxonHE12-3J.zip](https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE12-3/SaxonHE12-3J.zip "Download SaxonHE12-3J") file
-  - [ ]  copy extracted `saxon-he-12.3.jar` and `saxon-he-xqj-12.3.jar` files to the `MorganaXProc-IIIse_lib` folder
+  - [ ] copy extracted `saxon-he-12.3.jar` and `saxon-he-xqj-12.3.jar` files to the `MorganaXProc-IIIse_lib` folder
 - [ ] On your operating system, set environment PATH variable to point to the location of the `MorganaXProc-IIIse` folder
 - for example on Windows:
   - (run command line as administrator): `setx /m PATH "%PATH%;C:\Programs\MorganaXProc-IIIse"`
@@ -56,6 +56,10 @@ When viewing a [title](https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-6
 Or you can go through the sharing dialog where you have to select the `book` to share:
 
 <img src="doc/images/sample-book-share-uuid.png" title="document-id via Share dialog" width="624" height="407">
+
+## Technical documentation
+
+Detailed documentation of the code is in the [doc](./doc/) directory in [XML](./doc/README.xml), [HMTL](./doc/README.html) and [Markdown](./doc/README.md) format.
 
 ## Acknowledgment
 
