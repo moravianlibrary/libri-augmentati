@@ -20,6 +20,7 @@
  <p:import href="text.xpl"/>
  
  <p:documentation>
+  <xhtml:meta name="version" content="1.0.0" />
   <xhtml:section xml:lang="en">
    <xhtml:h1>Enrichment</xhtml:h1>
    <xhtml:p>The main programming library for enrichment data by external (web) services.</xhtml:p>

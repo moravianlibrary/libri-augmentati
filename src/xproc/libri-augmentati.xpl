@@ -25,6 +25,7 @@
  <p:import href="conversion.xpl" />
  
   <p:documentation>
+   <xhtml:meta name="version" content="1.0.0" />
    <xhtml:section xml:lang="en">
     <xhtml:h1>Libri augmentati</xhtml:h1>
     <xhtml:p>The main programming library for digital library data retrieval and enrichment.</xhtml:p>

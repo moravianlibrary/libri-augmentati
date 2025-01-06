@@ -7,6 +7,7 @@
  version="3.0">
  
  <p:documentation>
+  <xhtml:meta name="version" content="1.0.0" />
   <xhtml:section xml:lang="en">
    <xhtml:h1>Library for TEI data processing</xhtml:h1>
    <xhtml:p>Steps for standalone operations with TEI data.</xhtml:p>

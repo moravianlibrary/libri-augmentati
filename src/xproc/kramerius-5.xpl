@@ -12,6 +12,7 @@
 <!-- <p:import href="../includes/log-xpc-lib/src/xproc/log-xpc-lib.xpl" />-->
  
  <p:documentation>
+  <xhtml:meta name="version" content="1.0.0" />
   <xhtml:section xml:lang="en">
    <xhtml:h1>Kramerius 5</xhtml:h1>
    <xhtml:p>Programming library for communication with the system <xhtml:a href="https://system-kramerius.cz/en">Kramerius</xhtml:a>, <xhtml:a href="https://github.com/ceskaexpedice/kramerius/wiki/ClientAPIDEV">version 5</xhtml:a>.</xhtml:p>
