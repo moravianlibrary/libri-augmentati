@@ -47,7 +47,7 @@
   'info' : map {'extension' : '.txt'}
   }" static="true" />
 
- <!-- STEPS -->
+ <!-- STEP -->
  <p:declare-step type="lax:build-virtual-document" name="building-virtual-document" visibility="public">
   <p:documentation>
    <xhtml:section xml:lang="en">
@@ -126,7 +126,8 @@
   </p:for-each>
 
  </p:declare-step>
-
+ 
+ <!-- STEP -->
  <p:declare-step type="lax:get-virtual-document-metadata" name="getting-virtual-document-metadata" visibility="private">
 
   <p:documentation>
@@ -191,6 +192,7 @@
   
  </p:declare-step>
 
+ <!-- STEP -->
  <p:declare-step type="lax:download-document-data" name="downloading-document-data" visibility="public">
 
   <p:documentation>
@@ -236,9 +238,11 @@
    <p:variable name="page-resources" select="tokenize($options/@page-resources) ! lower-case(.)" />
    <p:variable name="document-resources" select="tokenize($options/@document-resources) ! lower-case(.)" />
 
-   <p:variable name="document-id" select="if(starts-with(/lad:document/@id, 'uuid:')) 
-     then substring-after(/lad:document/@id, 'uuid:') 
-      else  /lad:document/@id " />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
 
    <p:viewport match="lad:resource[@type=$document-resources][@available='true']">
     <p:variable name="type" select="/lad:resource/@type/data()" />
@@ -288,6 +292,7 @@
    
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lax:download-document-resources" visibility="private">
   
   <p:documentation>
@@ -355,6 +360,7 @@
   
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lax:check-local-file-exists" name="checking-local-file-exists">
   
   <p:documentation>
@@ -391,6 +397,7 @@
   </p:add-attribute>
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lax:download-document-data-items" visibility="private">
   
   <p:documentation>
@@ -440,6 +447,7 @@
   </p:for-each>
  </p:declare-step>
 
+ <!-- STEP -->
  <p:declare-step type="lax:download-document" visibility="private">
   
   <p:documentation>
@@ -501,6 +509,7 @@
   </p:try>
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lax:enrich-document-data" visibility="public" name="enriching-document-data">
   
   <p:documentation>
@@ -534,8 +543,6 @@
    <lar:report />
   </p:input>
   
-  
-  
   <!-- OUTPUT PORTS -->
   <p:output port="result" primary="true" sequence="true">
    <p:documentation>
@@ -556,6 +563,23 @@
   
   <p:option name="output-format" values="('TEXT', 'TEI')" as="xs:string*" />
   <p:option name="enrichment" values="('ENTITIES', 'MORPHOLOGY')" as="xs:string*"/>
+  
+  <p:viewport match="lad:document" use-when="false()">
+   <p:viewport match="lad:page">
+    <p:variable name="page-local-uri" select="/lad:page/lad:resource[@type='text'][@local-file-exists='true']/@local-uri" />
+    <p:if test="exists($page-local-uri)">
+     <lae:enrich-data
+      output-directory="{$output-directory}" 
+      debug-path="{$debug-path}" 
+      base-uri="{$base-uri}">
+      <p:with-option name="output-format" select="$output-format" />
+      <p:with-option name="enrichment" select="$enrichment" />
+      <p:with-input port="settings" pipe="settings@enriching-document-data" />
+      <p:with-input port="report-in" pipe="report-in@enriching-document-data" />
+     </lae:enrich-data>
+    </p:if>
+   </p:viewport>
+  </p:viewport>
   
   <lae:enrich-data
    output-directory="{$output-directory}" 
@@ -580,6 +604,7 @@
   -->
  </p:declare-step>
 
+ <!-- STEP -->
  <p:declare-step type="lax:create-report" name="creating-report">
   
   <p:documentation>
@@ -619,6 +644,7 @@
    <p:with-input select="/*"/>
    <p:output port="result" pipe="result@report" />
    <p:output port="result-uri" pipe="result-uri@save" />
+   <p:variable name="library-code" select="/lad:document/las:library/@code"/>
    <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
     then /lad:document/@nickname 
     else if(starts-with(/lad:document/@id, 'uuid:')) 
@@ -626,27 +652,29 @@
     else  /lad:document/@id " />
    
    <p:if test="$save-output" name="xml-report-save">
-    <p:store href="{$output-directory-uri}/{$document-id}/report.xml" message="Storing XML report to {$output-directory}/{$document-id}/report.xml" name="xml-report-store" />
+    <p:store href="{$output-directory-uri}/{$library-code}-{$document-id}-report.xml" message="Storing XML report to {$output-directory}/{$library-code}-{$document-id}-report.xml" name="xml-report-store" />
    </p:if>
    
    <p:xslt>
-    <p:with-input port="stylesheet" href="../Xslt/report.xsl" />
+    <p:with-input port="stylesheet" href="../xslt/report.xsl" />
    </p:xslt>
    
    <p:identity name="report" />
    <p:if test="$save-output" name="save">
     <p:output port="result-uri" primary="true" />
-    <p:store href="{$output-directory-uri}/{$document-id}/report.html" message="Storing HTML report to {$output-directory}/{$document-id}/report.html" name="store" />
+    <p:store href="{$output-directory-uri}/{$library-code}-{$document-id}-report.html" message="Storing HTML report to {$output-directory}/{$library-code}-{$document-id}-report.html" name="store" />
     <p:identity>
      <p:with-input port="source">
-      <c:file xml:base="report.html" name="report.html" full-path="{$output-directory-uri}/{$document-id}/report.html" parent-directory="{$output-directory-uri}" />
+      <c:file xml:base="{$library-code}-{$document-id}-report.html" name="{$library-code}-{$document-id}-report.html" full-path="{$output-directory-uri}/{$library-code}-{$document-id}-report.html" parent-directory="{$output-directory-uri}" />
      </p:with-input>
     </p:identity>
     <p:namespace-delete prefixes="lax err xlog array mox lap xs map lad xhtml" />
+    <p:namespace-delete prefixes="lae mods lar lac las" />
    </p:if>
   </p:for-each>
  </p:declare-step>
 
+ <!-- STEP -->
  <p:declare-step type="lax:get-document-id">
   
   <p:documentation>
