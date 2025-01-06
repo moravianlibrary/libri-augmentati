@@ -1,116 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xpan:report xmlns:xpan="https://www.daliboris.cz/ns/xproc/analysis">
-   <analysis file-name="alto.xpl"
-             path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/alto.xpl"
-             xmlns="https://www.daliboris.cz/ns/xproc/analysis"
-             xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
-         <prolog>
-            <documentation length="175">
-               <xhtml:section xml:lang="en"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                  <xhtml:h1>Library for ALTO documents processing</xhtml:h1>
-                  <xhtml:p>Steps for standalone operations with ALTO documents.</xhtml:p>
-               </xhtml:section>
-               <xhtml:section xml:lang="cs"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                  <xhtml:h1>Kihovna pro zpracování dokumentů ALTO</xhtml:h1>
-                  <xhtml:p>Kroky pro samostatné operace s dokumenty ALTO.</xhtml:p>
-               </xhtml:section>
-            </documentation>
-            <namespaces>
-               <namespace prefix="p"
-                          value="http://www.w3.org/ns/xproc"/>
-               <namespace prefix="xf"
-                          value="https://www.example.com/ns/xproc/function"/>
-               <namespace prefix="xhtml"
-                          value="http://www.w3.org/1999/xhtml"/>
-               <namespace prefix="xs"
-                          value="http://www.w3.org/2001/XMLSchema"/>
-               <namespace prefix="xml"
-                          value="http://www.w3.org/XML/1998/namespace"/>
-            </namespaces>
-         </prolog>
-         <body>
-            <documentation length="175">
-               <xhtml:section xml:lang="en"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                  <xhtml:h1>Library for ALTO documents processing</xhtml:h1>
-                  <xhtml:p>Steps for standalone operations with ALTO documents.</xhtml:p>
-               </xhtml:section>
-               <xhtml:section xml:lang="cs"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                  <xhtml:h1>Kihovna pro zpracování dokumentů ALTO</xhtml:h1>
-                  <xhtml:p>Kroky pro samostatné operace s dokumenty ALTO.</xhtml:p>
-               </xhtml:section>
-            </documentation>
-            <step type="xf:first-function-alto"
-                  name="fist-function">
-               <prolog>
-                  <namespaces>
-                     <namespace prefix="p"
-                                value="http://www.w3.org/ns/xproc"/>
-                     <namespace prefix="xf"
-                                value="https://www.example.com/ns/xproc/function"/>
-                     <namespace prefix="xhtml"
-                                value="http://www.w3.org/1999/xhtml"/>
-                     <namespace prefix="xs"
-                                value="http://www.w3.org/2001/XMLSchema"/>
-                     <namespace prefix="xml"
-                                value="http://www.w3.org/XML/1998/namespace"/>
-                  </namespaces>
-                  <options>
-                     <option name="debug-path"
-                             select="()"
-                             as="xs:string?"/>
-                     <option name="base-uri"
-                             as="xs:anyURI"
-                             select="static-base-uri()"/>
-                  </options>
-                  <ports>
-                     <input port="source"
-                            primary="true"/>
-                     <output port="result"
-                             primary="true"/>
-                  </ports>
-               </prolog>
-               <body>
-                  <call step="p:variable"
-                        name="debug">
-                     <parameter name="select"
-                                value="$debug-path || '' ne ''"/>
-                  </call>
-                  <call step="p:variable"
-                        name="debug-path-uri">
-                     <parameter name="select"
-                                value="resolve-uri($debug-path, $base-uri)"/>
-                  </call>
-                  <call step="p:xslt">
-                     <port name="stylesheet">
-                        <parameter name="href"
-                                   value="../Xslt/?.xsl"/>
-                     </port>
-                     <parameter name="parameters"
-                                value="map {'parameter' : 'value' }"/>
-                  </call>
-                  <call step="p:if">
-                     <parameter name="test"
-                                value="$debug"/>
-                     <parameter name="p:store"
-                                value=""/>
-                  </call>
-               </body>
-            </step>
-         </body>
-      </library>
-   </analysis>
    <analysis file-name="conversion.xpl"
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/conversion.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="194">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
                               xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0">
@@ -143,6 +43,10 @@
          </prolog>
          <body>
             <documentation length="194">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
                               xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0">
@@ -697,9 +601,21 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/enrichment.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="178">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -763,6 +679,18 @@
          </prolog>
          <body>
             <documentation length="178">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -1646,9 +1574,17 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/kramerius-5.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="166">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
                               xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
@@ -1696,6 +1632,14 @@
          </prolog>
          <body>
             <documentation length="166">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
                               xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
@@ -2751,9 +2695,17 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/kramerius-7.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="166">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
                               xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
@@ -2800,6 +2752,14 @@
          </prolog>
          <body>
             <documentation length="166">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
                               xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
@@ -3841,9 +3801,24 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/libri-augmentati.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="199">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:mods="http://www.loc.gov/mods/v3"
+                           xmlns:err="http://www.w3.org/ns/xproc-error"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:mox="http://www.xml-project.com/morganaxproc"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
                               xmlns:mods="http://www.loc.gov/mods/v3"
@@ -3922,6 +3897,21 @@
          </prolog>
          <body>
             <documentation length="199">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:mods="http://www.loc.gov/mods/v3"
+                           xmlns:err="http://www.w3.org/ns/xproc-error"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:mox="http://www.xml-project.com/morganaxproc"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
                               xmlns:mods="http://www.loc.gov/mods/v3"
@@ -5661,9 +5651,14 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/nametag.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="189">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -5698,6 +5693,11 @@
          </prolog>
          <body>
             <documentation length="189">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -6095,9 +6095,14 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/tei.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="161">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:tei="http://www.tei-c.org/ns/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
                               xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -6132,6 +6137,11 @@
          </prolog>
          <body>
             <documentation length="161">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:tei="http://www.tei-c.org/ns/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
                               xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -6928,9 +6938,13 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/text.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="192">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0">
@@ -6963,6 +6977,10 @@
          </prolog>
          <body>
             <documentation length="192">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0">
@@ -7118,9 +7136,14 @@
              path="file:///V:/Projekty/Github/MZK/libri-augmentati/src/xproc/udpipe.xpl"
              xmlns="https://www.daliboris.cz/ns/xproc/analysis"
              xmlns:xhtml="http://www.w3.org/1999/xhtml">
-      <library>
+      <library semver="1.0.0">
          <prolog>
             <documentation length="185">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
                               xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
@@ -7157,6 +7180,11 @@
          </prolog>
          <body>
             <documentation length="185">
+               <xhtml:meta name="version"
+                           content="1.0.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"/>
                <xhtml:section xml:lang="en"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
                               xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"

@@ -71,7 +71,18 @@
       }
       .heading > fieldset {
       place-self: center stretch;
-      }</style>
+      }
+      .semver {
+      font-size: 90%;
+      color: brown;
+      }
+      .semver::before {
+      content: '(version: '
+      }
+      .semver::after {
+      content: ')'
+      }
+    </style>
    </head>
    <body>
       <div class="container">
@@ -104,228 +115,19 @@
             </div>
             <details class="file">
                <summary>
-                  <strong>alto.xpl</strong>
-               </summary>
-               <div class="prolog">
-                  <details class="documentation">
-                     <summary>
-                        <strong>Documentation</strong> (175)          
-        </summary>
-                     <section xml:lang="en"
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                        <h1>Library for ALTO documents processing</h1>
-                        <p>Steps for standalone operations with ALTO documents.</p>
-                     </section>
-                     <section xml:lang="cs"
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                        <h1>Kihovna pro zpracování dokumentů ALTO</h1>
-                        <p>Kroky pro samostatné operace s dokumenty ALTO.</p>
-                     </section>
-                  </details>
-                  <details class="namespaces">
-                     <summary>
-                        <strong>Namespaces</strong>  (5)</summary>
-                     <table>
-                        <thead>
-                           <tr>
-                              <th>prefix</th>
-                              <th>string</th>
-                           </tr>
-                        </thead>
-                        <tr>
-                           <td>p</td>
-                           <td>http://www.w3.org/ns/xproc</td>
-                        </tr>
-                        <tr>
-                           <td>xf</td>
-                           <td>https://www.example.com/ns/xproc/function</td>
-                        </tr>
-                        <tr>
-                           <td>xhtml</td>
-                           <td>http://www.w3.org/1999/xhtml</td>
-                        </tr>
-                        <tr>
-                           <td>xs</td>
-                           <td>http://www.w3.org/2001/XMLSchema</td>
-                        </tr>
-                        <tr>
-                           <td>xml</td>
-                           <td>http://www.w3.org/XML/1998/namespace</td>
-                        </tr>
-                     </table>
-                  </details>
-               </div>
-               <details class="body">
-                  <summary>
-                     <strong>Steps</strong> (1 + 0)</summary>
-                  <details class="documentation">
-                     <summary>
-                        <strong>Documentation</strong> (175)          
-        </summary>
-                     <section xml:lang="en"
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                        <h1>Library for ALTO documents processing</h1>
-                        <p>Steps for standalone operations with ALTO documents.</p>
-                     </section>
-                     <section xml:lang="cs"
-                              xmlns="http://www.w3.org/1999/xhtml"
-                              xmlns:xf="https://www.example.com/ns/xproc/function">
-                        <h1>Kihovna pro zpracování dokumentů ALTO</h1>
-                        <p>Kroky pro samostatné operace s dokumenty ALTO.</p>
-                     </section>
-                  </details>
-                  <details class="step"
-                           id="d58e48">
-                     <summary>
-                        <strong>xf:first-function-alto</strong> (fist-function)</summary>
-                     <div class="prolog">
-                        <details class="options">
-                           <summary>
-                              <strong>Options</strong>  (2)</summary>
-                           <table>
-                              <thead>
-                                 <tr>
-                                    <th>name</th>
-                                    <th>properties</th>
-                                 </tr>
-                              </thead>
-                              <tr>
-                                 <td>debug-path</td>
-                                 <td>name = debug-path | select = () | as = xs:string?</td>
-                              </tr>
-                              <tr>
-                                 <td>base-uri</td>
-                                 <td>name = base-uri | as = xs:anyURI | select = static-base-uri()</td>
-                              </tr>
-                           </table>
-                        </details>
-                        <details class="ports">
-                           <summary>
-                              <strong>Ports</strong> (2)</summary>
-                           <table>
-                              <thead>
-                                 <tr>
-                                    <th>direction</th>
-                                    <th>value</th>
-                                    <th>primary</th>
-                                 </tr>
-                              </thead>
-                              <tr>
-                                 <td>input</td>
-                                 <td>
-                                    <strong>source</strong>
-                                 </td>
-                                 <td>true</td>
-                              </tr>
-                              <tr>
-                                 <td>output</td>
-                                 <td>
-                                    <strong>result</strong>
-                                 </td>
-                                 <td>true</td>
-                              </tr>
-                           </table>
-                        </details>
-                     </div>
-                     <details class="body">
-                        <summary>
-                           <strong>Steps</strong> (0 + 4)</summary>
-                        <table class="steps">
-                           <thead>
-                              <tr>
-                                 <th>position</th>
-                                 <th>step</th>
-                                 <th>name</th>
-                                 <th>parameter</th>
-                                 <th>value</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr class="call">
-                                 <td>1</td>
-                                 <td class="step">p:variable</td>
-                                 <td>debug</td>
-                                 <td colspan="2">
-                                 </td>
-                              </tr>
-                              <tr class="parameter">
-                                 <td colspan="3">
-                                 </td>
-                                 <td>select</td>
-                                 <td>$debug-path || '' ne ''</td>
-                              </tr>
-                              <tr class="call">
-                                 <td>2</td>
-                                 <td class="step">p:variable</td>
-                                 <td>debug-path-uri</td>
-                                 <td colspan="2">
-                                 </td>
-                              </tr>
-                              <tr class="parameter">
-                                 <td colspan="3">
-                                 </td>
-                                 <td>select</td>
-                                 <td>resolve-uri($debug-path, $base-uri)</td>
-                              </tr>
-                              <tr class="call">
-                                 <td>3</td>
-                                 <td class="step">p:xslt</td>
-                                 <td>
-                                 </td>
-                                 <td colspan="2">
-                                 </td>
-                              </tr>
-                              <tr class="parameter">
-                                 <td colspan="3">
-                                 </td>
-                                 <td>parameters</td>
-                                 <td>map {'parameter' : 'value' }</td>
-                              </tr>
-                              <tr class="parameter">
-                                 <td colspan="3">
-                                 </td>
-                                 <td>href</td>
-                                 <td>../Xslt/?.xsl</td>
-                              </tr>
-                              <tr class="call">
-                                 <td>4</td>
-                                 <td class="step">p:if</td>
-                                 <td>
-                                 </td>
-                                 <td colspan="2">
-                                 </td>
-                              </tr>
-                              <tr class="parameter">
-                                 <td colspan="3">
-                                 </td>
-                                 <td>p:store</td>
-                                 <td>
-                                 </td>
-                              </tr>
-                              <tr class="parameter">
-                                 <td colspan="3">
-                                 </td>
-                                 <td>test</td>
-                                 <td>$debug</td>
-                              </tr>
-                           </tbody>
-                        </table>
-                     </details>
-                  </details>
-               </details>
-            </details>
-            <details class="file">
-               <summary>
                   <strong>conversion.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (194)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -389,6 +191,11 @@
                      <summary>
                         <strong>Documentation</strong> (194)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -405,7 +212,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e128">
+                           id="d53e52">
                      <summary>
                         <strong>lac:convert-conllu-to-tei</strong> (converting-conllu-to-tei)</summary>
                      <div class="prolog">
@@ -613,7 +420,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e241">
+                           id="d53e165">
                      <summary>
                         <strong>lac:convert-nametag-xml-to-tei</strong> (converting-nametag-xml-to-tei)</summary>
                      <div class="prolog">
@@ -787,7 +594,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e344">
+                           id="d53e268">
                      <summary>
                         <strong>lac:convert-djvu</strong>
                      </summary>
@@ -975,7 +782,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e427">
+                           id="d53e351">
                      <summary>
                         <strong>lac:convert-djvu-item</strong>
                      </summary>
@@ -1251,7 +1058,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e535">
+                           id="d53e459">
                      <summary>
                         <strong>lac:fix-path</strong> (fixing-path)</summary>
                      <div class="prolog">
@@ -1436,12 +1243,26 @@
             <details class="file">
                <summary>
                   <strong>enrichment.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (178)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
@@ -1555,6 +1376,19 @@
                      <summary>
                         <strong>Documentation</strong> (178)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
@@ -1587,7 +1421,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e661">
+                           id="d53e587">
                      <summary>
                         <strong>lae:enrich-data</strong> (enriching-data)</summary>
                      <div class="prolog">
@@ -1843,7 +1677,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e746">
+                           id="d53e672">
                      <summary>
                         <strong>lae:enrich-by-entities</strong> (enriching-by-entities)</summary>
                      <div class="prolog">
@@ -2134,7 +1968,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e844">
+                           id="d53e770">
                      <summary>
                         <strong>lae:enrich-by-morphology</strong> (enriching-by-morphology)</summary>
                      <div class="prolog">
@@ -2425,7 +2259,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e942">
+                           id="d53e868">
                      <summary>
                         <strong>lae:convert-to-tei</strong> (converting-to-tei)</summary>
                      <div class="prolog">
@@ -2716,7 +2550,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1041">
+                           id="d53e967">
                      <summary>
                         <strong>lae:combine-text-pages</strong> (combining-text-pages)</summary>
                      <div class="prolog">
@@ -3011,12 +2845,22 @@
             <details class="file">
                <summary>
                   <strong>kramerius-5.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (166)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -3112,6 +2956,15 @@
                      <summary>
                         <strong>Documentation</strong> (166)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -3136,7 +2989,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e1215">
+                           id="d53e1143">
                      <summary>
                         <strong>lax:get-virtual-document-metadata-v5</strong> (getting-virtual-document-metadata)</summary>
                      <div class="prolog">
@@ -3570,7 +3423,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1351">
+                           id="d53e1279">
                      <summary>
                         <strong>lax:get-virtual-document-data-v5</strong> (getting-virtual-document-data)</summary>
                      <div class="prolog">
@@ -3739,7 +3592,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1430">
+                           id="d53e1358">
                      <summary>
                         <strong>lax:get-virtual-document-pages</strong>
                      </summary>
@@ -3957,7 +3810,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1532">
+                           id="d53e1460">
                      <summary>
                         <strong>lax:pages-convert-json-to-xml</strong>
                      </summary>
@@ -4141,7 +3994,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1627">
+                           id="d53e1555">
                      <summary>
                         <strong>lax:get-source-url</strong> (getting-source-url)</summary>
                      <div class="prolog">
@@ -4384,7 +4237,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1741">
+                           id="d53e1669">
                      <summary>
                         <strong>lax:get-available-formats</strong> (getting-available-formats)</summary>
                      <div class="prolog">
@@ -4910,7 +4763,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e1921">
+                           id="d53e1849">
                      <summary>
                         <strong>lax:get-available-format</strong> (getting-available-format)</summary>
                      <div class="prolog">
@@ -5161,12 +5014,22 @@
             <details class="file">
                <summary>
                   <strong>kramerius-7.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (166)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -5250,6 +5113,15 @@
                      <summary>
                         <strong>Documentation</strong> (166)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -5274,7 +5146,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e2117">
+                           id="d53e2047">
                      <summary>
                         <strong>lax:get-virtual-document-metadata-v7</strong> (getting-virtual-document-metadata)</summary>
                      <div class="prolog">
@@ -5915,7 +5787,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e2299">
+                           id="d53e2229">
                      <summary>
                         <strong>lax:get-virtual-document-data-v7</strong> (getting-virtual-document-data)</summary>
                      <div class="prolog">
@@ -6122,7 +5994,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e2387">
+                           id="d53e2317">
                      <summary>
                         <strong>lax:get-virtual-document-pages-v7</strong>
                      </summary>
@@ -6305,7 +6177,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e2480">
+                           id="d53e2410">
                      <summary>
                         <strong>lax:pages-convert-json-to-xml-v7</strong>
                      </summary>
@@ -6489,7 +6361,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e2575">
+                           id="d53e2505">
                      <summary>
                         <strong>lax:get-source-url-v7</strong>
                      </summary>
@@ -6706,7 +6578,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e2687">
+                           id="d53e2617">
                      <summary>
                         <strong>lax:get-available-formats-v7</strong> (getting-available-formats)</summary>
                      <div class="prolog">
@@ -6957,7 +6829,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e2810">
+                           id="d53e2740">
                      <summary>
                         <strong>lax:get-available-format-v7</strong> (getting-available-format)</summary>
                      <div class="prolog">
@@ -7228,12 +7100,29 @@
             <details class="file">
                <summary>
                   <strong>libri-augmentati.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (199)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:mods="http://www.loc.gov/mods/v3"
+                           xmlns:err="http://www.w3.org/ns/xproc-error"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:mox="http://www.xml-project.com/morganaxproc"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -7381,6 +7270,22 @@
                      <summary>
                         <strong>Documentation</strong> (199)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
+                           xmlns:mods="http://www.loc.gov/mods/v3"
+                           xmlns:err="http://www.w3.org/ns/xproc-error"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"
+                           xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
+                           xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
+                           xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+                           xmlns:mox="http://www.xml-project.com/morganaxproc"
+                           xmlns:lap="https://www.mzk.cz/ns/libri-augmentati/processing/1.0"
+                           xmlns:lar="https://www.mzk.cz/ns/libri-augmentati/report/1.0"
+                           xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
@@ -7419,7 +7324,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e2998">
+                           id="d53e2930">
                      <summary>
                         <strong>lax:build-virtual-document</strong> (building-virtual-document)</summary>
                      <div class="prolog">
@@ -7724,7 +7629,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3101">
+                           id="d53e3033">
                      <summary>
                         <strong>lax:get-virtual-document-metadata</strong> (getting-virtual-document-metadata)</summary>
                      <div class="prolog">
@@ -8019,7 +7924,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3210">
+                           id="d53e3142">
                      <summary>
                         <strong>lax:download-document-data</strong> (downloading-document-data)</summary>
                      <div class="prolog">
@@ -8320,7 +8225,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3312">
+                           id="d53e3244">
                      <summary>
                         <strong>lax:download-document-resources</strong>
                      </summary>
@@ -8631,7 +8536,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3420">
+                           id="d53e3352">
                      <summary>
                         <strong>lax:check-local-file-exists</strong> (checking-local-file-exists)</summary>
                      <div class="prolog">
@@ -8882,7 +8787,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3509">
+                           id="d53e3441">
                      <summary>
                         <strong>lax:download-document-data-items</strong>
                      </summary>
@@ -9062,7 +8967,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3582">
+                           id="d53e3514">
                      <summary>
                         <strong>lax:download-document</strong>
                      </summary>
@@ -9300,7 +9205,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3663">
+                           id="d53e3595">
                      <summary>
                         <strong>lax:enrich-document-data</strong> (enriching-document-data)</summary>
                      <div class="prolog">
@@ -9561,7 +9466,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3752">
+                           id="d53e3684">
                      <summary>
                         <strong>lax:create-report</strong> (creating-report)</summary>
                      <div class="prolog">
@@ -9789,7 +9694,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e3837">
+                           id="d53e3769">
                      <summary>
                         <strong>lax:get-document-id</strong>
                      </summary>
@@ -9933,12 +9838,19 @@
             <details class="file">
                <summary>
                   <strong>nametag.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (189)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
@@ -10004,6 +9916,12 @@
                      <summary>
                         <strong>Documentation</strong> (189)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
@@ -10022,7 +9940,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e3951">
+                           id="d53e3885">
                      <summary>
                         <strong>lant:get-nametag-analysis</strong> (getting-nametag-analysis)</summary>
                      <div class="prolog">
@@ -10353,7 +10271,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4050">
+                           id="d53e3984">
                      <summary>
                         <strong>lant:convert-nametag-analysis-to-xml</strong>
                      </summary>
@@ -10522,7 +10440,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4120">
+                           id="d53e4054">
                      <summary>
                         <strong>lant:get-nametag-analyses</strong> (getting-nametag-analyses)</summary>
                      <div class="prolog">
@@ -10848,12 +10766,19 @@
             <details class="file">
                <summary>
                   <strong>tei.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (161)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:tei="http://www.tei-c.org/ns/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -10919,6 +10844,12 @@
                      <summary>
                         <strong>Documentation</strong> (161)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:tei="http://www.tei-c.org/ns/1.0"
+                           xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -10937,7 +10868,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e4278">
+                           id="d53e4214">
                      <summary>
                         <strong>lat:convert-alto-to-tei</strong> (converting-alto-to-tei)</summary>
                      <div class="prolog">
@@ -11130,7 +11061,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4353">
+                           id="d53e4289">
                      <summary>
                         <strong>lat:convert-nametag-to-tei</strong> (converting-nametag-to-tei)</summary>
                      <div class="prolog">
@@ -11323,7 +11254,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4428">
+                           id="d53e4364">
                      <summary>
                         <strong>lat:convert-udpipe-to-tei</strong> (converting-udpipe-to-tei)</summary>
                      <div class="prolog">
@@ -11659,7 +11590,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4568">
+                           id="d53e4504">
                      <summary>
                         <strong>lat:merge-tei-representations</strong> (merging-tei-representations)</summary>
                      <div class="prolog">
@@ -11898,7 +11829,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4653">
+                           id="d53e4589">
                      <summary>
                         <strong>lat:convert-to-tei</strong> (converting-to-tei)</summary>
                      <div class="prolog">
@@ -12222,7 +12153,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e4754">
+                           id="d53e4690">
                      <summary>
                         <strong>lat:combine-tei-pages</strong> (combining-tei-pages)</summary>
                      <div class="prolog">
@@ -12548,12 +12479,18 @@
             <details class="file">
                <summary>
                   <strong>text.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (192)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
@@ -12617,6 +12554,11 @@
                      <summary>
                         <strong>Documentation</strong> (192)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
@@ -12633,7 +12575,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e4899">
+                           id="d53e4837">
                      <summary>
                         <strong>latx:combine-text-pages</strong> (combining-text-pages)</summary>
                      <div class="prolog">
@@ -12949,12 +12891,19 @@
             <details class="file">
                <summary>
                   <strong>udpipe.xpl</strong>
+                  <span class="semver">1.0.0</span>
                </summary>
                <div class="prolog">
                   <details class="documentation">
                      <summary>
                         <strong>Documentation</strong> (185)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -13024,6 +12973,12 @@
                      <summary>
                         <strong>Documentation</strong> (185)          
         </summary>
+                     <meta name="version"
+                           content="1.0.0"
+                           xmlns="http://www.w3.org/1999/xhtml"
+                           xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+                           xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
+                           xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0">
                      <section xml:lang="en"
                               xmlns="http://www.w3.org/1999/xhtml"
                               xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
@@ -13042,7 +12997,7 @@
                      </section>
                   </details>
                   <details class="step"
-                           id="d58e5043">
+                           id="d53e4983">
                      <summary>
                         <strong>laud:get-udpipe-analysis</strong> (getting-udpipe-analysis)</summary>
                      <div class="prolog">
@@ -13386,7 +13341,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e5146">
+                           id="d53e5086">
                      <summary>
                         <strong>laud:convert-udpipe-analysis-to-text</strong>
                      </summary>
@@ -13643,7 +13598,7 @@
                      </details>
                   </details>
                   <details class="step"
-                           id="d58e5232">
+                           id="d53e5172">
                      <summary>
                         <strong>laud:get-udpipe-analyses</strong> (getting-udpipe-analyses)</summary>
                      <div class="prolog">
@@ -13977,148 +13932,145 @@
             <h2>List of steps</h2>
             <ol>
                <li>
-                  <a href="#d58e128">lac:convert-conllu-to-tei</a>
+                  <a href="#d53e52">lac:convert-conllu-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e344">lac:convert-djvu</a>
+                  <a href="#d53e268">lac:convert-djvu</a>
                </li>
                <li>
-                  <a href="#d58e427">lac:convert-djvu-item</a>
+                  <a href="#d53e351">lac:convert-djvu-item</a>
                </li>
                <li>
-                  <a href="#d58e241">lac:convert-nametag-xml-to-tei</a>
+                  <a href="#d53e165">lac:convert-nametag-xml-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e535">lac:fix-path</a>
+                  <a href="#d53e459">lac:fix-path</a>
                </li>
                <li>
-                  <a href="#d58e1041">lae:combine-text-pages</a>
+                  <a href="#d53e967">lae:combine-text-pages</a>
                </li>
                <li>
-                  <a href="#d58e942">lae:convert-to-tei</a>
+                  <a href="#d53e868">lae:convert-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e746">lae:enrich-by-entities</a>
+                  <a href="#d53e672">lae:enrich-by-entities</a>
                </li>
                <li>
-                  <a href="#d58e844">lae:enrich-by-morphology</a>
+                  <a href="#d53e770">lae:enrich-by-morphology</a>
                </li>
                <li>
-                  <a href="#d58e661">lae:enrich-data</a>
+                  <a href="#d53e587">lae:enrich-data</a>
                </li>
                <li>
-                  <a href="#d58e4050">lant:convert-nametag-analysis-to-xml</a>
+                  <a href="#d53e3984">lant:convert-nametag-analysis-to-xml</a>
                </li>
                <li>
-                  <a href="#d58e4120">lant:get-nametag-analyses</a>
+                  <a href="#d53e4054">lant:get-nametag-analyses</a>
                </li>
                <li>
-                  <a href="#d58e3951">lant:get-nametag-analysis</a>
+                  <a href="#d53e3885">lant:get-nametag-analysis</a>
                </li>
                <li>
-                  <a href="#d58e4754">lat:combine-tei-pages</a>
+                  <a href="#d53e4690">lat:combine-tei-pages</a>
                </li>
                <li>
-                  <a href="#d58e4278">lat:convert-alto-to-tei</a>
+                  <a href="#d53e4214">lat:convert-alto-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e4353">lat:convert-nametag-to-tei</a>
+                  <a href="#d53e4289">lat:convert-nametag-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e4653">lat:convert-to-tei</a>
+                  <a href="#d53e4589">lat:convert-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e4428">lat:convert-udpipe-to-tei</a>
+                  <a href="#d53e4364">lat:convert-udpipe-to-tei</a>
                </li>
                <li>
-                  <a href="#d58e4568">lat:merge-tei-representations</a>
+                  <a href="#d53e4504">lat:merge-tei-representations</a>
                </li>
                <li>
-                  <a href="#d58e4899">latx:combine-text-pages</a>
+                  <a href="#d53e4837">latx:combine-text-pages</a>
                </li>
                <li>
-                  <a href="#d58e5146">laud:convert-udpipe-analysis-to-text</a>
+                  <a href="#d53e5086">laud:convert-udpipe-analysis-to-text</a>
                </li>
                <li>
-                  <a href="#d58e5232">laud:get-udpipe-analyses</a>
+                  <a href="#d53e5172">laud:get-udpipe-analyses</a>
                </li>
                <li>
-                  <a href="#d58e5043">laud:get-udpipe-analysis</a>
+                  <a href="#d53e4983">laud:get-udpipe-analysis</a>
                </li>
                <li>
-                  <a href="#d58e2998">lax:build-virtual-document</a>
+                  <a href="#d53e2930">lax:build-virtual-document</a>
                </li>
                <li>
-                  <a href="#d58e3420">lax:check-local-file-exists</a>
+                  <a href="#d53e3352">lax:check-local-file-exists</a>
                </li>
                <li>
-                  <a href="#d58e3752">lax:create-report</a>
+                  <a href="#d53e3684">lax:create-report</a>
                </li>
                <li>
-                  <a href="#d58e3582">lax:download-document</a>
+                  <a href="#d53e3514">lax:download-document</a>
                </li>
                <li>
-                  <a href="#d58e3210">lax:download-document-data</a>
+                  <a href="#d53e3142">lax:download-document-data</a>
                </li>
                <li>
-                  <a href="#d58e3509">lax:download-document-data-items</a>
+                  <a href="#d53e3441">lax:download-document-data-items</a>
                </li>
                <li>
-                  <a href="#d58e3312">lax:download-document-resources</a>
+                  <a href="#d53e3244">lax:download-document-resources</a>
                </li>
                <li>
-                  <a href="#d58e3663">lax:enrich-document-data</a>
+                  <a href="#d53e3595">lax:enrich-document-data</a>
                </li>
                <li>
-                  <a href="#d58e1921">lax:get-available-format</a>
+                  <a href="#d53e1849">lax:get-available-format</a>
                </li>
                <li>
-                  <a href="#d58e2810">lax:get-available-format-v7</a>
+                  <a href="#d53e2740">lax:get-available-format-v7</a>
                </li>
                <li>
-                  <a href="#d58e1741">lax:get-available-formats</a>
+                  <a href="#d53e1669">lax:get-available-formats</a>
                </li>
                <li>
-                  <a href="#d58e2687">lax:get-available-formats-v7</a>
+                  <a href="#d53e2617">lax:get-available-formats-v7</a>
                </li>
                <li>
-                  <a href="#d58e3837">lax:get-document-id</a>
+                  <a href="#d53e3769">lax:get-document-id</a>
                </li>
                <li>
-                  <a href="#d58e1627">lax:get-source-url</a>
+                  <a href="#d53e1555">lax:get-source-url</a>
                </li>
                <li>
-                  <a href="#d58e2575">lax:get-source-url-v7</a>
+                  <a href="#d53e2505">lax:get-source-url-v7</a>
                </li>
                <li>
-                  <a href="#d58e1351">lax:get-virtual-document-data-v5</a>
+                  <a href="#d53e1279">lax:get-virtual-document-data-v5</a>
                </li>
                <li>
-                  <a href="#d58e2299">lax:get-virtual-document-data-v7</a>
+                  <a href="#d53e2229">lax:get-virtual-document-data-v7</a>
                </li>
                <li>
-                  <a href="#d58e3101">lax:get-virtual-document-metadata</a>
+                  <a href="#d53e3033">lax:get-virtual-document-metadata</a>
                </li>
                <li>
-                  <a href="#d58e1215">lax:get-virtual-document-metadata-v5</a>
+                  <a href="#d53e1143">lax:get-virtual-document-metadata-v5</a>
                </li>
                <li>
-                  <a href="#d58e2117">lax:get-virtual-document-metadata-v7</a>
+                  <a href="#d53e2047">lax:get-virtual-document-metadata-v7</a>
                </li>
                <li>
-                  <a href="#d58e1430">lax:get-virtual-document-pages</a>
+                  <a href="#d53e1358">lax:get-virtual-document-pages</a>
                </li>
                <li>
-                  <a href="#d58e2387">lax:get-virtual-document-pages-v7</a>
+                  <a href="#d53e2317">lax:get-virtual-document-pages-v7</a>
                </li>
                <li>
-                  <a href="#d58e1532">lax:pages-convert-json-to-xml</a>
+                  <a href="#d53e1460">lax:pages-convert-json-to-xml</a>
                </li>
                <li>
-                  <a href="#d58e2480">lax:pages-convert-json-to-xml-v7</a>
-               </li>
-               <li>
-                  <a href="#d58e48">xf:first-function-alto</a>
+                  <a href="#d53e2410">lax:pages-convert-json-to-xml-v7</a>
                </li>
             </ol>
          </nav>

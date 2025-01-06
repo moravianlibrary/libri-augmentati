@@ -1,66 +1,6 @@
 # XProc Analysis Report
 
-## alto.xpl
-#### Documentation (175)
-    
-##### Library for ALTO documents processing
-Steps for standalone operations with ALTO documents.
-##### Kihovna pro zpracování dokumentů ALTO
-Kroky pro samostatné operace s dokumenty ALTO.
-#### Namespaces (5)
-    
-| prefix | string |
-| --- | --- |
-| p | http://www.w3.org/ns/xproc |
-| xf | https://www.example.com/ns/xproc/function |
-| xhtml | http://www.w3.org/1999/xhtml |
-| xs | http://www.w3.org/2001/XMLSchema |
-| xml | http://www.w3.org/XML/1998/namespace |
-
-### Steps  (1 + 0)
-      
-#### Documentation (175)
-    
-##### Library for ALTO documents processing
-Steps for standalone operations with ALTO documents.
-##### Kihovna pro zpracování dokumentů ALTO
-Kroky pro samostatné operace s dokumenty ALTO.
-
-#### **xf:first-function-alto** (fist-function)
-#### Options (2)
-      
-| name | properties |
-| --- | --- |
-| debug-path | name = debug-path \| select = () \| as = xs:string? |
-| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
-
-#### Ports (2)
-    
-| direction | value | primary |
-| --- | --- | ---| 
-| input | **source** | true |
-| output | **result** | true |
-
-### Steps  (0 + 4)
-      
-
-
-| position | step | name | parameter | value | 
-| --- | --- | --- | --- | --- | 
-| 1 | p:variable | debug |   |   | 
-|   |   |   | select | $debug-path \|\| '' ne '' | 
-| 2 | p:variable | debug-path-uri |   |   | 
-|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
-| 3 | p:xslt |  |   |   | 
-|   |   |   | parameters | map {'parameter' : 'value' } | 
-|   |   |   | href | ../Xslt/?.xsl | 
-| 4 | p:if |  |   |   | 
-|   |   |   | p:store |  | 
-|   |   |   | test | $debug | 
-
-
-
-## conversion.xpl
+## conversion.xpl (version: 1.0.0)
 #### Documentation (194)
     
 ##### Library for data conversion
@@ -341,7 +281,7 @@
 
 
 
-## enrichment.xpl
+## enrichment.xpl (version: 1.0.0)
 #### Documentation (178)
     
 ##### Enrichment
@@ -692,7 +632,7 @@
 
 
 
-## kramerius-5.xpl
+## kramerius-5.xpl (version: 1.0.0)
 #### Documentation (166)
     
 ##### Kramerius 5
@@ -1191,7 +1131,7 @@
 
 
 
-## kramerius-7.xpl
+## kramerius-7.xpl (version: 1.0.0)
 #### Documentation (166)
     
 ##### Kramerius 7
@@ -1680,7 +1620,7 @@
 
 
 
-## libri-augmentati.xpl
+## libri-augmentati.xpl (version: 1.0.0)
 #### Documentation (199)
     
 ##### Libri augmentati
@@ -2285,7 +2225,7 @@
 
 
 
-## nametag.xpl
+## nametag.xpl (version: 1.0.0)
 #### Documentation (189)
     
 ##### Library for NameTag data processing
@@ -2559,7 +2499,7 @@
 
 
 
-## tei.xpl
+## tei.xpl (version: 1.0.0)
 #### Documentation (161)
     
 ##### Library for TEI data processing
@@ -3058,7 +2998,7 @@
 
 
 
-## text.xpl
+## text.xpl (version: 1.0.0)
 #### Documentation (192)
     
 ##### Library for plain text data processing
@@ -3180,7 +3120,7 @@
 
 
 
-## udpipe.xpl
+## udpipe.xpl (version: 1.0.0)
 #### Documentation (185)
     
 ##### Library for UDPipe data processing
