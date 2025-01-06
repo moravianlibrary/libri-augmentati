@@ -37,7 +37,20 @@
 	<p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
 	
 	<p:option name="output-directory" as="xs:string" select="'../../_temp/test-samples'" />
+	
+	<!-- TODO: 
+		to disable downloading data files 
+		uncomment following option and comment next one 
+	-->
+<!--	<p:option name="download-data" as="xs:boolean" select="false()" />-->
 	<p:option name="download-data" as="xs:boolean" select="true()" />
+	
+	<!-- TODO: 
+		to disable enriching text data  
+		uncomment following option and comment next one 
+	-->
+<!--	<p:option name="enrich-data" as="xs:boolean" select="false()" />-->
+	<p:option name="enrich-data" as="xs:boolean" select="true()" />
 	
 	<!-- INNER STEPS -->
 	<p:declare-step type="lat:build-virtual-document">
@@ -78,8 +91,8 @@
 				<p:for-each message="api/@xml:id = {$api/las:api/@xml:id}; count $lib-samples: {count($lib-samples)}">
 					<p:with-input select="$lib-samples"/>
 					<p:variable name="sample" select="." />
-					<p:variable name="document-id" select="if(exists($sample/las:sample/las:document/@nickname))
-						then $sample/las:sample/las:document/@nickname 
+					<p:variable name="document-id" select="if(exists($sample/las:sample/@nickname))
+						then $sample/las:sample/@nickname 
 						else if(starts-with($sample/las:sample/las:document/@id, 'uuid:')) 
 						then substring-after($sample/las:sample/las:document/@id, 'uuid:') 
 						else  $sample/las:sample/las:document/@id 
@@ -91,12 +104,12 @@
 						api-version="{$api/las:api/@version}"
 						document-resources="{$api/las:api/las:resource[tokenize(@level)= 'document']/@type}"
 						page-resources="{$api/las:api/las:resource[tokenize(@level)= 'page']/@type}"
-						p:message="Processing {$sample/las:sample/@name}; building virtual document with: {$api/las:api/las:resource[tokenize(@level)= 'document']/@type}, and {$api/las:api/las:resource[tokenize(@level)= 'page']/@type}"
+						p:message="Processing {$sample/las:sample/@name}; document-id: {$document-id}; building virtual document with: {$api/las:api/las:resource[tokenize(@level)= 'document']/@type}, and {$api/las:api/las:resource[tokenize(@level)= 'page']/@type}"
 						>
 						<p:with-input port="source">
 							<p:inline>
 								<lad:documents>
-									<lad:document id="{$sample/las:sample/las:document/@id}" />
+									<lad:document id="{$sample/las:sample/las:document/@id}" nickname="{$sample/las:sample/@nickname}"/>
 								</lad:documents>
 							</p:inline>
 						</p:with-input>
@@ -107,12 +120,38 @@
 						<p:store href="{$debug-path-uri}/{$library/@code}/{$document-id}-virtual.xml" />
 					</p:if>
 					
-					<p:if test="$download-data">
-						<lax:download-document-data output-directory="{$output-directory}/{$library/@code}" debug-path="{$debug-path}" base-uri="{$base-uri}" pause-before-request="0" p:message=" - downloading virtual document data to {$output-directory}/{$library/@code}" />
+					<p:if test="$download-data" name="download-data">
+						<p:output port="result" pipe="result@download-document-data" primary="true" />
+						<p:output port="report" pipe="report@download-document-data" />
+						<lax:download-document-data 
+							output-directory="{$output-directory}/{$library/@code}" 
+							debug-path="{$debug-path}" 
+							base-uri="{$base-uri}" 
+							pause-before-request="0" 
+							p:message=" - downloading virtual document data to {$output-directory}/{$library/@code}"
+							name="download-document-data"
+						/>
 					</p:if>
 					
 					<p:if test="$debug">
 						<p:store href="{$debug-path-uri}/{$library/@code}/{$document-id}-virtual-data.xml" />
+					</p:if>
+					
+					<p:if test="$download-data">
+						<lax:enrich-document-data 
+							output-directory="{$output-directory}/{$library/@code}" 
+							debug-path="{$debug-path}" 
+							base-uri="{$base-uri}" 
+							pause-before-request="0" 
+							p:message=" - enriching document data to {$output-directory}/{$library/@code}">
+							<p:with-option name="output-format" select="('TEXT', 'TEI')" />
+							<p:with-option name="enrichment" select="('ENTITIES', 'MORPHOLOGY')" />
+							<p:with-input port="report-in" pipe="report@download-data" />
+							<p:with-input port="settings" href="../../settings/services.xml" />
+						</lax:enrich-document-data>
+					</p:if>
+					<p:if test="$debug">
+						<p:store href="{$debug-path-uri}/{$library/@code}/{$document-id}-enriched-data.xml" />
 					</p:if>
 					
 				</p:for-each>
@@ -138,11 +177,16 @@
 	<lat:build-virtual-document debug-path="{$debug-path}" base-uri="{$base-uri}" output-directory="{$output-directory}" download-data="{$download-data}" />
 	<p:wrap-sequence wrapper="c:result" />
 
+	
 	<p:if test="$debug">
 		<p:store href="{$debug-path-uri}/report.xml" />
 	</p:if>
-		
+	
 	<p:store href="{$output-directory}/report.xml" serialization="map{'indent' : true()}" message="Storing result to {$output-directory}/report.xml" />
 	
-
+	<p:xslt>
+		<p:with-input port="stylesheet" href="../../xslt/report.xsl" />
+	</p:xslt>
+	<p:store href="{$output-directory}/report.html" serialization="map{'indent' : true()}" message="Storing summary report to {$output-directory}/report.html" />
+	
 </p:declare-step>
