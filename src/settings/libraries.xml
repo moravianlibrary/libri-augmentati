@@ -17,18 +17,18 @@
       <resource type="MODS" level="document page" method="get" url="/search/api/v5.0/item/{pid}/streams/BIBLIO_MODS" />
       <resource type="FOXML" level="document page" method="get" url="/search/api/v5.0/item/{pid}/foxml" />
       <resource type="IMAGE" level="page" method="get" url="/search/api/v5.0/item/{pid}/full" />
-      <resource type="IMAGE" level="page" method="get" url="/search//img?{pid}&amp;stream=IMG_FULL&amp;action=GETRAW" />
+						<!--  <resource type="IMAGE" level="page" method="get" url="/search/img?{pid}&amp;stream=IMG_FULL&amp;action=GETRAW" /> -->
     </api>
     <api xml:id="api.kramerius.7" common-name="Kramerius" version="7" documentation="https://github.com/ceskaexpedice/kramerius/wiki/API-v7">
       <resource type="api-info" level="site" method="get" url="/search/api/client/v7.0/info" />
       <resource type="info" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/info" />
+      <resource type="ALTO" level="page" method="get" url="/search/api/client/v7.0/items/{pid}/ocr/alto" />
+      <resource type="TEXT" level="page" method="get" url="/search/api/client/v7.0/items/{pid}/ocr/text" />
       <resource type="DC" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/metadata/dc" />
       <resource type="MODS" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/metadata/mods" />
       <resource type="FOXML" level="page document" method="get" url="/search/api/client/v7.0/items/{pid}/foxml" />
-      <resource type="ALTO" level="page" method="get" url="/search/api/client/v7.0/items/{pid}/ocr/alto" />
-      <resource type="TEXT" level="page" method="get" url="/search/api/client/v7.0/items/{pid}/ocr/text" />
-      <resource type="IMAGE-info" method="get" url="/search/api/client/v7.0/items/{pid}/image" />
       <resource type="IMAGE" level="page" method="get" url="/search/iiif/{pid}/full/max/0/default.jpg" />
+      <resource type="IMAGE-info" method="get" url="/search/api/client/v7.0/items/{pid}/image" />
     </api>
   </apis>
   <samples>
@@ -36,7 +36,7 @@
       <document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" />
       <page id="uuid:2d666ced-fea9-4823-ac8e-b26641da6e35" />
     </sample>
-    <sample xml:id="nespravny-postoj.mzk" name="Nesprávný postoj u dětí a jeho náprava = Postural defects in childern and their correction" url="https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-643b-11ea-a744-005056827e51?page=uuid:2d666ced-fea9-4823-ac8e-b26641da6e35"  nickname="nespravny-postoj">
+    <sample xml:id="nespravny-postoj.mzk" name="Nesprávný postoj u dětí a jeho náprava = Postural defects in childern and their correction" url="https://www.digitalniknihovna.cz/mzk/view/uuid:de87a0e0-643b-11ea-a744-005056827e51?page=uuid:2d666ced-fea9-4823-ac8e-b26641da6e35" nickname="nespravny-postoj">
       <document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" />
       <page id="uuid:2d666ced-fea9-4823-ac8e-b26641da6e35" />
     </sample>
@@ -48,7 +48,7 @@
       <document id="uuid:07f3a620-e276-11ed-b3f4-005056827e51" />
       <page id="uuid:16478654-e95b-4bd4-98e6-ef720f275ec8" />
     </sample>
-    <sample xml:id="blaise-pascal" name="Blaise Pascal, jeho život a filosofie" url="https://www.ndk.cz/view/uuid:be35c7c0-ce3d-11e4-8565-005056827e52?page=uuid:c8f67430-e9fd-11e4-b834-005056827e51"  nickname="blaise-pascal">
+    <sample xml:id="blaise-pascal" name="Blaise Pascal, jeho život a filosofie" url="https://www.ndk.cz/view/uuid:be35c7c0-ce3d-11e4-8565-005056827e52?page=uuid:c8f67430-e9fd-11e4-b834-005056827e51" nickname="blaise-pascal">
       <document id="uuid:be35c7c0-ce3d-11e4-8565-005056827e52" />
       <page id="uuid:c8f67430-e9fd-11e4-b834-005056827e51" />
     </sample>
