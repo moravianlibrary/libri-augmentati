@@ -52,6 +52,10 @@
       <document id="uuid:be35c7c0-ce3d-11e4-8565-005056827e52" />
       <page id="uuid:c8f67430-e9fd-11e4-b834-005056827e51" />
     </sample>
+    <sample xml:id="secondary-schools" name="Czecho-Slovak Secondary Schools" url="https://www.digitalniknihovna.cz/mzk/view/uuid:75c6c0e0-ccc8-11ef-854b-0050568d319f?page=uuid:2c720e70-ded1-44ae-93a7-ac5e22cb73e3" nickname="secondary-schools">
+      <document id="uuid:75c6c0e0-ccc8-11ef-854b-0050568d319f" />
+      <page id="uuid:2c720e70-ded1-44ae-93a7-ac5e22cb73e3" />
+    </sample>
   </samples>
   <libraries>
     <library code="mzk" sigla="BOA001" logo="https://api.registr.digitalniknihovna.cz/libraries/mzk/logo">
@@ -67,7 +71,7 @@
         </address>
       </institution>
       <api ref="#api.kramerius.7" version="7.0.29" url="https://api.kramerius.mzk.cz" client-url-pattern="https://www.digitalniknihovna.cz/mzk/view/{document-id}?page={page-id}" client-url-regex="https://www.digitalniknihovna.cz/mzk/view/uuid\:(.[^\?]*)">
-        <samples ref="#nespravny-postoj.mzk #jadro-otazky.mzk" />  
+        <samples ref="#nespravny-postoj.mzk #jadro-otazky.mzk #secondary-schools" />  
       </api>
     </library>
     <library code="nkp" sigla="ABA000" logo="https://api.registr.digitalniknihovna.cz/libraries/nkp/logo">
