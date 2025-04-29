@@ -18,6 +18,7 @@
   </xhtml:section>
  </p:documentation>
  
+ <!-- STEP -->
  <p:declare-step type="lac:convert-conllu-to-tei" name="converting-conllu-to-tei">
   <p:documentation>
    <xhtml:section xml:lang="en">
@@ -63,6 +64,7 @@
   
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lac:convert-nametag-xml-to-tei" name="converting-nametag-xml-to-tei">
   <p:documentation>
    <xhtml:section xml:lang="en">
@@ -99,6 +101,7 @@
   
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lac:convert-djvu" visibility="public">
   
   <p:documentation>
@@ -155,6 +158,7 @@
   
  </p:declare-step>
  
+ <!-- STEP -->
  <p:declare-step type="lac:convert-djvu-item" visibility="private">
   
   <p:documentation>
@@ -226,7 +230,7 @@
   
  </p:declare-step>
  
- 
+ <!-- STEP -->
  <p:declare-step type="lac:fix-path" name="fixing-path">
   
   <p:documentation>
