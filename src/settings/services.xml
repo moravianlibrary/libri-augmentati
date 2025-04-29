@@ -7,6 +7,9 @@
       <resource type="models" method="post" url="/models" />
       <feature type="entities" method="post" url="/recognize">
         <param name="data" place="body" />
+        <param name="model" place="body" />
+        <param name="input" place="body" value="untokenized" />
+        <param name="output" place="body" value="xml" />
       </feature>
       <feature type="entities" method="get" url="/recognize?data={$data}&amp;model={$model}&amp;input={$input}&amp;output={$output}" />
       <feature type="tokens" method="get" url="/tokenize?data={$data}&amp;model={$model}&amp;output={$output}" />
@@ -21,6 +24,7 @@
         <param name="tokenizer" place="body" />
         <param name="tagger" place="body" />
         <param name="parser" place="body" />
+        <param name="model" place="body" />
         <param name="data" place="body" />
       </feature>
     </api>
