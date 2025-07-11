@@ -129,12 +129,13 @@
    select="//las:api[@xml:id=$api-id]/las:feature[@type='process'][@method='post']"
    pipe="settings@getting-udpipe-analysis"/>
   <p:variable name="step-url" select="concat($service-url, $feature/@url)" />
-  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][@name !='data']/@name, '=&amp;')" />
-  
+  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;')" />
+<!--  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data'))]//concat(@name, '=', @value), '&amp;')" />-->
+  <p:variable name="step-params" select="$step-params || '&amp;model=' || 'english'" use-when="false()" />
   <p:variable name="full-text" select="." />
   
   <!-- PIPELINE BODY -->
-  <p:http-request href="{$step-url}" message="udpipe: $api-id: {$api-id}; $step-url: {$step-url}">
+  <p:http-request href="{$step-url}" message="udpipe: $api-id: {$api-id}; $step-url: {$step-url}; $step-params: {$step-params}">
    <p:with-option name="method" select="'POST'" />
    <p:documentation>
     <xhtml:section xml:lang="en">
@@ -206,9 +207,9 @@
   <!-- PIPELINE BODY -->
   
   <p:if test="$debug">
-   <p:store href="{$debug-path}/udpipe/convert/input.json" 
+   <p:store href="{$debug-path-uri}/udpipe/convert/input.json" 
     serialization="map{'indent' : true()}"
-    message="Storing to {$debug-path}/udpipe/convert/input.json"
+    message="Storing to {$debug-path-uri}/udpipe/convert/input.json"
     use-when="true()" />
   </p:if>
   
@@ -343,14 +344,17 @@
   
   <!-- PIPELINE BODY -->
   <p:if test="$debug">
-   <p:store href="{$debug-path}/udpipe/get-udpipe-analyses.xml" 
+   <p:store href="{$debug-path-uri}/udpipe/get-udpipe-analyses.xml" 
     serialization="map{'indent' : true()}"  use-when="true()"
     >
     <p:with-input port="source" pipe="source@getting-udpipe-analyses" />
    </p:store>   
   </p:if>
   
+  <p:identity  message=" :- reources -: {/local-name()}" />
+  
   <p:viewport match="lad:pages/lad:page/lad:resource[@type='nametag'][@local-file-exists='true']" use-when="true()">
+   <p:with-input pipe="source@getting-udpipe-analyses" />
    <p:variable name="resource" select="/lad:resource" />
    <p:if test="exists($resource)">
     
