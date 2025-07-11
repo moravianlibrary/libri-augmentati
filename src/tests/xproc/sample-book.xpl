@@ -47,11 +47,13 @@
 			document-resources="MODS DC FOXML"
 			page-resources="ALTO TEXT FOXML DC MODS IMAGE"
 			debug-path="{$debug-path}"
-			base-uri="{$base-uri}">
+			base-uri="{$base-uri}"
+			p:message=" :: BUILDING VIRTUAL DOCUMENT :: ">
 			<p:with-input port="source">
 				<p:inline>
 					<lad:documents>
 						<lad:document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" nickname="Postural-defects" /> 
+<!--						<lad:document id="uuid:75c6c0e0-ccc8-11ef-854b-0050568d319f" nickname="Secondary-schools" /> -->
 					</lad:documents>
 				</p:inline>
 			</p:with-input>
@@ -71,27 +73,32 @@
 		debug-path="{$debug-path}" 
 		base-uri="{$base-uri}"
 		pause-before-request="0"
-		name="download-data">
+		name="download-data"
+		p:message=" :: DOWNLOADING DOCUMENT DATA :: ">
 		<p:with-input port="report-in" pipe="report@virtual-document" />
 	</lax:download-document-data>
 	
 	<p:store href="{$output-directory}/virtual-document-02-downloaded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
+	<p:store href="{$output-directory}/virtual-document-03-prepared.xml" serialization="map{'indent' : true()}"  use-when="true()" message="  - storing to {$output-directory}/virtual-document-03-prepared.xml" />
+	
 	<lax:enrich-document-data p:use-when="true()"
 		output-directory="{$output-directory}" 
 		debug-path="{$debug-path}" 
 		base-uri="{$base-uri}"
-		pause-before-request="0">
-		<p:with-option name="output-format" select="('TEXT', 'TEI')" />
+		pause-before-request="0"
+		p:message=" :: ENRICHING DOCUMENT DATA :: ">
+		<p:with-option name="output-format" select="('ALTO', 'TEXT', 'TEI')" />
 		<p:with-option name="enrichment" select="('ENTITIES', 'MORPHOLOGY')" />
 		<p:with-input port="report-in" pipe="report@download-data" />
 		<p:with-input port="settings" href="../../settings/services.xml" />
 	</lax:enrich-document-data>
 	
-	<p:store href="{$output-directory}/virtual-document-03-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+	<p:store href="{$output-directory}/virtual-document-04-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
-	<lax:create-report output-directory="{output-directory}"/>
+	<lax:create-report output-directory="{output-directory}" p:message=" :: CREATING REPORT :: "/>
 	<p:store href="{$output-directory}/report.html" message="Storing report to {$output-directory}/report.html" />
+
 	<p:identity>
 		<p:with-input port="source" pipe="result-uri" />
 	</p:identity>
