@@ -5,3 +5,6 @@ _temp
 # editor settings directories
 .vscode
 .vs
+
+# local files
+*.local.*
