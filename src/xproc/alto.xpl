@@ -117,6 +117,22 @@
     <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/merged-pages.xml" />
    </p:if>
    
+   <p:xslt>
+    <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-prepare-styles.xsl" />
+   </p:xslt>
+   
+   <p:if test="$debug">
+    <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/prepared-styles.xml" />
+   </p:if>
+   
+   <p:xslt>
+    <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-clean-styles.xsl" />
+   </p:xslt>
+   
+   <p:if test="$debug">
+    <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/cleaned-styles.xml" />
+   </p:if>
+   
    <p:if test="$result-directory-path">
     <p:store href="{$saved-file-uri}" message="Storing to {$saved-file-uri}" />
    </p:if>   

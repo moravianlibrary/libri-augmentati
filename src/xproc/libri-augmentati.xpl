@@ -7,6 +7,7 @@
  xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
  xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
  xmlns:lac="https://www.mzk.cz/ns/libri-augmentati/conversion/1.0"
+ xmlns:laa="https://www.mzk.cz/ns/libri-augmentati/alto/1.0"
  xmlns:xlog="https://www.daliboris.cz/ns/xproc/logging/1.0"
  xmlns:map="http://www.w3.org/2005/xpath-functions/map"
  xmlns:mox="http://www.xml-project.com/morganaxproc" 
@@ -23,6 +24,7 @@
  <p:import href="kramerius-5.xpl"/>
  <p:import href="enrichment.xpl" />
  <p:import href="conversion.xpl" />
+ <p:import href="alto.xpl" />
  
   <p:documentation>
    <xhtml:meta name="version" content="1.0.0" />
@@ -190,6 +192,39 @@
     else  /lad:document/@id" />
    <p:store href="{$debug-path-uri}/libri-augmentati/{$library-code}/{$id}/virtual-document-metadata-result.xml"  message="  - storing to {$debug-path-uri}/libri-augmentati/{$library-code}/{$id}/virtual-document-metadata-result.xml" />
   </p:if>
+  
+ </p:declare-step>
+ 
+ <!-- STEP -->
+ <p:declare-step type="lax:prepare-text-data" name="preparing-text-data" use-when="true()">
+  <!-- INPUT PORTS -->
+  <p:input port="source" primary="true" />
+  <p:input port="report-in">
+   <lar:report />
+  </p:input>
+  
+  <!-- OUTPUT PORTS -->
+  <p:output port="result" primary="true" serialization="map{'indent' : true()}"/>
+  <p:output port="report" primary="false" sequence="false" pipe="report-in@preparing-text-data"/>
+  
+  <!-- OPTIONS -->
+  <p:option name="debug-path" select="()" as="xs:string?" />
+  <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="output-directory" required="true" as="xs:string" />
+  <p:option name="pause-before-request" select="2" as="xs:integer"/>
+  
+  <!-- VARIABLES -->
+  <p:variable name="debug" select="$debug-path || '' ne ''" />
+  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  
+  <!-- PIPELINE BODY -->
+  <laa:combine-alto-pages 
+   output-directory="{$output-directory}" 
+   debug-path="{$debug-path}" 
+   base-uri="{$base-uri}">
+   <p:with-input port="report-in" pipe="report-in@preparing-text-data" />
+  </laa:combine-alto-pages>
+  
   
  </p:declare-step>
 
@@ -568,7 +603,7 @@
   <p:option name="output-directory" required="true" as="xs:string" />
   <p:option name="pause-before-request" select="2" as="xs:integer"/>
   
-  <p:option name="output-format" values="('TEXT', 'TEI')" as="xs:string*" />
+  <p:option name="output-format" values="('ALTO', 'TEXT', 'TEI')" as="xs:string*" />
   <p:option name="enrichment" values="('ENTITIES', 'MORPHOLOGY')" as="xs:string*"/>
   
   <p:viewport match="lad:document" use-when="false()">
@@ -672,9 +707,10 @@
     <p:store href="{$output-directory-uri}/{$library-code}-{$document-id}-report.html" message="Storing HTML report to {$output-directory}/{$library-code}-{$document-id}-report.html" name="store" />
     <p:identity>
      <p:with-input port="source">
-      <c:file xml:base="{$library-code}-{$document-id}-report.html" name="{$library-code}-{$document-id}-report.html" full-path="{$output-directory-uri}/{$library-code}-{$document-id}-report.html" parent-directory="{$output-directory-uri}" />
+      <c:file name="{$library-code}-{$document-id}-report.html" full-path="{$output-directory-uri}/{$library-code}-{$document-id}-report.html" parent-directory="{$output-directory-uri}" />
      </p:with-input>
     </p:identity>
+    <p:add-attribute attribute-name="xml:base" attribute-value="{$library-code}-{$document-id}-report.html" />
     <p:namespace-delete prefixes="lax err xlog array mox lap xs map lad xhtml" />
     <p:namespace-delete prefixes="lae mods lar lac las" />
    </p:if>
