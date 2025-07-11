@@ -128,11 +128,14 @@
    select="//las:api[@xml:id=$api-id]/las:feature[@type='entities'][@method='post']"
    pipe="settings@getting-nametag-analysis"/>
   <p:variable name="step-url" select="concat($service-url, $feature/@url)" />
+  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;') " />
+  <p:variable name="step-params" select="$step-params || '&amp;model=' || 'nametag3-multilingual-conll-250203'" use-when="false()" />
  
   <p:variable name="full-text" select="." />
+
   
   <!-- PIPELINE BODY -->
-  <p:http-request href="{$step-url}" message="nametag: $api-id: {$api-id}; $step-url: {$step-url}">
+  <p:http-request href="{$step-url}" message="nametag: $api-id: {$api-id}; $step-url: {$step-url}; $step-params: {$step-params}">
    <p:with-option name="method" select="'POST'" />
    <p:documentation>
     <xhtml:section xml:lang="en">
@@ -143,7 +146,7 @@
     </xhtml:section>
    </p:documentation>
    <p:with-input>
-    <p:inline content-type="application/x-www-form-urlencoded">data={$full-text}</p:inline>
+    <p:inline content-type="application/x-www-form-urlencoded">{$step-params}&amp;data={$full-text}</p:inline>
    </p:with-input>
   </p:http-request>
   
@@ -319,7 +322,7 @@
   
   <!-- PIPELINE BODY -->
   <p:if test="$debug">
-   <p:store href="{$debug-path}/nametag/get-nametag-analyses.xml" 
+   <p:store href="{$debug-path-uri}/nametag/get-nametag-analyses.xml" 
     serialization="map{'indent' : true()}"  use-when="true()"
     >
     <p:with-input port="source" pipe="source@getting-nametag-analyses" />
@@ -336,6 +339,12 @@
      
     <p:if test="not(doc-available($saved-file-uri))">
      <p:variable name="href" select="$resource/@local-uri" />
+     
+     <p:if test="$debug">
+      <p:store href="{$debug-path-uri}/nametag/get-nametag-analysis/{$file-stem}-input.txt">
+       <p:with-input port="source" select="unparsed-text($href)" />
+      </p:store>
+     </p:if>
      
      <p:identity name="text">
       <p:with-input select="unparsed-text($href)" />
