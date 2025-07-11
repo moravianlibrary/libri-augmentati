@@ -500,7 +500,7 @@
     <p:variable name="saved-file-uri" select="concat($result-directory-uri, '/', $result-file-name)"/>
     
     
-    <p:if test="not(doc-available($saved-file-uri))">
+    <p:if test="not(doc-available($saved-file-uri))" message="    checking for {$saved-file-uri}">
      
      <lat:convert-nametag-to-tei name="nametag-tei" 
       debug-path="{$debug-path}" 
