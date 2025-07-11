@@ -24,7 +24,7 @@
         <param name="tokenizer" place="body" />
         <param name="tagger" place="body" />
         <param name="parser" place="body" />
-        <param name="model" place="body" />
+        <param name="model" place="body" /> <!-- value="czech-cac-ud-2.15-241121"  -->
         <param name="data" place="body" />
       </feature>
     </api>
