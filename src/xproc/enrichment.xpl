@@ -7,6 +7,7 @@
  xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xproc/1.0"
  xmlns:lae="https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0"
  xmlns:lat="https://www.mzk.cz/ns/libri-augmentati/tei/1.0"
+ xmlns:laa="https://www.mzk.cz/ns/libri-augmentati/alto/1.0"
  xmlns:latx="https://www.mzk.cz/ns/libri-augmentati/text/1.0"
  xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
  xmlns:laud="https://www.mzk.cz/ns/libri-augmentati/udpipe/1.0"
@@ -82,8 +83,32 @@
   <p:option name="output-directory" required="true" as="xs:string" />
   <p:option name="pause-before-request" select="2" as="xs:integer"/>
   
-  <p:option name="output-format" values="('TEXT', 'TEI')" as="xs:string*" />
+  <p:option name="output-format" values="('ALTO', 'TEI', 'TEXT')" as="xs:string*" />
   <p:option name="enrichment" values="('ENTITIES', 'MORPHOLOGY')" as="xs:string*"/>
+
+  <p:identity message="output formats: {string-join($output-format, '; ')}; enrichment: {string-join($enrichment, '; ')}" />
+
+  <p:if test="$output-format = 'TEXT'">
+   <lae:combine-text-pages
+    output-directory="{$output-directory}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}"
+    >
+    <p:with-input port="settings" pipe="settings@enriching-data" />
+    <p:with-input port="report-in" pipe="report-in@enriching-data" />
+   </lae:combine-text-pages>
+  </p:if>
+  
+  <p:if test="$output-format = 'ALTO'">
+   <lae:combine-alto-pages
+    output-directory="{$output-directory}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}">
+    <p:with-input port="settings" pipe="settings@enriching-data" />
+    <p:with-input port="report-in" pipe="report-in@enriching-data" />
+   </lae:combine-alto-pages>
+  </p:if>
+ 
   
   <p:if test="$enrichment = 'ENTITIES'">
    <lae:enrich-by-entities 
@@ -105,6 +130,7 @@
    </lae:enrich-by-morphology>
   </p:if>
   
+  
   <p:if test="$output-format = 'TEI'">
    <lae:convert-to-tei
     output-directory="{$output-directory}" 
@@ -113,17 +139,6 @@
     <p:with-input port="settings" pipe="settings@enriching-data" />
     <p:with-input port="report-in" pipe="report-in@enriching-data" />
    </lae:convert-to-tei>
-  </p:if>
-  
-  <p:if test="$output-format = 'TEXT'">
-   <lae:combine-text-pages
-    output-directory="{$output-directory}" 
-    debug-path="{$debug-path}" 
-    base-uri="{$base-uri}"
-    >
-    <p:with-input port="settings" pipe="settings@enriching-data" />
-    <p:with-input port="report-in" pipe="report-in@enriching-data" />
-   </lae:combine-text-pages>
   </p:if>
   
  </p:declare-step>
@@ -355,12 +370,13 @@
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
   <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="step-name" select="'lat:convert-to-tei'" />
   
   <!-- PIPELINE BODY -->
   <p:insert position="last-child" name="report-start">
    <p:with-input port="source" pipe="report-in@converting-to-tei" />
    <p:with-input port="insertion">
-    <p:inline><lax:step type="lae:convert-to-tei" start="{current-dateTime()}" /></p:inline>
+    <p:inline><lax:step type="{$step-name}" start="{current-dateTime()}" /></p:inline>
    </p:with-input>
   </p:insert>
    
@@ -376,7 +392,7 @@
     output-directory="{$output-directory}/{$document-id}" 
     debug-path="{$debug-path}" 
     base-uri="{$base-uri}"
-    p:message="convert-to-tei; output-directory: {$output-directory}/{$document-id}">
+    p:message="   convert-to-tei; output-directory: {$output-directory}/{$document-id}">
     <p:with-input port="report-in" pipe="result@report-start" />
    </lat:convert-to-tei>
 
@@ -385,7 +401,8 @@
   <p:namespace-delete prefixes="lat xs xhtml" />
   <p:identity name="final" />
   
-  <p:add-attribute match="lax:step[@type='lae:enrich-by-entities'][not(@end)]" 
+  <p:variable name="step-name" select="'lat:convert-to-tei'" />
+  <p:add-attribute match="lax:step[@type='lat:convert-to-tei'][not(@end)]" 
    attribute-name="end" 
    attribute-value="{current-dateTime()}"
    name="report-final">
@@ -475,6 +492,95 @@
   <p:identity name="final" />
   
   <p:add-attribute match="lax:step[@type='lae:enrich-by-entities'][not(@end)]" 
+   attribute-name="end" 
+   attribute-value="{current-dateTime()}"
+   name="report-final">
+   <p:with-input port="source" pipe="result@report-start" />
+  </p:add-attribute>
+  
+ </p:declare-step>
+ 
+ <!-- STEP -->
+ <p:declare-step type="lae:combine-alto-pages" name="combining-alto-pages">
+  <p:documentation>
+   <xhtml:section xml:lang="en">
+    <xhtml:h2>Combine pages in ALTO format</xhtml:h2>
+    <xhtml:p>Combines available pages to one document.</xhtml:p>
+   </xhtml:section>
+   <xhtml:section xml:lang="cs">
+    <xhtml:h2>Sloučení stránek ve formátu ALTO</xhtml:h2>
+    <xhtml:p>Sloučí text dostupných stránek do jednoho dokumentu.</xhtml:p>
+   </xhtml:section>
+  </p:documentation>
+  
+  <!-- INPUT PORTS -->
+  <p:input  port="source" primary="true" sequence="true">
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>   
+  </p:input>
+  
+  <p:input  port="settings" primary="false">
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
+   </p:documentation>
+  </p:input>
+  
+  <p:input  port="report-in">
+   <lar:report />
+  </p:input>
+  
+  <!-- OUTPUT PORTS -->
+  <p:output port="result" primary="true" sequence="true"  pipe="result@final">
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>   
+  </p:output>
+  
+  <p:output port="report" pipe="result@report-final" />
+  
+  <!-- OPTIONS -->
+  <p:option name="debug-path" select="()" as="xs:string?" />
+  <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="output-directory" required="true" as="xs:string" />
+  
+  <!-- VARIABLES -->
+  <p:variable name="debug" select="$debug-path || '' ne ''" />
+  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  
+  <!-- PIPELINE BODY -->
+  <p:insert position="last-child" name="report-start">
+   <p:with-input port="source" pipe="report-in@combining-alto-pages" />
+   <p:with-input port="insertion">
+    <p:inline><lax:step type="laa:combine-alto-pages" start="{current-dateTime()}" /></p:inline>
+   </p:with-input>
+  </p:insert>
+  
+  <p:viewport match="lad:document">
+   <p:with-input pipe="source@combining-alto-pages" />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
+   
+   <laa:combine-alto-pages 
+    output-directory="{$output-directory}/{$document-id}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}"
+    >
+    <p:with-input port="report-in" pipe="result@report-start" />
+   </laa:combine-alto-pages>
+   
+  </p:viewport>
+  
+  <p:namespace-delete prefixes="lat xs xhtml" />
+  <p:identity name="final" />
+  
+  <p:add-attribute match="lax:step[@type='laa:combine-alto-pages'][not(@end)]" 
    attribute-name="end" 
    attribute-value="{current-dateTime()}"
    name="report-final">
