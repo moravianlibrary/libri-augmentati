@@ -98,62 +98,72 @@
    <p:variable name="result-file-name" select="concat($file-stem, '.xml')" />
    <p:variable name="saved-file-uri" select="concat($result-directory-uri, '/', $result-file-name)"/>
    
-   <p:for-each>
-    <p:with-input select="$alto-pages/lad:page[lad:resource[@type='alto']]"/>
-    <laa:process-page />
-   </p:for-each>
+   <p:variable name="file-exists" select="doc-available($saved-file-uri)" />
    
-   <p:wrap-sequence wrapper="laa:pages" />
-   
-   <p:if test="$debug">
-    <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/separate-pages.xml" />
+   <p:if test="not($file-exists)">
+    <p:for-each>
+     <p:with-input select="$alto-pages/lad:page[lad:resource[@type='alto']]"/>
+     <laa:process-page />
+    </p:for-each>
+    
+    <p:wrap-sequence wrapper="laa:pages" />
+    
+    <p:if test="$debug">
+     <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/separate-pages.xml" />
+    </p:if>
+    
+    <p:xslt>
+     <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-alto-pages.xsl" />
+    </p:xslt>
+    
+    <p:if test="$debug">
+     <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/merged-pages.xml" />
+    </p:if>
+    
+    <p:xslt>
+     <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-prepare-styles.xsl" />
+    </p:xslt>
+    
+    <p:if test="$debug">
+     <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/prepared-styles.xml" />
+    </p:if>
+    
+    <p:xslt>
+     <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-clean-styles.xsl" />
+    </p:xslt>
+    
+    <p:if test="$debug">
+     <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/cleaned-styles.xml" />
+    </p:if>
+    
+    <p:if test="$result-directory-path">
+     <p:store href="{$saved-file-uri}" message="Storing to {$saved-file-uri}" />
+    </p:if>   
+    
+    <p:identity name="item-metadata">
+     <p:with-input>
+      <lad:resource local-file-exists="true" name="{$result-file-name}" 
+       local-path="{$result-directory-path}/{$result-file-name}"
+       local-uri="{$saved-file-uri}"
+       type="alto"
+      />
+     </p:with-input>
+    </p:identity>
+    
+    <p:namespace-delete prefixes="laa xs xhtml" />
+    
+    <p:insert match="/lad:document/lad:resource[last()]" position="after">
+     <p:with-input port="source" pipe="source@combining-alto-pages" />
+     <p:with-input port="insertion" pipe="@item-metadata" />
+    </p:insert>
+    
    </p:if>
    
-   <p:xslt>
-    <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-alto-pages.xsl" />
-   </p:xslt>
-   
-   <p:if test="$debug">
-    <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/merged-pages.xml" />
-   </p:if>
-   
-   <p:xslt>
-    <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-prepare-styles.xsl" />
-   </p:xslt>
-   
-   <p:if test="$debug">
-    <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/prepared-styles.xml" />
-   </p:if>
-   
-   <p:xslt>
-    <p:with-input port="stylesheet" href="../xslt/alto/alto-merge-clean-styles.xsl" />
-   </p:xslt>
-   
-   <p:if test="$debug">
-    <p:store href="{$debug-path-uri}/alto/{$library-code}/{$id}/cleaned-styles.xml" />
-   </p:if>
-   
-   <p:if test="$result-directory-path">
-    <p:store href="{$saved-file-uri}" message="Storing to {$saved-file-uri}" />
-   </p:if>   
-   
-   <p:identity name="item-metadata">
-    <p:with-input>
-     <lad:resource local-file-exists="true" name="{$result-file-name}" 
-      local-path="{$result-directory-path}/{$result-file-name}"
-      local-uri="{$saved-file-uri}"
-      type="alto"
-     />
-    </p:with-input>
-   </p:identity>
    
    
-   <p:namespace-delete prefixes="laa xs xhtml" />
    
-   <p:insert match="/lad:document/lad:resource[last()]" position="after">
-    <p:with-input port="source" pipe="source@combining-alto-pages" />
-    <p:with-input port="insertion" pipe="@item-metadata" />
-   </p:insert>
+   
+   <p:namespace-delete prefixes="xs lar laa xhtml" />
    
   </p:if>
 
