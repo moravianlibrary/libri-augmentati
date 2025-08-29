@@ -8,12 +8,13 @@
       <feature type="entities" method="post" url="/recognize">
         <param name="data" place="body" />
         <param name="model" place="body" />
-        <param name="input" place="body" value="untokenized" />
+<!--        <param name="input" place="body" value="untokenized" />-->
+        <param name="input" place="body" value="conllu" />
         <param name="output" place="body" value="xml" />
       </feature>
       <feature type="entities" method="get" url="/recognize?data={$data}&amp;model={$model}&amp;input={$input}&amp;output={$output}" />
       <feature type="tokens" method="get" url="/tokenize?data={$data}&amp;model={$model}&amp;output={$output}" />
-      <feature type="tokens" method="post" url="/tokenize?data={$data}&amp;model={$model}&amp;&amp;output={$output}" />
+      <feature type="tokens" method="post" url="/tokenize?data={$data}&amp;model={$model}&amp;output={$output}" />
     </api>
     <api xml:id="api.udpipe.2" common-name="UDPipe" version="2.0" documentation="https://lindat.mff.cuni.cz/services/udpipe/api-reference.php">
       <resource type="models" method="get" url="/models" />
