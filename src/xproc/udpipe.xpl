@@ -93,6 +93,7 @@
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
   <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="language" as="xs:string?" select="'cze'"/>
   
   
   <!-- VARIABLES -->
@@ -129,9 +130,9 @@
    select="//las:api[@xml:id=$api-id]/las:feature[@type='process'][@method='post']"
    pipe="settings@getting-udpipe-analysis"/>
   <p:variable name="step-url" select="concat($service-url, $feature/@url)" />
+<!--  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;')" />-->
   <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;')" />
-<!--  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data'))]//concat(@name, '=', @value), '&amp;')" />-->
-  <p:variable name="step-params" select="$step-params || '&amp;model=' || 'english'" use-when="false()" />
+  <p:variable name="step-params" select="$step-params || '&amp;model=' || $language" />
   <p:variable name="full-text" select="." />
   
   <!-- PIPELINE BODY -->
@@ -197,6 +198,7 @@
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
   <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="file-stem" as="xs:string?" />
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
@@ -207,9 +209,9 @@
   <!-- PIPELINE BODY -->
   
   <p:if test="$debug">
-   <p:store href="{$debug-path-uri}/udpipe/convert/input.json" 
+   <p:store href="{$debug-path-uri}/udpipe/convert/{$file-stem}-input.json" 
     serialization="map{'indent' : true()}"
-    message="Storing to {$debug-path-uri}/udpipe/convert/input.json"
+    message="Storing to {$debug-path-uri}/udpipe/convert/{$file-stem}-input.json"
     use-when="true()" />
   </p:if>
   
@@ -228,9 +230,9 @@
   </p:identity>
   
   <p:if test="$debug">
-   <p:store href="{$debug-path-uri}/udpipe/convert/input.xml" 
+   <p:store href="{$debug-path-uri}/udpipe/convert/{$file-stem}-input.xml" 
     serialization="map{'indent' : true()}"
-    message="Storing to {$debug-path-uri}/udpipe/convert/input.xml"
+    message="Storing to {$debug-path-uri}/udpipe/convert/{$file-stem}-input.xml"
     use-when="true()" />
   </p:if>
 
@@ -239,9 +241,9 @@
   </p:xslt>
   
   <p:if test="$debug">
-   <p:store href="{$debug-path-uri}/udpipe/convert/output.txt" 
+   <p:store href="{$debug-path-uri}/udpipe/convert/{$file-stem}-output.txt" 
     serialization="map{'indent' : true()}"
-    message="Storing to {$debug-path-uri}/udpipe/convert/output.txt"
+    message="Storing to {$debug-path-uri}/udpipe/convert/{$file-stem}-output.txt"
     use-when="true()" />
   </p:if>
 
@@ -342,6 +344,8 @@
   </p:variable>
   <p:variable name="result-directory-uri" select="resolve-uri($result-directory-path, $base-uri)" />
   
+  <p:variable name="language" select="/lad:document/@language" />
+  
   <!-- PIPELINE BODY -->
   <p:if test="$debug">
    <p:store href="{$debug-path-uri}/udpipe/get-udpipe-analyses.xml" 
@@ -353,7 +357,8 @@
   
   <p:identity  message=" :- reources -: {/local-name()}" />
   
-  <p:viewport match="lad:pages/lad:page/lad:resource[@type='nametag'][@local-file-exists='true']" use-when="true()">
+  <!--<p:viewport match="lad:pages/lad:page/lad:resource[@type='nametag'][@local-file-exists='true']" use-when="true()">-->
+   <p:viewport match="lad:pages/lad:page/lad:resource[@type='text'][@local-file-exists='true']" use-when="true()">
    <p:with-input pipe="source@getting-udpipe-analyses" />
    <p:variable name="resource" select="/lad:resource" />
    <p:if test="exists($resource)">
@@ -375,10 +380,21 @@
         <p:with-input port="stylesheet" href="../xslt/nametag/nametag-xml-to-vertical.xsl" />
        </p:xslt>
       </p:when>
+      <p:when test="p:document-property(/, 'content-type') eq 'text/plain'" use-when="false()">
+       <p:text-replace pattern="\\r\\n" replacement="\\r" />
+       <!--<p:identity>
+        <p:with-input port="source" select="parse-json(.)" />
+       </p:identity>-->
+       <p:cast-content-type content-type="application/xml" />
+       <!--<p:cast-content-type content-type="application/json" />-->
+      </p:when>
       <p:otherwise>
        <p:identity name="text">
-        <p:with-input select="unparsed-text($href)" />
+        <p:with-input select="unparsed-text($href) => replace('\n', '')" />
        </p:identity>
+       <!--<p:identity>
+        <p:with-input select="replace(.?, '\\r\\n', '\\r')" />
+       </p:identity>-->
       </p:otherwise>
      </p:choose>
      
@@ -386,7 +402,9 @@
       <p:store href="{$debug-path-uri}/udpipe/get-udpipe-analysis/{$file-stem}-input.txt" />
      </p:if>
      
-     <laud:get-udpipe-analysis debug-path="{$debug-path}" base-uri="{$base-uri}">
+     <laud:get-udpipe-analysis
+      language="{$language}"
+      debug-path="{$debug-path}" base-uri="{$base-uri}">
       <p:with-input port="report-in" pipe="report-in@getting-udpipe-analyses" />
       <p:with-input port="settings" pipe="settings@getting-udpipe-analyses" />
      </laud:get-udpipe-analysis>
@@ -395,7 +413,8 @@
       <p:store href="{$debug-path-uri}/udpipe/get-udpipe-analysis/{$file-stem}.json" />
      </p:if>
      
-     <laud:convert-udpipe-analysis-to-text debug-path="{$debug-path}" base-uri="{$base-uri}" name="get-data"/>
+     <laud:convert-udpipe-analysis-to-text file-stem="{$file-stem}" name="get-data"
+      debug-path="{$debug-path}" base-uri="{$base-uri}" />
      
      <p:if test="$debug">
       <p:store href="{$debug-path-uri}/udpipe/get-udpipe-analysis/{$file-stem}.txt" />
