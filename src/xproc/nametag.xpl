@@ -3,6 +3,7 @@
  xmlns:lant="https://www.mzk.cz/ns/libri-augmentati/nametag/1.0"
  xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"
  xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0"
+ xmlns:map = "http://www.w3.org/2005/xpath-functions/map"
  xmlns:xhtml="http://www.w3.org/1999/xhtml"
  version="3.0">
  
@@ -92,12 +93,31 @@
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
   <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="file-stem" as="xs:string?" />
+
+  <p:option name="language" as="xs:string?" select="'cze'"/>
  
 
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
   <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
   
+  <p:variable name="language-models" select="map {
+   'cze': 'czech',
+   'ces': 'czech',
+   'dut': 'dutch',
+   'nld': 'dutch',
+   'eng': 'english',
+   'deu': 'german',
+   'ger': 'german',
+   'spa': 'spanish',
+   'multi' : 'multilingual'
+   }" />
+  
+  <p:variable name="language-model" 
+    select="if(map:contains($language-models, $language)) 
+    then $language-models?($language) 
+    else $language-models?multi" />
   
   <p:variable name="service" select="//las:service[@code='nametag']" 
    pipe="settings@getting-nametag-analysis" />
@@ -128,12 +148,17 @@
    select="//las:api[@xml:id=$api-id]/las:feature[@type='entities'][@method='post']"
    pipe="settings@getting-nametag-analysis"/>
   <p:variable name="step-url" select="concat($service-url, $feature/@url)" />
+<!--  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;') " />-->
   <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;') " />
-  <p:variable name="step-params" select="$step-params || '&amp;model=' || 'nametag3-multilingual-conll-250203'" use-when="false()" />
+  <p:variable name="step-params" select="$step-params || '&amp;model=' || $language-model"  />
  
   <p:variable name="full-text" select="." />
 
-  
+  <p:if test="$debug">
+   <p:store href="{$debug-path-uri}/nametag/{$file-stem}-http-request-input.txt" message="Storing {$debug-path-uri}/nametag/{$file-stem}-http-request-input.txt">
+    <!--<p:with-input port="source" select="$full-text" />-->
+   </p:store>
+  </p:if>
   <!-- PIPELINE BODY -->
   <p:http-request href="{$step-url}" message="nametag: $api-id: {$api-id}; $step-url: {$step-url}; $step-params: {$step-params}">
    <p:with-option name="method" select="'POST'" />
@@ -153,7 +178,7 @@
   <p:identity name="final" />
   
   <p:if test="$debug">
-   <p:store href="{$debug-path-uri}/nametag/http-request.json" message="Storing {$debug-path-uri}/nametag/http-request.json" />
+   <p:store href="{$debug-path-uri}/nametag/{$file-stem}-http-request.json" message="Storing {$debug-path-uri}/nametag/{$file-stem}-http-request.json" />
   </p:if>
   
  </p:declare-step>
@@ -194,6 +219,8 @@
     </xhtml:section>
    </p:documentation>
   </p:output>
+  
+  
   
   <!-- VARIABLES -->
   <p:variable name="model" select="normalize-space(.?model)" />
@@ -318,7 +345,10 @@
     </xhtml:section>
    </p:documentation>
   </p:variable>
+  
   <p:variable name="result-directory-uri" select="resolve-uri($result-directory-path, $base-uri)" />
+  
+  <p:variable name="language" select="/lad:document/@language" />
   
   <!-- PIPELINE BODY -->
   <p:if test="$debug">
@@ -328,8 +358,11 @@
     <p:with-input port="source" pipe="source@getting-nametag-analyses" />
    </p:store>   
   </p:if>
+  
+  
 
-  <p:viewport match="lad:pages/lad:page/lad:resource[@type='text'][@local-file-exists='true']" use-when="true()">
+  <!--<p:viewport match="lad:pages/lad:page/lad:resource[@type='text'][@local-file-exists='true']" use-when="true()">-->
+  <p:viewport match="lad:pages/lad:page/lad:resource[@type='udpipe'][@local-file-exists='true']" use-when="true()">
    <p:variable name="resource" select="/lad:resource" />
    <p:if test="exists($resource)">
      
@@ -346,11 +379,15 @@
       </p:store>
      </p:if>
      
-     <p:identity name="text">
+     <!--<p:identity name="text">
       <p:with-input select="unparsed-text($href)" />
-     </p:identity>
+     </p:identity>-->
+     <p:load href="{$href}" />
      
-     <lant:get-nametag-analysis debug-path="{$debug-path}" base-uri="{$base-uri}">
+     <lant:get-nametag-analysis
+      file-stem="{$file-stem}"
+      language="{$language}"
+      debug-path="{$debug-path}" base-uri="{$base-uri}">
       <p:with-input port="report-in" pipe="report-in@getting-nametag-analyses" />
       <p:with-input port="settings" pipe="settings@getting-nametag-analyses" />
      </lant:get-nametag-analysis>
