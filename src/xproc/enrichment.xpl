@@ -44,6 +44,7 @@
     <xhtml:p>Obohatí dostupná (textová) data o vybrané vlastnosti.</xhtml:p>
    </xhtml:section>
   </p:documentation>
+  
   <!-- INPUT PORTS -->
   <p:input port="source" primary="true" sequence="true">
    <p:documentation>
@@ -99,6 +100,7 @@
    </lae:combine-text-pages>
   </p:if>
   
+  <!-- TODO: REDUNDAND? See lax:prepare-text-data -->
   <p:if test="$output-format = 'ALTO'">
    <lae:combine-alto-pages
     output-directory="{$output-directory}" 
@@ -108,27 +110,42 @@
     <p:with-input port="report-in" pipe="report-in@enriching-data" />
    </lae:combine-alto-pages>
   </p:if>
+  
+  <p:identity  message="   ... $enrichment = 'MORPHOLOGY': {$enrichment = 'MORPHOLOGY'}; "/>
+  <p:identity  message="   ... $enrichment = 'ENTITIES': {$enrichment = 'ENTITIES'}"/>
  
-  
-  <p:if test="$enrichment = 'ENTITIES'">
-   <lae:enrich-by-entities 
+  <p:if test="$enrichment = ('ENTITIES', 'MORPHOLOGY')">
+   
+   <lae:tokenize p:use-when="false()" 
     output-directory="{$output-directory}" 
     debug-path="{$debug-path}" 
     base-uri="{$base-uri}">
     <p:with-input port="settings" pipe="settings@enriching-data" />
     <p:with-input port="report-in" pipe="report-in@enriching-data" />
-   </lae:enrich-by-entities>
+   </lae:tokenize>
+   
+   <p:if test="$enrichment = 'MORPHOLOGY'">
+    <lae:enrich-by-morphology
+     output-directory="{$output-directory}" 
+     debug-path="{$debug-path}" 
+     base-uri="{$base-uri}">
+     <p:with-input port="settings" pipe="settings@enriching-data" />
+     <p:with-input port="report-in" pipe="report-in@enriching-data" />
+    </lae:enrich-by-morphology>
+   </p:if>
+
+   <p:if test="$enrichment = 'ENTITIES'">
+    <lae:enrich-by-entities 
+     output-directory="{$output-directory}" 
+     debug-path="{$debug-path}" 
+     base-uri="{$base-uri}">
+     <p:with-input port="settings" pipe="settings@enriching-data" />
+     <p:with-input port="report-in" pipe="report-in@enriching-data" />
+    </lae:enrich-by-entities>
+   </p:if>
+   
   </p:if>
   
-  <p:if test="$enrichment = 'MORPHOLOGY'">
-   <lae:enrich-by-morphology
-    output-directory="{$output-directory}" 
-    debug-path="{$debug-path}" 
-    base-uri="{$base-uri}">
-    <p:with-input port="settings" pipe="settings@enriching-data" />
-    <p:with-input port="report-in" pipe="report-in@enriching-data" />
-   </lae:enrich-by-morphology>
-  </p:if>
   
   
   <p:if test="$output-format = 'TEI'">
@@ -143,6 +160,95 @@
   
  </p:declare-step>
  
+ <!-- STEP -->
+ <p:declare-step type="lae:tokenize" name="tokenizing">
+  
+  <p:documentation>
+   <xhtml:section xml:lang="en">
+    <xhtml:h2>Tokenize the text</xhtml:h2>
+    <xhtml:p>Apply tokenization on text using morphological and syntactic analysis.</xhtml:p>
+   </xhtml:section>
+   <xhtml:section xml:lang="cs">
+    <xhtml:h2>Tokenizace textu</xhtml:h2>
+    <xhtml:p>Rozdělí vstupní text na tokeny pomocí morfologické a syntaktické analýzy.</xhtml:p>
+   </xhtml:section>
+  </p:documentation>
+  
+  <!-- INPUT PORTS -->
+  <p:input  port="source" primary="true" sequence="true">
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Sequence of virtual documents.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Sekvence virtuálních dokumentů.</xhtml:p></xhtml:section>
+   </p:documentation>
+  </p:input>
+  
+  <p:input  port="settings" primary="false">
+   <p:documentation>
+    <xhtml:section xml:lang="en"><xhtml:p>Settings for web services for enrichment.</xhtml:p></xhtml:section>
+    <xhtml:section xml:lang="cs"><xhtml:p>Nastavení webových služeb pro obohacení.</xhtml:p></xhtml:section>
+   </p:documentation>
+  </p:input>
+  
+  <p:input  port="report-in">
+   <p:inline><lar:report /></p:inline>
+  </p:input>
+  
+  <!-- OUTPUT PORTS -->
+  <p:output port="result" primary="true" sequence="true" pipe="result@final" />
+  <p:output port="report" pipe="result@report-final" />
+  
+  <!-- OPTIONS -->
+  <p:option name="debug-path" select="()" as="xs:string?" />
+  <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="output-directory" required="true" as="xs:string" />
+  
+  
+  <!-- VARIABLES -->
+  <p:variable name="debug" select="$debug-path || '' ne ''" />
+  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  
+  
+  <!-- PIPELINE BODY -->
+  <p:insert position="last-child" name="report-start">
+   <p:with-input port="source" pipe="report-in@tokenizing" />
+   <p:with-input port="insertion">
+    <p:inline><lax:step type="lae:tokenize" start="{current-dateTime()}" /></p:inline>
+   </p:with-input>
+  </p:insert>
+  
+  <!--<p:identity message="enriching morphology">
+   <p:with-input port="source" pipe="source@enriching-by-morphology" />
+  </p:identity>-->
+  
+  <p:viewport match="lad:document">
+   <p:with-input pipe="source@tokenizing" />
+   <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
+    then /lad:document/@nickname 
+    else if(starts-with(/lad:document/@id, 'uuid:')) 
+    then substring-after(/lad:document/@id, 'uuid:') 
+    else  /lad:document/@id " />
+   
+   
+   <laud:get-udpipe-tokens p:use-when="false()"
+    output-directory="{$output-directory}/{$document-id}" 
+    debug-path="{$debug-path}" 
+    base-uri="{$base-uri}">
+    <p:with-input port="settings" pipe="settings@tokenizing" />
+    <p:with-input port="report-in" pipe="result@report-start" />
+   </laud:get-udpipe-tokens>
+   
+  </p:viewport>
+  <p:namespace-delete prefixes="laud xs xhtml" />
+  <p:identity name="final" />
+  
+  <p:add-attribute match="lax:step[@type='lae:tokenize'][not(@end)]" 
+   attribute-name="end" 
+   attribute-value="{current-dateTime()}"
+   name="report-final">
+   <p:with-input port="source" pipe="result@report-start" />
+  </p:add-attribute>
+  
+ </p:declare-step>
  <!-- STEP -->
  <p:declare-step type="lae:enrich-by-entities" name="enriching-by-entities">
   <p:documentation>
@@ -298,6 +404,7 @@
     else if(starts-with(/lad:document/@id, 'uuid:')) 
     then substring-after(/lad:document/@id, 'uuid:') 
     else  /lad:document/@id " />
+   
    
    <laud:get-udpipe-analyses 
     output-directory="{$output-directory}/{$document-id}" 
