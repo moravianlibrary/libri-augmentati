@@ -97,17 +97,30 @@
 	
 	<p:store href="{$output-directory}/virtual-document-02-downloaded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
-	<lax:enrich-document-data p:use-when="false()"
+	<lax:prepare-text-data
+		output-directory="{$output-directory}" 
+		debug-path="{$debug-path}" 
+		base-uri="{$base-uri}"
+		name="preparing-text-data">
+		<p:with-input port="report-in" pipe="report@download-data" />
+	</lax:prepare-text-data>
+	
+	<p:store href="{$output-directory}/virtual-document-03-prepared-text.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+	
+	<lax:enrich-document-data p:use-when="true()"
 		output-directory="{$output-directory}" 
 		debug-path="{$debug-path}" 
 		base-uri="{$base-uri}"
 		pause-before-request="0">
-		<p:with-option name="output-format" select="('TEXT', 'TEI')" />
+		<p:with-option name="output-format" select="('ALTO', 'TEXT', 'TEI')" />
 		<p:with-option name="enrichment" select="('ENTITIES', 'MORPHOLOGY')" />
-		<p:with-input port="report-in" pipe="report@download-data" />
+		<p:with-input port="report-in" pipe="report@preparing-text-data" />
 		<p:with-input port="settings" href="../../settings/services.xml" />
 	</lax:enrich-document-data>
+
+	<p:store href="{$output-directory}/virtual-document-04-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
+
 	<p:store href="{$output-directory}/report.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
 	<lax:create-report output-directory="{output-directory}"/>
