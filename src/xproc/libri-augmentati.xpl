@@ -47,7 +47,8 @@
   'mods' : map {'extension' : '.xml'},
   'image' : map {'extension' : '.jpg'},
   'tei' : map {'extension' : '.xml'},
-  'info' : map {'extension' : '.txt'}
+  'info' : map {'extension' : '.txt'},
+  'tokens' : map {'extension' : '.txt'}
   }" static="true" />
 
  <!-- STEP -->
@@ -285,6 +286,8 @@
     else if(starts-with(/lad:document/@id, 'uuid:')) 
     then substring-after(/lad:document/@id, 'uuid:') 
     else  /lad:document/@id " />
+   
+   <p:add-attribute attribute-name="document-id" attribute-value="{$document-id}" />
 
    <p:viewport match="lad:resource[@type=$document-resources][@available='true']">
     <p:variable name="type" select="/lad:resource/@type/data()" />
@@ -324,11 +327,15 @@
    <p:variable name="metadata-doc" select="doc($metadata/@local-uri)" />
    <p:variable name="title" select="$metadata-doc//mods:mods[1]/mods:titleInfo[1]/mods:title[1]"  />
    <p:variable name="author" select="$metadata-doc//mods:mods[1]/mods:name[@usage='primary'][1]/mods:namePart[1]"  />
+   <p:variable name="language" select="$metadata-doc//mods:mods[1]/mods:language/mods:languageTerm[@type='code'][1]"  />
    <p:if test="$title">
     <p:add-attribute attribute-name="title" attribute-value="{$title}" message="  - adding title: {$title}" /> 
    </p:if>
    <p:if test="$author">
     <p:add-attribute attribute-name="author" attribute-value="{$author}" message="  - adding author: {$author}" /> 
+   </p:if>
+   <p:if test="$language">
+    <p:add-attribute attribute-name="language" attribute-value="{$language}" message="  - adding language: {$language}" /> 
    </p:if>
   </p:viewport>
    
@@ -524,6 +531,9 @@
   <!-- PIPELINE BODY -->
   <p:try>
    <p:http-request href="{$url}" parameters="map {'mox:pause-before-request' : $pause-before-request, 'follow-redirect' : 3}" headers="map {'contet-type' : $content-type}" message="Downloading {$url}"/>
+   <p:if test="$content-type = 'text/plain'">
+    <p:text-replace pattern="\\r\\n" replacement="\\r" />
+   </p:if>
    <p:store href="{$local-path-uri}" message="Storing to {$local-path-uri} ({$local-path})"/>
    <p:catch code="err:XD0006">
     <!--
