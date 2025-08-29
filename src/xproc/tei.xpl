@@ -374,6 +374,7 @@
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
   <p:option name="base-uri" as="xs:anyURI" select="static-base-uri()"/>
+  <p:option name="file-stem" as="xs:string?" />
 <!--  <p:option name="output-directory" required="true" as="xs:string" />-->
   
   <!-- VARIABLES -->
@@ -397,7 +398,7 @@
    <p:with-input port="stylesheet" href="../xslt/tei/merge-nametag-with-udpipe.xsl" />
   </p:xslt>
   <p:if test="$debug">
-   <p:store href="{$debug-path-uri}/tei/merge/merge-nametag-with-udpipe.xml" />
+   <p:store href="{$debug-path-uri}/tei/merge/merge-nametag-with-udpipe-{$file-stem}.xml" />
   </p:if>
   
   <p:identity name="final" />
@@ -539,6 +540,7 @@
      </p:if>
      
      <lat:merge-tei-representations
+      file-stem="{$file-stem}"
       debug-path="{$debug-path}" 
       base-uri="{$base-uri}"
       name="merge-tei">
