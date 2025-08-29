@@ -1,6 +1,200 @@
 # XProc Analysis Report
 
-## conversion.xpl (version: 1.0.0)
+## alto.xpl (version: 1.0.0)
+#### Documentation (176)
+    
+##### Library for ALTO format manipulation
+Steps for standalone ALTO data operations.
+##### Knihovna pro zpracování dat ve formátu ALTO
+Kroky pro samostatné operace s daty ve formátu ALTO.
+#### Namespaces (8)
+    
+| prefix | string |
+| --- | --- |
+| laa | https://www.mzk.cz/ns/libri-augmentati/alto/1.0 |
+| lad | https://www.mzk.cz/ns/libri-augmentati/documents/1.0 |
+| lar | https://www.mzk.cz/ns/libri-augmentati/report/1.0 |
+| las | https://www.mzk.cz/ns/libri-augmentati/settings/1.0 |
+| p | http://www.w3.org/ns/xproc |
+| xhtml | http://www.w3.org/1999/xhtml |
+| xs | http://www.w3.org/2001/XMLSchema |
+| xml | http://www.w3.org/XML/1998/namespace |
+
+### Steps  (2 + 0)
+      
+#### Documentation (176)
+    
+##### Library for ALTO format manipulation
+Steps for standalone ALTO data operations.
+##### Knihovna pro zpracování dat ve formátu ALTO
+Kroky pro samostatné operace s daty ve formátu ALTO.
+
+#### **laa:combine-alto-pages** (combining-alto-pages)
+#### Documentation (253)
+    
+##### Merge multiple pages
+Merges separate ALTO documents into one document, including metadata (styles) and textcontent (pages).
+##### Spojení stran
+Spojí samostatné dokumenty ve formátu ALTO do jednoho dokumentu, včetně metadat (stylu) a textového obsahu (stran).
+#### Options (3)
+      
+| name | properties |
+| --- | --- |
+| debug-path | name = debug-path \| select = () \| as = xs:string? |
+| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| output-directory | name = output-directory \| required = true \| as = xs:string |
+
+#### Ports (4)
+    
+| direction | value | primary |
+| --- | --- | ---| 
+| input | **source** | true |
+| input | report-in | false |
+| output | **result** | true |
+| output | report | false |
+
+### Steps  (0 + 11)
+      
+#### Documentation (253)
+    
+##### Merge multiple pages
+Merges separate ALTO documents into one document, including metadata (styles) and textcontent (pages).
+##### Spojení stran
+Spojí samostatné dokumenty ve formátu ALTO do jednoho dokumentu, včetně metadat (stylu) a textového obsahu (stran).
+
+
+| position | step | name | parameter | value | 
+| --- | --- | --- | --- | --- | 
+| 1 | p:variable | debug |   |   | 
+|   |   |   | select | $debug-path \|\| '' ne '' | 
+| 2 | p:variable | debug-path-uri |   |   | 
+|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
+| 3 | p:variable | library-code |   |   | 
+|   |   |   | select | /lad:document/las:library/@code | 
+| 4 | p:variable | id |   |   | 
+|   |   |   | select | if(exists(/lad:document/@nickname))    then /lad:document/@nickname     else if(starts-with(/lad:document/@id, 'uuid:'))     then substring-after(/lad:document/@id, 'uuid:')     else  /lad:document/@id | 
+| 5 | p:variable | result-directory-path |   |   | 
+|   |   |   | p:documentation | 
+    
+     The folder where generated documents are saved. The path to the folder can be absolute or relative.
+    
+    
+     Složka, do níž se uloží vygenerované dokumenty. Cesta ke složce může být absolutní i relativní.
+    
+    | 
+|   |   |   | select | $output-directory | 
+| 6 | p:variable | result-directory-uri |   |   | 
+|   |   |   | select | resolve-uri($result-directory-path, $base-uri) | 
+| 7 | p:variable | alto-pages |   |   | 
+|   |   |   | select | /lad:document/lad:pages[lad:page[lad:resource[@type='alto']]] | 
+| 8 | p:if |  |   |   | 
+|   |   |   | p:store |  | 
+|   |   |   | test | $debug | 
+| 9 | p:if |  |   |   | 
+|   |   |   | p:if | 
+    
+     
+     
+    
+    
+    
+    
+    
+     
+    
+    
+    
+     
+    
+    
+    
+     
+    
+    
+    
+     
+    
+    
+    
+     
+    
+    
+    
+     
+    
+    
+    
+     
+    
+    
+    
+     
+       
+    
+    
+     
+      
+     
+    
+    
+    
+    
+    
+     
+     
+    
+    
+    | 
+|   |   |   | p:namespace-delete |  | 
+|   |   |   | p:variable |  | 
+|   |   |   | p:variable |  | 
+|   |   |   | p:variable |  | 
+|   |   |   | p:variable |  | 
+|   |   |   | test | exists($alto-pages) | 
+| 10 | p:identity | final |   |   | 
+| 11 | p:identity | final-report |   |   | 
+|   |   |   | pipe | report-in@combining-alto-pages | 
+
+
+#### **laa:process-page** (processing-page)
+#### Documentation (293)
+    
+##### Proces single page
+Aplies modifications on one ALTO document to prepare it for merging, especialy assigning unique indentifires.
+##### Zpracování jedné strany
+Aplikuje úpravy na jeden dokument ve formátu ALTO, aby ho bylo možné spojit s ostatními, zejména jde o přiřazení jedinečných identifikátorů.
+#### Ports (2)
+    
+| direction | value | primary |
+| --- | --- | ---| 
+| input | **source** | true |
+| output | **result** | true |
+
+### Steps  (0 + 1)
+      
+#### Documentation (293)
+    
+##### Proces single page
+Aplies modifications on one ALTO document to prepare it for merging, especialy assigning unique indentifires.
+##### Zpracování jedné strany
+Aplikuje úpravy na jeden dokument ve formátu ALTO, aby ho bylo možné spojit s ostatními, zejména jde o přiřazení jedinečných identifikátorů.
+
+
+| position | step | name | parameter | value | 
+| --- | --- | --- | --- | --- | 
+| 1 | p:viewport |  |   |   | 
+|   |   |   | match | lad:page | 
+|   |   |   | p:variable |  | 
+|   |   |   | p:variable |  | 
+|   |   |   | p:xslt | 
+   
+   
+   
+   | 
+
+
+
+## conversion.xpl (version: 1.0.0)
 #### Documentation (194)
     
 ##### Library for data conversion
@@ -288,10 +482,11 @@
 The main programming library for enrichment data by external (web) services.
 ##### Obohacení
 Hlavní programová knihovna pro obohacení dat pomocí externích (webových) služeb.
-#### Namespaces (14)
+#### Namespaces (15)
     
 | prefix | string |
 | --- | --- |
+| laa | https://www.mzk.cz/ns/libri-augmentati/alto/1.0 |
 | lad | https://www.mzk.cz/ns/libri-augmentati/documents/1.0 |
 | lae | https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0 |
 | lant | https://www.mzk.cz/ns/libri-augmentati/nametag/1.0 |
@@ -310,7 +505,7 @@
 #### Imports (0)
     
 
-### Steps  (5 + 0)
+### Steps  (7 + 0)
       
 #### Documentation (178)
     
@@ -334,7 +529,7 @@
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
 | output-directory | name = output-directory \| required = true \| as = xs:string |
 | pause-before-request | name = pause-before-request \| select = 2 \| as = xs:integer |
-| output-format | name = output-format \| values = ('TEXT', 'TEI') \| as = xs:string* |
+| output-format | name = output-format \| values = ('ALTO', 'TEI', 'TEXT') \| as = xs:string* |
 | enrichment | name = enrichment \| values = ('ENTITIES', 'MORPHOLOGY') \| as = xs:string* |
 
 #### Ports (5)
@@ -347,7 +542,7 @@
 | output | **result** | true |
 | output | report | false |
 
-### Steps  (0 + 4)
+### Steps  (0 + 7)
       
 #### Documentation (155)
     
@@ -359,30 +554,107 @@
 
 | position | step | name | parameter | value | 
 | --- | --- | --- | --- | --- | 
-| 1 | p:if |  |   |   | 
-|   |   |   | lae:enrich-by-entities | 
-    
-    
-    | 
-|   |   |   | test | $enrichment = 'ENTITIES' | 
+| 1 | p:identity |  |   |   | 
 | 2 | p:if |  |   |   | 
-|   |   |   | lae:enrich-by-morphology | 
-    
-    
-    | 
-|   |   |   | test | $enrichment = 'MORPHOLOGY' | 
-| 3 | p:if |  |   |   | 
-|   |   |   | lae:convert-to-tei | 
-    
-    
-    | 
-|   |   |   | test | $output-format = 'TEI' | 
-| 4 | p:if |  |   |   | 
 |   |   |   | lae:combine-text-pages | 
     
     
     | 
 |   |   |   | test | $output-format = 'TEXT' | 
+| 3 | p:if |  |   |   | 
+|   |   |   | lae:combine-alto-pages | 
+    
+    
+    | 
+|   |   |   | test | $output-format = 'ALTO' | 
+| 4 | p:identity |  |   |   | 
+| 5 | p:identity |  |   |   | 
+| 6 | p:if |  |   |   | 
+|   |   |   | lae:tokenize | 
+    
+    
+    | 
+|   |   |   | p:if | 
+    
+     
+     
+    
+    | 
+|   |   |   | p:if | 
+    
+     
+     
+    
+    | 
+|   |   |   | test | $enrichment = ('ENTITIES', 'MORPHOLOGY') | 
+| 7 | p:if |  |   |   | 
+|   |   |   | lae:convert-to-tei | 
+    
+    
+    | 
+|   |   |   | test | $output-format = 'TEI' | 
+
+
+#### **lae:tokenize** (tokenizing)
+#### Documentation (179)
+    
+##### Tokenize the text
+Apply tokenization on text using morphological and syntactic analysis.
+##### Tokenizace textu
+Rozdělí vstupní text na tokeny pomocí morfologické a syntaktické analýzy.
+#### Options (3)
+      
+| name | properties |
+| --- | --- |
+| debug-path | name = debug-path \| select = () \| as = xs:string? |
+| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| output-directory | name = output-directory \| required = true \| as = xs:string |
+
+#### Ports (5)
+    
+| direction | value | primary |
+| --- | --- | ---| 
+| input | **source** | true |
+| input | settings | false |
+| input | report-in | false |
+| output | **result** | true |
+| output | report | false |
+
+### Steps  (0 + 7)
+      
+#### Documentation (179)
+    
+##### Tokenize the text
+Apply tokenization on text using morphological and syntactic analysis.
+##### Tokenizace textu
+Rozdělí vstupní text na tokeny pomocí morfologické a syntaktické analýzy.
+
+
+| position | step | name | parameter | value | 
+| --- | --- | --- | --- | --- | 
+| 1 | p:variable | debug |   |   | 
+|   |   |   | select | $debug-path \|\| '' ne '' | 
+| 2 | p:variable | debug-path-uri |   |   | 
+|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
+| 3 | p:insert | report-start |   |   | 
+|   |   |   | position | last-child | 
+|   |   |   | pipe | report-in@tokenizing | 
+| 4 | p:viewport |  |   |   | 
+|   |   |   | pipe | source@tokenizing | 
+|   |   |   | laud:get-udpipe-tokens | 
+    
+    
+    | 
+|   |   |   | match | lad:document | 
+|   |   |   | p:variable |  | 
+| 5 | p:namespace-delete |  |   |   | 
+|   |   |   | prefixes | laud xs xhtml | 
+| 6 | p:identity | final |   |   | 
+| 7 | p:add-attribute | report-final |   |   | 
+|   |   |   | attribute-name | end | 
+|   |   |   | attribute-value | {current-dateTime()} | 
+|   |   |   | match | lax:step[@type='lae:tokenize'][not(@end)] | 
+|   |   |   | pipe | result@report-start | 
 
 
 #### **lae:enrich-by-entities** (enriching-by-entities)
@@ -534,7 +806,7 @@
 | output | **result** | true |
 | output | report | false |
 
-### Steps  (0 + 7)
+### Steps  (0 + 9)
       
 #### Documentation (156)
     
@@ -550,23 +822,27 @@
 |   |   |   | select | $debug-path \|\| '' ne '' | 
 | 2 | p:variable | debug-path-uri |   |   | 
 |   |   |   | select | resolve-uri($debug-path, $base-uri) | 
-| 3 | p:insert | report-start |   |   | 
+| 3 | p:variable | step-name |   |   | 
+|   |   |   | select | 'lat:convert-to-tei' | 
+| 4 | p:insert | report-start |   |   | 
 |   |   |   | position | last-child | 
 |   |   |   | pipe | report-in@converting-to-tei | 
-| 4 | p:viewport |  |   |   | 
+| 5 | p:viewport |  |   |   | 
 |   |   |   | pipe | source@converting-to-tei | 
 |   |   |   | lat:convert-to-tei | 
     
     | 
 |   |   |   | match | lad:document | 
 |   |   |   | p:variable |  | 
-| 5 | p:namespace-delete |  |   |   | 
+| 6 | p:namespace-delete |  |   |   | 
 |   |   |   | prefixes | lat xs xhtml | 
-| 6 | p:identity | final |   |   | 
-| 7 | p:add-attribute | report-final |   |   | 
+| 7 | p:identity | final |   |   | 
+| 8 | p:variable | step-name |   |   | 
+|   |   |   | select | 'lat:convert-to-tei' | 
+| 9 | p:add-attribute | report-final |   |   | 
 |   |   |   | attribute-name | end | 
 |   |   |   | attribute-value | {current-dateTime()} | 
-|   |   |   | match | lax:step[@type='lae:enrich-by-entities'][not(@end)] | 
+|   |   |   | match | lax:step[@type='lat:convert-to-tei'][not(@end)] | 
 |   |   |   | pipe | result@report-start | 
 
 
@@ -628,6 +904,67 @@
 |   |   |   | attribute-name | end | 
 |   |   |   | attribute-value | {current-dateTime()} | 
 |   |   |   | match | lax:step[@type='lae:enrich-by-entities'][not(@end)] | 
+|   |   |   | pipe | result@report-start | 
+
+
+#### **lae:combine-alto-pages** (combining-alto-pages)
+#### Documentation (156)
+    
+##### Combine pages in ALTO format
+Combines available pages to one document.
+##### Sloučení stránek ve formátu ALTO
+Sloučí text dostupných stránek do jednoho dokumentu.
+#### Options (3)
+      
+| name | properties |
+| --- | --- |
+| debug-path | name = debug-path \| select = () \| as = xs:string? |
+| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| output-directory | name = output-directory \| required = true \| as = xs:string |
+
+#### Ports (5)
+    
+| direction | value | primary |
+| --- | --- | ---| 
+| input | **source** | true |
+| input | settings | false |
+| input | report-in | false |
+| output | **result** | true |
+| output | report | false |
+
+### Steps  (0 + 7)
+      
+#### Documentation (156)
+    
+##### Combine pages in ALTO format
+Combines available pages to one document.
+##### Sloučení stránek ve formátu ALTO
+Sloučí text dostupných stránek do jednoho dokumentu.
+
+
+| position | step | name | parameter | value | 
+| --- | --- | --- | --- | --- | 
+| 1 | p:variable | debug |   |   | 
+|   |   |   | select | $debug-path \|\| '' ne '' | 
+| 2 | p:variable | debug-path-uri |   |   | 
+|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
+| 3 | p:insert | report-start |   |   | 
+|   |   |   | position | last-child | 
+|   |   |   | pipe | report-in@combining-alto-pages | 
+| 4 | p:viewport |  |   |   | 
+|   |   |   | pipe | source@combining-alto-pages | 
+|   |   |   | laa:combine-alto-pages | 
+    
+    | 
+|   |   |   | match | lad:document | 
+|   |   |   | p:variable |  | 
+| 5 | p:namespace-delete |  |   |   | 
+|   |   |   | prefixes | lat xs xhtml | 
+| 6 | p:identity | final |   |   | 
+| 7 | p:add-attribute | report-final |   |   | 
+|   |   |   | attribute-name | end | 
+|   |   |   | attribute-value | {current-dateTime()} | 
+|   |   |   | match | lax:step[@type='laa:combine-alto-pages'][not(@end)] | 
 |   |   |   | pipe | result@report-start | 
 
 
@@ -1627,13 +1964,14 @@
 The main programming library for digital library data retrieval and enrichment.
 ##### Libri augmentati
 Hlavní programová knihovna pro získání dat z digitálních knihoven a jejich obohacení.
-#### Namespaces (18)
+#### Namespaces (19)
     
 | prefix | string |
 | --- | --- |
 | array | http://www.w3.org/2005/xpath-functions/array |
 | c | http://www.w3.org/ns/xproc-step |
 | err | http://www.w3.org/ns/xproc-error |
+| laa | https://www.mzk.cz/ns/libri-augmentati/alto/1.0 |
 | lac | https://www.mzk.cz/ns/libri-augmentati/conversion/1.0 |
 | lad | https://www.mzk.cz/ns/libri-augmentati/documents/1.0 |
 | lae | https://www.mzk.cz/ns/libri-augmentati/enrichment/1.0 |
@@ -1658,7 +1996,7 @@
 | name | properties |
 | --- | --- |
 
-### Steps  (10 + 0)
+### Steps  (11 + 0)
       
 #### Documentation (199)
     
@@ -1788,6 +2126,42 @@
 |   |   |   | test | $debug | 
 
 
+#### **lax:prepare-text-data** (preparing-text-data)
+#### Options (4)
+      
+| name | properties |
+| --- | --- |
+| debug-path | name = debug-path \| select = () \| as = xs:string? |
+| base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| output-directory | name = output-directory \| required = true \| as = xs:string |
+| pause-before-request | name = pause-before-request \| select = 2 \| as = xs:integer |
+
+#### Ports (4)
+    
+| direction | value | primary |
+| --- | --- | ---| 
+| input | **source** | true |
+| input | report-in | false |
+| output | **result** | true |
+| output | report | false |
+
+### Steps  (0 + 3)
+      
+
+
+| position | step | name | parameter | value | 
+| --- | --- | --- | --- | --- | 
+| 1 | p:variable | debug |   |   | 
+|   |   |   | select | $debug-path \|\| '' ne '' | 
+| 2 | p:variable | debug-path-uri |   |   | 
+|   |   |   | select | resolve-uri($debug-path, $base-uri) | 
+| 3 | laa:combine-alto-pages |  |   |   | 
+|   |   |   | base-uri | {$base-uri} | 
+|   |   |   | debug-path | {$debug-path} | 
+|   |   |   | output-directory | {$output-directory} | 
+|   |   |   | pipe | report-in@preparing-text-data | 
+
+
 #### **lax:download-document-data** (downloading-document-data)
 #### Documentation (511)
     
@@ -1831,6 +2205,7 @@
 | --- | --- | --- | --- | --- | 
 | 1 | p:viewport |  |   |   | 
 |   |   |   | match | lad:document | 
+|   |   |   | p:add-attribute |  | 
 |   |   |   | p:variable |  | 
 |   |   |   | p:variable |  | 
 |   |   |   | p:variable |  | 
@@ -1858,6 +2233,10 @@
 |   |   |   | p:if | 
      
     | 
+|   |   |   | p:if | 
+     
+    | 
+|   |   |   | p:variable |  | 
 |   |   |   | p:variable |  | 
 |   |   |   | p:variable |  | 
 |   |   |   | p:variable |  | 
@@ -2081,6 +2460,9 @@
     
     | 
 |   |   |   | p:http-request |  | 
+|   |   |   | p:if | 
+    
+    | 
 |   |   |   | p:store |  | 
 
 
@@ -2099,7 +2481,7 @@
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
 | output-directory | name = output-directory \| required = true \| as = xs:string |
 | pause-before-request | name = pause-before-request \| select = 2 \| as = xs:integer |
-| output-format | name = output-format \| values = ('TEXT', 'TEI') \| as = xs:string* |
+| output-format | name = output-format \| values = ('ALTO', 'TEXT', 'TEI') \| as = xs:string* |
 | enrichment | name = enrichment \| values = ('ENTITIES', 'MORPHOLOGY') \| as = xs:string* |
 
 #### Ports (5)
@@ -2232,13 +2614,14 @@
 Steps for standalone operations with NameTag service and data.
 ##### Kihovna pro zpracování dat NameTag
 Kroky pro samostatné operace se službou a daty NameTag.
-#### Namespaces (7)
+#### Namespaces (8)
     
 | prefix | string |
 | --- | --- |
 | lad | https://www.mzk.cz/ns/libri-augmentati/documents/1.0 |
 | lant | https://www.mzk.cz/ns/libri-augmentati/nametag/1.0 |
 | las | https://www.mzk.cz/ns/libri-augmentati/settings/1.0 |
+| map | http://www.w3.org/2005/xpath-functions/map |
 | p | http://www.w3.org/ns/xproc |
 | xhtml | http://www.w3.org/1999/xhtml |
 | xs | http://www.w3.org/2001/XMLSchema |
@@ -2260,12 +2643,14 @@
 It calls the REST API of the NameTag service, passes it the text to recognize, and returns the result in JSON format.
 ##### Analýza textu NameTagem
 Zavolá rozhraní REST API služby NameTag, předá jí text k rozpoznání a vrátí výsledek ve formátu JSON.
-#### Options (2)
+#### Options (4)
       
 | name | properties |
 | --- | --- |
 | debug-path | name = debug-path \| select = () \| as = xs:string? |
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| file-stem | name = file-stem \| as = xs:string? |
+| language | name = language \| as = xs:string? \| select = 'cze' |
 
 #### Ports (5)
     
@@ -2277,7 +2662,7 @@
 | output | **result** | true |
 | output | report | false |
 
-### Steps  (0 + 11)
+### Steps  (0 + 16)
       
 #### Documentation (264)
     
@@ -2293,10 +2678,14 @@
 |   |   |   | select | $debug-path \|\| '' ne '' | 
 | 2 | p:variable | debug-path-uri |   |   | 
 |   |   |   | select | resolve-uri($debug-path, $base-uri) | 
-| 3 | p:variable | service |   |   | 
+| 3 | p:variable | language-models |   |   | 
+|   |   |   | select | map {    'cze': 'czech',    'ces': 'czech',    'dut': 'dutch',    'nld': 'dutch',    'eng': 'english',    'deu': 'german',    'ger': 'german',    'spa': 'spanish',    'multi' : 'multilingual'    } | 
+| 4 | p:variable | language-model |   |   | 
+|   |   |   | select | if(map:contains($language-models, $language))      then $language-models?($language)      else $language-models?multi | 
+| 5 | p:variable | service |   |   | 
 |   |   |   | pipe | settings@getting-nametag-analysis | 
 |   |   |   | select | //las:service[@code='nametag'] | 
-| 4 | p:variable | service-url |   |   | 
+| 6 | p:variable | service-url |   |   | 
 |   |   |   | p:documentation | 
     
      URL of the REST service.
@@ -2306,7 +2695,7 @@
     
     | 
 |   |   |   | select | $service/las:api/@url | 
-| 5 | p:variable | api-id |   |   | 
+| 7 | p:variable | api-id |   |   | 
 |   |   |   | p:documentation | 
     
      Identifier of the REST service.
@@ -2316,14 +2705,23 @@
     
     | 
 |   |   |   | select | substring-after($service/las:api/@ref, '#') | 
-| 6 | p:variable | feature |   |   | 
+| 8 | p:variable | feature |   |   | 
 |   |   |   | pipe | settings@getting-nametag-analysis | 
 |   |   |   | select | //las:api[@xml:id=$api-id]/las:feature[@type='entities'][@method='post'] | 
-| 7 | p:variable | step-url |   |   | 
+| 9 | p:variable | step-url |   |   | 
 |   |   |   | select | concat($service-url, $feature/@url) | 
-| 8 | p:variable | full-text |   |   | 
+| 10 | p:variable | step-params |   |   | 
+|   |   |   | select | string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&')  | 
+| 11 | p:variable | step-params |   |   | 
+|   |   |   | select | $step-params \|\| '&model=' \|\| $language-model | 
+| 12 | p:variable | full-text |   |   | 
 |   |   |   | select | . | 
-| 9 | p:http-request |  |   |   | 
+| 13 | p:if |  |   |   | 
+|   |   |   | p:store | 
+    
+    | 
+|   |   |   | test | $debug | 
+| 14 | p:http-request |  |   |   | 
 |   |   |   | href | {$step-url} | 
 |   |   |   | method | 'POST' | 
 |   |   |   | p:documentation | 
@@ -2334,8 +2732,8 @@
      Volání API služby NameTag pomocí metodyPOST. Jako vstupní parametr služby se předává prostý text, kódovaný pro URI.
     
     | 
-| 10 | p:identity | final |   |   | 
-| 11 | p:if |  |   |   | 
+| 15 | p:identity | final |   |   | 
+| 16 | p:if |  |   |   | 
 |   |   |   | p:store |  | 
 |   |   |   | test | $debug | 
 
@@ -2404,7 +2802,7 @@
 | output | **result** | true |
 | output | report | false |
 
-### Steps  (0 + 10)
+### Steps  (0 + 11)
       
 #### Documentation (375)
     
@@ -2432,13 +2830,15 @@
 |   |   |   | select | concat($output-directory, '/nametag') | 
 | 4 | p:variable | result-directory-uri |   |   | 
 |   |   |   | select | resolve-uri($result-directory-path, $base-uri) | 
-| 5 | p:if |  |   |   | 
+| 5 | p:variable | language |   |   | 
+|   |   |   | select | /lad:document/@language | 
+| 6 | p:if |  |   |   | 
 |   |   |   | p:store | 
     
     | 
 |   |   |   | test | $debug | 
-| 6 | p:viewport |  |   |   | 
-|   |   |   | match | lad:pages/lad:page/lad:resource[@type='text'][@local-file-exists='true'] | 
+| 7 | p:viewport |  |   |   | 
+|   |   |   | match | lad:pages/lad:page/lad:resource[@type='udpipe'][@local-file-exists='true'] | 
 |   |   |   | p:if | 
      
      
@@ -2450,6 +2850,11 @@
      
      
       
+       
+      
+     
+     
+     
      
      
      
@@ -2486,12 +2891,12 @@
      | 
 |   |   |   | p:variable |  | 
 |   |   |   | use-when | true() | 
-| 7 | p:identity | final |   |   | 
-| 8 | p:if |  |   |   | 
+| 8 | p:identity | final |   |   | 
+| 9 | p:if |  |   |   | 
 |   |   |   | p:store |  | 
 |   |   |   | test | $debug | 
-| 9 | p:identity | metadata |   |   | 
-| 10 | p:insert | final-report |   |   | 
+| 10 | p:identity | metadata |   |   | 
+| 11 | p:insert | final-report |   |   | 
 |   |   |   | pipe | @metadata | 
 |   |   |   | match | lant:report/lant:result | 
 |   |   |   | position | last-child | 
@@ -2697,12 +3102,13 @@
 Merge different representation of one page in TEI, comming from different sources, like ALTO, NameTag, and UDPipe.
 ##### Kombinace reprezentace TEI
 Zkombinuje různé reprezentace stejné stránky ve formátu TEI, které pocházejí z různých zdrojů, jako např. ALTO, NameTag nebo UDPipe.
-#### Options (2)
+#### Options (3)
       
 | name | properties |
 | --- | --- |
 | debug-path | name = debug-path \| select = () \| as = xs:string? |
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| file-stem | name = file-stem \| as = xs:string? |
 
 #### Ports (6)
     
@@ -3156,12 +3562,13 @@
 Calls the REST API of the UDPipe service, passes it the text to recognize, and returns the result in JSON format.
 ##### Analýza textu pomocí UDPipe
 Zavolá rozhraní REST API služby UDPipe, předá jí text k rozpoznání a vrátí výsledek ve formátu JSON.
-#### Options (2)
+#### Options (3)
       
 | name | properties |
 | --- | --- |
 | debug-path | name = debug-path \| select = () \| as = xs:string? |
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| language | name = language \| as = xs:string? \| select = 'cze' |
 
 #### Ports (5)
     
@@ -3173,7 +3580,7 @@
 | output | **result** | true |
 | output | report | false |
 
-### Steps  (0 + 12)
+### Steps  (0 + 13)
       
 #### Documentation (262)
     
@@ -3218,10 +3625,12 @@
 | 7 | p:variable | step-url |   |   | 
 |   |   |   | select | concat($service-url, $feature/@url) | 
 | 8 | p:variable | step-params |   |   | 
-|   |   |   | select | string-join($feature/las:param[@place='body'][@name !='data']/@name, '=&') | 
-| 9 | p:variable | full-text |   |   | 
+|   |   |   | select | string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&') | 
+| 9 | p:variable | step-params |   |   | 
+|   |   |   | select | $step-params \|\| '&model=' \|\| $language | 
+| 10 | p:variable | full-text |   |   | 
 |   |   |   | select | . | 
-| 10 | p:http-request |  |   |   | 
+| 11 | p:http-request |  |   |   | 
 |   |   |   | href | {$step-url} | 
 |   |   |   | method | 'POST' | 
 |   |   |   | p:documentation | 
@@ -3232,8 +3641,8 @@
      Volání API služby UDPipe pomocí metodyPOST. Jako vstupní parametr služby se předává prostý text, kódovaný pro URI.
     
     | 
-| 11 | p:identity | final |   |   | 
-| 12 | p:if |  |   |   | 
+| 12 | p:identity | final |   |   | 
+| 13 | p:if |  |   |   | 
 |   |   |   | p:store |  | 
 |   |   |   | test | $debug | 
 
@@ -3245,12 +3654,13 @@
 Converts the analysis output in JSON format to an XML document.
 ##### Konverze analýzy UDPipe do XML
 Převede výstup analýzy ve formátu JSON na dokument ve formátu XML.
-#### Options (2)
+#### Options (3)
       
 | name | properties |
 | --- | --- |
 | debug-path | name = debug-path \| select = () \| as = xs:string? |
 | base-uri | name = base-uri \| as = xs:anyURI \| select = static-base-uri() |
+| file-stem | name = file-stem \| as = xs:string? |
 
 #### Ports (2)
     
@@ -3325,7 +3735,7 @@
 | output | **result** | true |
 | output | report | false |
 
-### Steps  (0 + 10)
+### Steps  (0 + 12)
       
 #### Documentation (419)
     
@@ -3353,13 +3763,17 @@
 |   |   |   | select | concat($output-directory, '/udpipe') | 
 | 4 | p:variable | result-directory-uri |   |   | 
 |   |   |   | select | resolve-uri($result-directory-path, $base-uri) | 
-| 5 | p:if |  |   |   | 
+| 5 | p:variable | language |   |   | 
+|   |   |   | select | /lad:document/@language | 
+| 6 | p:if |  |   |   | 
 |   |   |   | p:store | 
     
     | 
 |   |   |   | test | $debug | 
-| 6 | p:viewport |  |   |   | 
-|   |   |   | match | lad:pages/lad:page/lad:resource[@type='nametag'][@local-file-exists='true'] | 
+| 7 | p:identity |  |   |   | 
+| 8 | p:viewport |  |   |   | 
+|   |   |   | pipe | source@getting-udpipe-analyses | 
+|   |   |   | match | lad:pages/lad:page/lad:resource[@type='text'][@local-file-exists='true'] | 
 |   |   |   | p:if | 
     
     
@@ -3381,7 +3795,14 @@
       
       
        
+       
+       
+       
+      
+      
+       
         
+       
        
       
      
@@ -3424,12 +3845,12 @@
     | 
 |   |   |   | p:variable |  | 
 |   |   |   | use-when | true() | 
-| 7 | p:identity | final |   |   | 
-| 8 | p:if |  |   |   | 
+| 9 | p:identity | final |   |   | 
+| 10 | p:if |  |   |   | 
 |   |   |   | p:store |  | 
 |   |   |   | test | $debug | 
-| 9 | p:identity | metadata |   |   | 
-| 10 | p:insert | final-report |   |   | 
+| 11 | p:identity | metadata |   |   | 
+| 12 | p:insert | final-report |   |   | 
 |   |   |   | pipe | @metadata | 
 |   |   |   | match | laud:report/laud:result | 
 |   |   |   | p:documentation | Doplnění zprávy o zpracovaných prvcích. | 
