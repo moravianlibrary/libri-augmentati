@@ -225,8 +225,8 @@
  </xsl:template>
  
  <xsl:template match="lad:page">
-  <xsl:variable name="root" select="root()/lad:document"/>
-  <xsl:variable name="library-api" select="root()/lad:document/las:library/las:api"/>
+  <xsl:variable name="root" select="ancestor::lad:document"/>
+  <xsl:variable name="library-api" select="ancestor::lad:document/las:library/las:api"/>
   <xsl:variable name="view-url" select="replace($library-api/@client-url-pattern, '\{document-id\}', $root/@id) => replace('\{page-id\}', @id)"/>
   <tr>
    <td><a href="{$view-url}"><xsl:value-of select="position()"/></a></td>
