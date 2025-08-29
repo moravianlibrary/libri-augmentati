@@ -1,0 +1,113 @@
+# generator = UDPipe 2, https://lindat.mff.cuni.cz/services/udpipe
+# udpipe_model = czech-pdt-ud-2.15-241121
+# udpipe_model_licence = CC BY-NC-SA
+# newdoc
+# newpar
+# sent_id = 1
+# text = ’•V:.- ROZPRAVY ÚSTAVU PRO VÝZKUM DÍTĚTE A DORŮSTAJÍCÍ MLÁDEŽE (PEDOLOGICKÉHO ÚSTAVU V PRßZt)'» £ J | Reports of the Pedologica!
+1	’	_	_	_	_	_	_	_	SpacesBefore=r|SpaceAfter=No
+2	•	_	_	_	_	_	_	_	SpaceAfter=No
+3	V	_	_	_	_	_	_	_	SpaceAfter=No
+4	:	_	_	_	_	_	_	_	SpaceAfter=No
+5	.	_	_	_	_	_	_	_	SpaceAfter=No
+6	-	_	_	_	_	_	_	_	SpacesAfter=r
+7	ROZPRAVY	_	_	_	_	_	_	_	_
+8	ÚSTAVU	_	_	_	_	_	_	_	_
+9	PRO	_	_	_	_	_	_	_	_
+10	VÝZKUM	_	_	_	_	_	_	_	_
+11	DÍTĚTE	_	_	_	_	_	_	_	_
+12	A	_	_	_	_	_	_	_	_
+13	DORŮSTAJÍCÍ	_	_	_	_	_	_	_	SpacesAfter=r
+14	MLÁDEŽE	_	_	_	_	_	_	_	SpacesAfter=r
+15	(	_	_	_	_	_	_	_	SpaceAfter=No
+16	PEDOLOGICKÉHO	_	_	_	_	_	_	_	_
+17	ÚSTAVU	_	_	_	_	_	_	_	_
+18	V	_	_	_	_	_	_	_	_
+19	PRßZt	_	_	_	_	_	_	_	SpaceAfter=No
+20	)	_	_	_	_	_	_	_	SpaceAfter=No
+21	'	_	_	_	_	_	_	_	SpaceAfter=No
+22	»	_	_	_	_	_	_	_	_
+23	£	_	_	_	_	_	_	_	_
+24	J	_	_	_	_	_	_	_	_
+25	|	_	_	_	_	_	_	_	SpacesAfter=r
+26	Reports	_	_	_	_	_	_	_	_
+27	of	_	_	_	_	_	_	_	_
+28	the	_	_	_	_	_	_	_	_
+29	Pedologica	_	_	_	_	_	_	_	SpaceAfter=No
+30	!	_	_	_	_	_	_	_	SpacesAfter=	
+
+# sent_id = 2
+# text = Travaux de ľínstitut pédo- Institute of Prague logique de Prague Adresse: Prague II., Vladislavova 5. Číslo 45. Rok 1928.
+1	Travaux	_	_	_	_	_	_	_	_
+2	de	_	_	_	_	_	_	_	_
+3	ľínstitut	_	_	_	_	_	_	_	_
+4	pédo	_	_	_	_	_	_	_	SpaceAfter=No
+5	-	_	_	_	_	_	_	_	SpacesAfter=r
+6	Institute	_	_	_	_	_	_	_	_
+7	of	_	_	_	_	_	_	_	_
+8	Prague	_	_	_	_	_	_	_	SpacesAfter=	
+9	logique	_	_	_	_	_	_	_	_
+10	de	_	_	_	_	_	_	_	_
+11	Prague	_	_	_	_	_	_	_	SpacesAfter=r
+12	Adresse	_	_	_	_	_	_	_	SpaceAfter=No
+13	:	_	_	_	_	_	_	_	_
+14	Prague	_	_	_	_	_	_	_	_
+15	II	_	_	_	_	_	_	_	SpaceAfter=No
+16	.	_	_	_	_	_	_	_	SpaceAfter=No
+17	,	_	_	_	_	_	_	_	_
+18	Vladislavova	_	_	_	_	_	_	_	_
+19	5	_	_	_	_	_	_	_	SpaceAfter=No
+20	.	_	_	_	_	_	_	_	SpacesAfter=r
+21	Číslo	_	_	_	_	_	_	_	_
+22	45	_	_	_	_	_	_	_	SpaceAfter=No
+23	.	_	_	_	_	_	_	_	SpacesAfter=r
+24	Rok	_	_	_	_	_	_	_	_
+25	1928	_	_	_	_	_	_	_	SpaceAfter=No
+26	.	_	_	_	_	_	_	_	SpacesAfter=r
+
+# sent_id = 3
+# text = Nesprávný postoj u dětí a jeho náprava.
+1	Nesprávný	_	_	_	_	_	_	_	_
+2	postoj	_	_	_	_	_	_	_	_
+3	u	_	_	_	_	_	_	_	_
+4	dětí	_	_	_	_	_	_	_	_
+5	a	_	_	_	_	_	_	_	_
+6	jeho	_	_	_	_	_	_	_	_
+7	náprava	_	_	_	_	_	_	_	SpaceAfter=No
+8	.	_	_	_	_	_	_	_	SpacesAfter=r
+
+# sent_id = 4
+# text = POSTURAL DEFECTS IN CHILDREN AND THEIR CORRECTION.
+1	POSTURAL	_	_	_	_	_	_	_	_
+2	DEFECTS	_	_	_	_	_	_	_	_
+3	IN	_	_	_	_	_	_	_	_
+4	CHILDREN	_	_	_	_	_	_	_	_
+5	AND	_	_	_	_	_	_	_	SpacesAfter=r
+6	THEIR	_	_	_	_	_	_	_	_
+7	CORRECTION	_	_	_	_	_	_	_	SpaceAfter=No
+8	.	_	_	_	_	_	_	_	SpacesAfter=r
+
+# sent_id = 5
+# text = PROF. Dr. J. MATIEGKA.
+1	PROF	_	_	_	_	_	_	_	SpaceAfter=No
+2	.	_	_	_	_	_	_	_	_
+3	Dr	_	_	_	_	_	_	_	SpaceAfter=No
+4	.	_	_	_	_	_	_	_	_
+5	J	_	_	_	_	_	_	_	SpaceAfter=No
+6	.	_	_	_	_	_	_	_	_
+7	MATIEGKA	_	_	_	_	_	_	_	SpaceAfter=No
+8	.	_	_	_	_	_	_	_	SpacesAfter=r
+
+# sent_id = 6
+# text = V PRAZE
+1	V	_	_	_	_	_	_	_	_
+2	PRAZE	_	_	_	_	_	_	_	SpacesAfter=r
+
+# sent_id = 7
+# text = Nákladem vlastním 19 2 8
+1	Nákladem	_	_	_	_	_	_	_	_
+2	vlastním	_	_	_	_	_	_	_	SpacesAfter=r
+3	19	_	_	_	_	_	_	_	_
+4	2	_	_	_	_	_	_	_	_
+5	8	_	_	_	_	_	_	_	SpaceAfter=No
+
