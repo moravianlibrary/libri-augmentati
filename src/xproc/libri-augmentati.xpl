@@ -197,7 +197,7 @@
  </p:declare-step>
  
  <!-- STEP -->
- <p:declare-step type="lax:prepare-text-data" name="preparing-text-data" use-when="true()">
+ <p:declare-step type="lax:prepare-text-data" name="preparing-text-data" use-when="false()">
   <!-- INPUT PORTS -->
   <p:input port="source" primary="true" />
   <p:input port="report-in">
@@ -710,6 +710,7 @@
    <p:xslt>
     <p:with-input port="stylesheet" href="../xslt/report.xsl" />
    </p:xslt>
+   <p:namespace-delete prefixes="c" />
    
    <p:identity name="report" />
    <p:if test="$save-output" name="save">
