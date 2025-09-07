@@ -126,13 +126,16 @@
    </p:documentation>
   </p:variable>
   
+  <!-- TODO: try all languages, take the best result -->
+  <p:variable name="language-param" select="tokenize($language)[1]" />
+  
   <p:variable name="feature" 
    select="//las:api[@xml:id=$api-id]/las:feature[@type='process'][@method='post']"
    pipe="settings@getting-udpipe-analysis"/>
   <p:variable name="step-url" select="concat($service-url, $feature/@url)" />
 <!--  <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;')" />-->
   <p:variable name="step-params" select="string-join($feature/las:param[@place='body'][not(@name =('data','model'))]//concat(@name, '=', @value), '&amp;')" />
-  <p:variable name="step-params" select="$step-params || '&amp;model=' || $language" />
+  <p:variable name="step-params" select="$step-params || '&amp;model=' || $language-param" />
   <p:variable name="full-text" select="." />
   
   <!-- PIPELINE BODY -->

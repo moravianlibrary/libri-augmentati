@@ -114,9 +114,12 @@
    'multi' : 'multilingual'
    }" />
   
+  <!-- TODO: try all languages, take the best result -->
+  <p:variable name="language-param" select="tokenize($language)[1]" />
+  
   <p:variable name="language-model" 
-    select="if(map:contains($language-models, $language)) 
-    then $language-models?($language) 
+   select="if(map:contains($language-models, $language-param)) 
+   then $language-models?($language-param) 
     else $language-models?multi" />
   
   <p:variable name="service" select="//las:service[@code='nametag']" 
