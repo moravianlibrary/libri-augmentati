@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lad:documents xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0">
+ <lad:document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" nickname="postural-defekty"/>
+ <lad:document id="uuid:de87a0e0-643b-11ea-a744-005056827e51" nickname="defekty"/>
+ <!-- Turgeněv, Lovcovy zápisky, 1916 -->
+ <!--<lad:document id="uuid:787b1470-8e51-11ec-8353-005056827e51" nickname="zapisky-1916"/>
+ <lad:document id="uuid:9d2d25e0-9565-11ec-a3e4-5ef3fc9bb22f" nickname="zapisky-1922" />-->
+</lad:documents>
