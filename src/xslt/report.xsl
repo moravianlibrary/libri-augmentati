@@ -6,8 +6,10 @@
  xmlns:lad="https://www.mzk.cz/ns/libri-augmentati/documents/1.0" 
  xmlns:las="https://www.mzk.cz/ns/libri-augmentati/settings/1.0"
  xmlns:c="http://www.w3.org/ns/xproc-step"
- exclude-result-prefixes="xs math xd lad las"
- version="3.0">
+ xmlns:lax="https://www.mzk.cz/ns/libri-augmentati/xslt"
+ exclude-result-prefixes="xs math xd lad las lax"
+ version="3.0"
+>
  <xd:doc scope="stylesheet">
   <xd:desc>
    <xd:p><xd:b>Created on:</xd:b> Jun 4, 2024</xd:p>
@@ -19,6 +21,7 @@
  <xsl:strip-space elements="*"/>
  <xsl:output method="html" indent="true" />
  <xsl:mode on-no-match="shallow-skip"/>
+ <xsl:param name="use-relative-paths" as="xs:boolean" select="true()" />
  
  <xsl:template match="/">
   <html>
@@ -50,6 +53,12 @@
      grid-template-columns: 5fr 2fr;
      grid-template-rows: auto auto;
      gap: 10px;
+     }
+     
+     .container div {
+      border-bottom-width: 1em;
+      border-bottom-color: #7EA8F8;
+      border-bottom-style: solid;
      }
      
      img.logo {
@@ -91,6 +100,7 @@
  </xsl:template>
  
  <xsl:template match="lad:document">
+  <xsl:variable name="view-url" select="lax:get-view-url(lad:pages/lad:page[1])"/>
   <div>
    <section>
     <xsl:if test="@author | @title">
@@ -98,7 +108,8 @@
       <xsl:if test="@author and @title"><xsl:text>: </xsl:text></xsl:if> 
       <xsl:value-of select="@title"/></h1> 
     </xsl:if>
-    <h2>Document ID <xsl:value-of select="@id"/></h2>
+    
+    <h2>Document ID <a href="{$view-url}"><xsl:value-of select="@id"/></a></h2>
     <xsl:call-template name="resource-table" />
     <xsl:apply-templates select="* except (las:api, las:library, lad:options)" />
    </section>   
@@ -136,7 +147,14 @@
     <xsl:text> | </xsl:text>    
    </xsl:if>
    <xsl:if test="@local-file-exists = 'true'">
-    <a href="{@local-uri}">local</a>      
+    <xsl:choose>
+     <xsl:when test="$use-relative-paths">
+      <a href="{@local-path}">local</a>
+     </xsl:when>
+     <xsl:otherwise>
+      <a href="{@local-uri}">local</a>
+     </xsl:otherwise>
+    </xsl:choose>      
    </xsl:if>
   </td>
  </xsl:template>
@@ -225,9 +243,7 @@
  </xsl:template>
  
  <xsl:template match="lad:page">
-  <xsl:variable name="root" select="ancestor::lad:document"/>
-  <xsl:variable name="library-api" select="ancestor::lad:document/las:library/las:api"/>
-  <xsl:variable name="view-url" select="replace($library-api/@client-url-pattern, '\{document-id\}', $root/@id) => replace('\{page-id\}', @id)"/>
+  <xsl:variable name="view-url" select="lax:get-view-url(.)"/>
   <tr>
    <td><a href="{$view-url}"><xsl:value-of select="position()"/></a></td>
    <xsl:for-each select="@* except(@alto, @ocr, @mods, @foxml, @dc, @image, @id)">
@@ -252,7 +268,14 @@
        <a href="{@url}">on-line</a>
        <xsl:if test="@local-file-exists = 'true'">
         <xsl:text> | </xsl:text>
-        <a href="{@local-uri}">local</a>      
+        <xsl:choose>
+         <xsl:when test="$use-relative-paths">
+          <a href="{@local-path}">local</a>
+         </xsl:when>
+         <xsl:otherwise>
+          <a href="{@local-uri}">local</a>
+         </xsl:otherwise>
+        </xsl:choose>      
        </xsl:if>
     </td>
    </xsl:for-each>
@@ -289,5 +312,14 @@
  <xsl:template match="c:file">
   <li><a href="{@full-path}"><xsl:value-of select="@name"/></a></li>
  </xsl:template>
+ 
+ <xsl:function name="lax:get-view-url">
+  <xsl:param name="context" as="node()"/>
+  <xsl:variable name="root" select="$context/ancestor::lad:document"/>
+  <xsl:variable name="library-api" select="$context/ancestor::lad:document/las:library/las:api"/>
+  <xsl:variable name="view-url" select="replace($library-api/@client-url-pattern, '\{document-id\}', $root/@id) => replace('\{page-id\}', $context/@id)"/>
+  <xsl:value-of select="$view-url"/>
+ </xsl:function>
+ 
  
 </xsl:stylesheet>
