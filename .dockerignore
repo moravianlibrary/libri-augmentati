@@ -1,0 +1,6 @@
+src/_debug
+src/_temp
+src/todo
+src/morgana
+src/tests
+.gitignore
