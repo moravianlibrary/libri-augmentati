@@ -22,6 +22,7 @@
  <xsl:output method="html" indent="true" />
  <xsl:mode on-no-match="shallow-skip"/>
  <xsl:param name="use-relative-paths" as="xs:boolean" select="true()" />
+ <xsl:param name="docker-data-root" select="'/data/'" />
  
  <xsl:template match="/">
   <html>
@@ -147,14 +148,9 @@
     <xsl:text> | </xsl:text>    
    </xsl:if>
    <xsl:if test="@local-file-exists = 'true'">
-    <xsl:choose>
-     <xsl:when test="$use-relative-paths">
-      <a href="{@local-path}">local</a>
-     </xsl:when>
-     <xsl:otherwise>
-      <a href="{@local-uri}">local</a>
-     </xsl:otherwise>
-    </xsl:choose>      
+    <xsl:call-template name="get-local-path">
+     <xsl:with-param name="resource" select="." />
+    </xsl:call-template>
    </xsl:if>
   </td>
  </xsl:template>
@@ -268,14 +264,9 @@
        <a href="{@url}">on-line</a>
        <xsl:if test="@local-file-exists = 'true'">
         <xsl:text> | </xsl:text>
-        <xsl:choose>
-         <xsl:when test="$use-relative-paths">
-          <a href="{@local-path}">local</a>
-         </xsl:when>
-         <xsl:otherwise>
-          <a href="{@local-uri}">local</a>
-         </xsl:otherwise>
-        </xsl:choose>      
+        <xsl:call-template name="get-local-path">
+         <xsl:with-param name="resource" select="." />
+        </xsl:call-template> 
        </xsl:if>
     </td>
    </xsl:for-each>
@@ -321,5 +312,21 @@
   <xsl:value-of select="$view-url"/>
  </xsl:function>
  
+ <xsl:template name="get-local-path">
+  <xsl:param name="resource" as="element(lad:resource)?" />
+  <xsl:variable name="local-path" select="if($use-relative-paths and starts-with($resource/@local-path, '/'))
+    then replace($resource/@local-path, $docker-data-root, '../') 
+    else $resource/@local-path"/>
+  <xsl:if test="$resource/@local-file-exists = 'true'">
+   <xsl:choose>
+    <xsl:when test="$use-relative-paths">
+     <a href="{$local-path}">local</a>
+    </xsl:when>
+    <xsl:otherwise>
+     <a href="{@local-uri}">local</a>
+    </xsl:otherwise>
+   </xsl:choose>      
+  </xsl:if>
+ </xsl:template>
  
 </xsl:stylesheet>

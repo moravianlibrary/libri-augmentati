@@ -20,7 +20,7 @@
    >>>>>>>>>>>>>>>>>
   -->
   <p:input port="source" primary="true">
-  	<p:document href="../../_temp/zapisky/report.xml" />
+  	<p:document href="../../_temp/result/report.xml" />
   </p:input>
    
 	<!--
@@ -53,7 +53,10 @@
   -->
 	<lax:create-report />
 	
-	<p:store href="../../_temp/zapisky/report.html" serialization="map{'indent' : true()}" message="Storing result to ../../_temp/zapisky/report.html" />
+	<p:store href="../../_temp/result/report.html" serialization="map{'indent' : true()}" message="Storing result to ../../_temp/result/report.html" />
 	
+	<p:identity>
+		<p:with-input port="source" pipe="result-uri" />
+	</p:identity>
 
 </p:declare-step>
