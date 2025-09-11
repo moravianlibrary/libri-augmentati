@@ -395,7 +395,7 @@
    <xsl:when test="$ne[@type='T']">
     <xsl:value-of select="concat(
      if($ne/ne[@type='ty']) then '' else '-',
-     lant:get-when-value($ne/ne[@type='ty']),
+     string-join(for $ty in $ne/ne[@type='ty'] return lant:get-when-value($ty)),
      if($ne/ne[@type='tm']) then '-' else '',
      string-join(for $tm in $ne/ne[@type='tm'] return lant:get-when-value($tm)),
      if($ne/ne[@type='td']) then '-' else '',
