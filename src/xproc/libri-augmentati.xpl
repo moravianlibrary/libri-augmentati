@@ -693,7 +693,7 @@
 
   <!-- PIPELINE BODY -->
   <p:for-each name="documents-loop">
-   <p:with-input select="/*"/>
+   <p:with-input select="/lad:documents/lad:document"/>
    <p:output port="result" pipe="result@report" />
    <p:output port="result-uri" pipe="result-uri@save" />
    <p:variable name="library-code" select="/lad:document/las:library/@code"/>
@@ -706,9 +706,10 @@
    <p:if test="$save-output" name="xml-report-save">
     <p:store href="{$output-directory-uri}/{$library-code}-{$document-id}-report.xml" message="Storing XML report to {$output-directory}/{$library-code}-{$document-id}-report.xml" name="xml-report-store" />
    </p:if>
-   
+      
    <p:xslt>
     <p:with-input port="stylesheet" href="../xslt/report.xsl" />
+    <p:with-option name="parameters" select="map {'docker-data-root' : $output-directory }" />
    </p:xslt>
    <p:namespace-delete prefixes="c" />
    
