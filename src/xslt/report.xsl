@@ -22,7 +22,7 @@
  <xsl:output method="html" indent="true" />
  <xsl:mode on-no-match="shallow-skip"/>
  <xsl:param name="use-relative-paths" as="xs:boolean" select="true()" />
- <xsl:param name="docker-data-root" select="'/data/'" />
+ <xsl:param name="docker-data-root" select="'/data/tei-conference'" />
  
  <xsl:template match="/">
   <html>
@@ -314,8 +314,8 @@
  
  <xsl:template name="get-local-path">
   <xsl:param name="resource" as="element(lad:resource)?" />
-  <xsl:variable name="local-path" select="if($use-relative-paths and starts-with($resource/@local-path, '/'))
-    then replace($resource/@local-path, $docker-data-root, '../') 
+  <xsl:variable name="local-path" select="if($use-relative-paths and starts-with($resource/@local-path, $docker-data-root))
+    then replace($resource/@local-path, $docker-data-root, '.') 
     else $resource/@local-path"/>
   <xsl:if test="$resource/@local-file-exists = 'true'">
    <xsl:choose>
