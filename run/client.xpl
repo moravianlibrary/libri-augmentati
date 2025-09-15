@@ -170,7 +170,7 @@
 	<p:wrap-sequence wrapper="lad:documents" />
 	<p:store href="{$output-directory}/report.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
-	<lax:create-report output-directory="{output-directory}"/>
+	<lax:create-report output-directory="{$output-directory}"/>
 	<p:store href="{$output-directory}/report.html" />
 	<p:identity>
 		<p:with-input port="source" pipe="result-uri" />
