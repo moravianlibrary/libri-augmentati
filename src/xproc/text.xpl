@@ -83,7 +83,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   <p:variable name="result-directory-path" select="$output-directory">
    <p:documentation>
     <xhtml:section xml:lang="en">
@@ -94,7 +94,7 @@
     </xhtml:section>
    </p:documentation>
   </p:variable>
-  <p:variable name="result-directory-uri" select="resolve-uri($result-directory-path, $base-uri)" />
+  <p:variable name="result-directory-uri" select="p:urify($result-directory-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <p:variable name="resources"  select="/lad:document/lad:pages/lad:page/lad:resource[@type='text'][@local-file-exists='true']" />

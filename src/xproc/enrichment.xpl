@@ -205,7 +205,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->
@@ -298,7 +298,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
     
   <!-- PIPELINE BODY -->
   <p:insert position="last-child" name="report-start">
@@ -382,7 +382,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->
@@ -476,7 +476,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   <p:variable name="step-name" select="'lat:convert-to-tei'" />
   
   <!-- PIPELINE BODY -->
@@ -567,7 +567,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <p:insert position="last-child" name="report-start">
@@ -656,7 +656,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <p:insert position="last-child" name="report-start">

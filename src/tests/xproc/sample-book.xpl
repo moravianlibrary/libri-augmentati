@@ -158,7 +158,7 @@
 	
 	<p:store href="{$output-directory}/virtual-document-04-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" message="   storing {$output-directory}/virtual-document-04-enriched.xml" />
 	
-	<lax:create-report output-directory="{output-directory}" p:message=" :: CREATING REPORT :: "/>
+	<lax:create-report output-directory="{$output-directory}" p:message=" :: CREATING REPORT :: "/>
 	<p:store href="{$output-directory}/report.html" message="Storing report to {$output-directory}/report.html" />
 
 	<p:identity>

@@ -49,7 +49,7 @@
      
      <!-- VARIABLES -->
      <p:variable name="debug" select="$debug-path || '' ne ''" />
-     <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+     <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
      
 
      <p:variable name="resources" select="/lad:document/las:api/las:resource" />
@@ -185,7 +185,7 @@
      
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <p:variable name="base-url" select="/lad:document/lad:options/@base-url" />
@@ -224,7 +224,7 @@
         
      <!-- VARIABLES -->
      <p:variable name="debug" select="$debug-path || '' ne ''" />
-     <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+     <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
 
     <!-- PIPELINE BODY -->
     <p:try>
@@ -277,7 +277,7 @@
    
    <!-- VARIABLES -->
    <p:variable name="debug" select="$debug-path || '' ne ''" />
-   <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+   <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
    
    <!-- PIPELINE BODY -->
    <p:for-each>
@@ -320,7 +320,7 @@
      
      <!-- VARIABLES -->
      <p:variable name="debug" select="$debug-path || '' ne ''" />
-     <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+     <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
      
      <p:variable name="options" select="/lad:document/lad:options" />
      <p:variable name="resources" select="/lad:document/las:api/las:resource" />
@@ -430,7 +430,7 @@
      
      <!-- VARIABLES -->
      <p:variable name="debug" select="$debug-path || '' ne ''" />
-     <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+     <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
     
     <!-- PIPELINE BODY -->
     <p:http-request href="{$url}" 

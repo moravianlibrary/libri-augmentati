@@ -43,7 +43,7 @@
  
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->
@@ -89,7 +89,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->
@@ -134,7 +134,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->
@@ -191,7 +191,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->
@@ -203,7 +203,7 @@
    <p:variable name="new-filename" select="concat(substring-before($filename, '.'), '.', $format)"/>
    <p:identity>
     <p:with-input port="source">
-     <p:inline content-type="text/plain">{$ddjvu-path} -format={$format} -mode=color {resolve-uri(concat($input-directory, '/', $filename),static-base-uri())} {resolve-uri(concat($output-directory, '/', $new-filename), static-base-uri())}</p:inline>
+     <p:inline content-type="text/plain">{$ddjvu-path} -format={$format} -mode=color {p:urify(concat($input-directory, '/', $filename),static-base-uri())} {p:urify(concat($output-directory, '/', $new-filename), static-base-uri())}</p:inline>
     </p:with-input>
    </p:identity>
    <lac:fix-path name="pdf-merge" debug-path="{$debug-path}" base-uri="{$base-uri}"/>
@@ -214,7 +214,7 @@
   
   <p:identity>
    <p:with-input port="source">
-    <p:inline content-type="text/plain">java -jar {$pdfbox-path} PDFMerger {resolve-uri(concat($output-directory, '/*.pdf'),static-base-uri())} {resolve-uri(concat($output-directory, '/../Full.pdf'),static-base-uri())}</p:inline>
+    <p:inline content-type="text/plain">java -jar {$pdfbox-path} PDFMerger {p:urify(concat($output-directory, '/*.pdf'),static-base-uri())} {p:urify(concat($output-directory, '/../Full.pdf'),static-base-uri())}</p:inline>
    </p:with-input>
   </p:identity>
   <lac:fix-path name="pdf-merge" debug-path="{$debug-path}" base-uri="{$base-uri}"/>
@@ -257,7 +257,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE BODY -->

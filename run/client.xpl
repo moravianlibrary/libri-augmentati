@@ -23,7 +23,7 @@
 	
    
 	<!-- OUTPUT PORTS -->
-	<p:output port="result" primary="true" serialization="map{'indent' : true()}" />
+	<p:output port="result" primary="true" serialization="map{'indent' : true()}" sequence="true" />
 	
 	<!-- OPTIONS -->
 	<!-- TODO: 
@@ -46,7 +46,8 @@
 	
 	<!-- VARIABLES -->
 	<p:variable name="debug" select="$debug-path || '' ne ''" />
-	<p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+	<p:variable name="debug-path-uri" select="if(empty($debug-path)) then () else p:urify($debug-path, $base-uri)" />
+	<p:variable name="output-directory-uri" select="if(empty($output-directory)) then () else p:urify($output-directory, $base-uri)" />
 	
 	<p:variable name="input-documents" select="//lad:document[@id]" pipe="source@client" />
 	
@@ -96,7 +97,7 @@
 	<p:for-each>
 		<p:with-input select="//lad:document"/>
 		<p:variable name="nickname" select="/lad:document/@nickname" />
-		<p:store href="{$output-directory}/{$nickname}/virtual-document-01-builded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+		<p:store href="{$output-directory-uri}/{$nickname}/virtual-document-01-builded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	</p:for-each>
 
 	<lax:download-document-data p:use-when="true()"
@@ -111,7 +112,7 @@
 	<p:for-each>
 		<p:with-input select="//lad:document"/>
 		<p:variable name="nickname" select="/lad:document/@nickname" />
-		<p:store href="{$output-directory}/{$nickname}/virtual-document-02-downloaded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+		<p:store href="{$output-directory-uri}/{$nickname}/virtual-document-02-downloaded.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 		
 		<lax:prepare-text-data p:use-when="false()"
 			output-directory="{$output-directory}" 
@@ -121,7 +122,7 @@
 			<p:with-input port="report-in" pipe="report@download-data" />
 		</lax:prepare-text-data>
 		
-		<p:store href="{$output-directory}/{$nickname}/virtual-document-03-prepared-text.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+		<p:store href="{$output-directory-uri}/{$nickname}/virtual-document-03-prepared-text.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 		
 		<lax:enrich-document-data p:use-when="true()"
 			output-directory="{$output-directory}" 
@@ -135,7 +136,7 @@
 			<p:with-input port="settings" href="../src/settings/services.xml" />
 		</lax:enrich-document-data>
 		
-		<p:store href="{$output-directory}/{$nickname}/virtual-document-04-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+		<p:store href="{$output-directory-uri}/{$nickname}/virtual-document-04-enriched.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 		
 	</p:for-each>
 	
@@ -168,10 +169,10 @@
 	</p:for-each>-->
 
 	<p:wrap-sequence wrapper="lad:documents" />
-	<p:store href="{$output-directory}/report.xml" serialization="map{'indent' : true()}"  use-when="true()" />
+	<p:store href="{$output-directory-uri}/report.xml" serialization="map{'indent' : true()}"  use-when="true()" />
 	
-	<lax:create-report output-directory="{$output-directory}"/>
-	<p:store href="{$output-directory}/report.html" />
+	<lax:create-report output-directory="{$output-directory}" />
+	<p:store href="{$output-directory-uri}/report.html" />
 	<p:identity>
 		<p:with-input port="source" pipe="result-uri" />
 	</p:identity>

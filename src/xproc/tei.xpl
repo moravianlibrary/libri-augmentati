@@ -85,7 +85,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <p:xslt message="  - transforming from ALTO to TEI">
    <p:with-input port="stylesheet" href="../xslt/conversion/alto2tei.xsl" />
@@ -167,7 +167,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <p:xslt message="  - transforming from NameTag to TEI">
    <p:with-input port="stylesheet" href="../xslt/nametag/nametag-xml-to-tei.xsl" />
@@ -250,7 +250,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   
   <!-- PIPELINE -->
@@ -379,7 +379,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
  <!-- <p:variable name="result-directory-path" select="concat($output-directory, '/tei')">
    <p:documentation>
     <xhtml:section xml:lang="en">
@@ -390,7 +390,7 @@
     </xhtml:section>
    </p:documentation>
   </p:variable>
-  <p:variable name="result-directory-uri" select="resolve-uri($result-directory-path, $base-uri)" />-->
+  <p:variable name="result-directory-uri" select="p:urify($result-directory-path, $base-uri)" />-->
   
   <p:variable name="udpipe-root" select="/*" pipe="udpipe@merging-tei-representations" />
   
@@ -475,7 +475,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   <p:variable name="result-directory-path" select="concat($output-directory, '/tei')">
    <p:documentation>
     <xhtml:section xml:lang="en">
@@ -486,7 +486,7 @@
     </xhtml:section>
    </p:documentation>
   </p:variable>
-  <p:variable name="result-directory-uri" select="resolve-uri($result-directory-path, $base-uri)" />
+  <p:variable name="result-directory-uri" select="p:urify($result-directory-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <p:viewport match="lad:pages/lad:page" use-when="true()">
@@ -676,7 +676,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   <p:variable name="result-directory-path" select="$output-directory">
    <p:documentation>
     <xhtml:section xml:lang="en">
@@ -687,9 +687,10 @@
     </xhtml:section>
    </p:documentation>
   </p:variable>
-  <p:variable name="result-directory-uri" select="resolve-uri($result-directory-path, $base-uri)" />
+  <p:variable name="result-directory-uri" select="p:urify($result-directory-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
+  <p:variable name="document-id" select="/lad:document/@document-id" />
   <p:variable name="foxml" select="/lad:document/lad:resource[@type='foxml'][@local-file-exists='true']" />
   <p:variable name="teis"  select="/lad:document/lad:pages/lad:page/lad:resource[@type='tei'][@local-file-exists='true']" />
   
@@ -702,9 +703,13 @@
     <p:variable name="file-stem" select="'tei'" />
     <p:variable name="result-file-name" select="concat($file-stem, '.xml')" />
     <p:variable name="saved-file-uri" select="concat($result-directory-uri, '/', $result-file-name)"/>
+
+   <p:variable name="unique-file-stem" select="replace($document-id, ':', '_')" />
+   <p:variable name="unique-file-name" select="concat($unique-file-stem, '-', $file-stem, '.xml')" />
+   <p:variable name="saved-unique-file-uri" select="concat($result-directory-uri, '/', $unique-file-name)"/>
+   
     
-    
-    <p:if test="not(doc-available($saved-file-uri))">
+   <p:if test="not(doc-available($saved-file-uri)) or not(doc-available($saved-unique-file-uri))">
      
      <p:identity name="first-tei-page">
       <p:with-input port="source">
@@ -713,7 +718,7 @@
      </p:identity>
      <p:variable name="first-page" select="/*" />
      
-     <p:xslt message="$first-page: {local-name($first-page)}; {$teis[1]/@local-uri}">
+     <p:xslt>
       <p:with-input port="source" href="{$foxml/@local-uri}" />
       <p:with-input port="stylesheet" href="../xslt/conversion/foxml-to-tei.xsl" />
       <p:with-option name="parameters" select="map {'tei-page' : $first-page }" />
@@ -736,6 +741,7 @@
      </p:viewport>
      
      <p:if test="$result-directory-path">
+      <p:store href="{$saved-unique-file-uri}" message="Storing to {$saved-unique-file-uri}" />
       <p:store href="{$saved-file-uri}" message="Storing to {$saved-file-uri}" />
      </p:if>     
     </p:if>
@@ -749,6 +755,11 @@
       />
      </p:with-input>
     </p:identity>
+   <!--<lad:resource local-file-exists="true" name="{$unique-file-name}" 
+       local-path="{$result-directory-path}/{$unique-file-name}"
+       local-uri="{$saved-unique-file-uri}"
+       type="tei"
+      />-->
     <p:namespace-delete prefixes="lat xs xhtml" />
     
     <p:insert match="/lad:document/lad:resource[last()]" position="after">
