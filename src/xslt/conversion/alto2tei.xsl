@@ -18,6 +18,11 @@
  <xsl:variable name="version" select="'1.2.0'"/>
 
  <!--
+  original source:
+  https://github.com/instituutnederlandsetaal/OpenConvert/blob/master/resources/xsl/alto2tei.xsl
+ -->
+
+ <!--
 <String ID="P1_ST03570" HPOS="3324" VPOS="3090" WIDTH=
 "33" HEIGHT="19" CONTENT="on" SUBS_TYPE="HypPart1" SUBS_CONTENT="onderaardsche" WC="0.62" CC="460"/>
                                                 <HYP HPOS="3357" VPOS="3090" WIDTH="15" CONTENT="-"/>
