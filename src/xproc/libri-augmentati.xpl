@@ -90,7 +90,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <p:variable name="library" 
    select="/las:digital-libraries/las:libraries/las:library[@code=$library-code]"
@@ -163,7 +163,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <p:variable name="api-version" select="/lad:document/lad:options/@api-version"/>
   <p:variable name="system" select="/lad:document/lad:options/@system"/>
@@ -216,7 +216,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <laa:combine-alto-pages 
@@ -374,8 +374,8 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
-  <p:variable name="output-directory-uri" select="resolve-uri($output-directory, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
+  <p:variable name="output-directory-uri" select="p:urify($output-directory, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <p:viewport match="lad:resource">
@@ -387,7 +387,7 @@
     else $resource-types?($type)?extension" />
    <p:variable name="name" select="concat($position, $extension)" />
    <p:variable name="local-path" select="concat($output-directory, '/', $name)"/>
-   <p:variable name="local-uri" select="resolve-uri($local-path, $base-uri)"/>
+   <p:variable name="local-uri" select="p:urify($local-path, $base-uri)"/>
    <p:set-attributes attributes="map {
      'name' : $name, 
      'local-path' : $local-path, 
@@ -435,7 +435,7 @@
   
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="p:urify($debug-path, $base-uri)" />
   <p:variable name="local-path" select="/*/@local-uri" />
   
   <!-- PIPELINE BODY -->
@@ -526,7 +526,7 @@
 
   <!-- VARIABLES -->
   <p:variable name="content-type" select="if(ends-with($url, '.txt')) then 'text/plain' else if(ends-with($url, '.djvu')) then 'image/vnd.djvu' else '*/*'"/>
-  <p:variable name="local-path-uri" select="resolve-uri($local-path, $base-uri)" />
+  <p:variable name="local-path-uri" select="p:urify($local-path, $base-uri)" />
   
   <!-- PIPELINE BODY -->
   <p:try>
@@ -675,8 +675,12 @@
   <p:input port="source" primary="true" sequence="true"/>
   
   <!-- OUTPUT PORTS -->
-  <p:output port="result" primary="true" sequence="true" pipe="result@documents-loop"/>
-  <p:output port="result-uri" primary="false" sequence="true" pipe="result-uri@documents-loop"/>
+  <p:output port="result" primary="true" sequence="false" pipe="result@complete-report"/>
+  <p:output port="result-uri" primary="false" sequence="false" pipe="result-uri@complete-save"/>
+  
+<!--  <p:output port="result" primary="true" sequence="true" pipe="result@documents-loop" use-when="false()"/>
+  <p:output port="result-uri" primary="false" sequence="true" pipe="result-uri@documents-loop" use-when="false()"/>-->
+
   
   <!-- OPTIONS -->
   <p:option name="debug-path" select="()" as="xs:string?" />
@@ -686,16 +690,16 @@
 
   <!-- VARIABLES -->
   <p:variable name="debug" select="$debug-path || '' ne ''" />
-  <p:variable name="debug-path-uri" select="resolve-uri($debug-path, $base-uri)" />
+  <p:variable name="debug-path-uri" select="if(empty($debug-path)) then resolve-uri($debug-path, $base-uri) else p:urify($debug-path, $base-uri)" />
   
   <p:variable name="save-output" select="$output-directory || '' ne ''" />
-  <p:variable name="output-directory-uri" select="resolve-uri($output-directory, $base-uri)" />
+  <p:variable name="output-directory-uri" select="p:urify($output-directory, $base-uri)" />
 
   <!-- PIPELINE BODY -->
   <p:for-each name="documents-loop">
-   <p:with-input select="/lad:documents/lad:document"/>
-   <p:output port="result" pipe="result@report" />
-   <p:output port="result-uri" pipe="result-uri@save" />
+   <p:with-input select="//lad:document"/>
+   <p:output port="result" pipe="current@documents-loop" primary="true" sequence="true" />
+   <p:output port="result-uri" pipe="result-uri@report-save" sequence="true" />
    <p:variable name="library-code" select="/lad:document/las:library/@code"/>
    <p:variable name="document-id" select="if(exists(/lad:document/@nickname))
     then /lad:document/@nickname 
@@ -707,15 +711,16 @@
     <p:store href="{$output-directory-uri}/{$library-code}-{$document-id}-report.xml" message="Storing XML report to {$output-directory}/{$library-code}-{$document-id}-report.xml" name="xml-report-store" />
    </p:if>
       
-   <p:xslt>
+   <p:xslt message="$output-directory: {$output-directory }">
     <p:with-input port="stylesheet" href="../xslt/report.xsl" />
     <p:with-option name="parameters" select="map {'docker-data-root' : $output-directory }" />
    </p:xslt>
    <p:namespace-delete prefixes="c" />
    
    <p:identity name="report" />
-   <p:if test="$save-output" name="save">
-    <p:output port="result-uri" primary="true" />
+   <p:if test="$save-output" name="report-save">
+    <p:output port="result" primary="true" />
+    <p:output port="result-uri" primary="false" pipe="result-uri@store" />
     <p:store href="{$output-directory-uri}/{$library-code}-{$document-id}-report.html" message="Storing HTML report to {$output-directory}/{$library-code}-{$document-id}-report.html" name="store" />
     <p:identity>
      <p:with-input port="source">
@@ -727,6 +732,23 @@
     <p:namespace-delete prefixes="lae mods lar lac las" />
    </p:if>
   </p:for-each>
+  
+  <p:wrap-sequence wrapper="lad:documents" />
+  <p:identity name="complete-report">
+   <p:with-input port="source" pipe="source@creating-report" />
+  </p:identity>
+  
+  <p:xslt message=" creating report {base-uri(/)}">
+<!--   <p:with-input port="source" pipe="source@creating-report" />-->
+   <p:with-input port="stylesheet" href="../xslt/report.xsl" />
+   <p:with-option name="parameters" select="map {'docker-data-root' : $output-directory }" />
+  </p:xslt>
+  
+  <p:if test="$save-output" name="complete-save">
+   <p:output port="result-uri" primary="true" pipe="result-uri@store" />
+   <p:store href="{$output-directory-uri}/report.html" message="Storing HTML report to {$output-directory}/report.html" name="store" />
+  </p:if>
+  
  </p:declare-step>
 
  <!-- STEP -->
