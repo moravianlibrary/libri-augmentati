@@ -57,6 +57,49 @@ Or you can go through the sharing dialog where you have to select the `book` to 
 
 <img src="doc/images/sample-book-share-uuid.png" title="document-id via Share dialog" width="624" height="407">
 
+## Docker
+
+- [ ] install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [ ] create Libri augmentati container with following command
+
+```powershell
+docker run -it --rm --volume D:\TEI-2025\Libri-augmentati:/data daliboris/libri-augmentati:latest
+```
+
+### Parameters
+
+- `-it` = interactive mode
+- `--rm` = remove Docker container after exit
+- `D:\TEI-2025\Libri-augmentati` = path on your computer where you want store enriched data
+- `/data` = path in Docker container where enriched data will be stored (can't be changed)
+- `daliboris/libri-augmentati:latest` = identifier of the Docker image with Libri augmentati application
+
+### Use Libri augmentati
+
+Use prompt in the Docker container to run the pipeline, for example:
+
+```script
+Morgana.sh -config=/config/config.xml /la/run/client.xpl -option:library-code=mzk -option:api-version=7 -option:output-directory=/data/tei-conference -option:document-resources="MODS DC FOXML" -option:page-resources="ALTO TEXT FOXML DC MODS IMAGE" -option:document-id=uuid:de87a0e0-643b-11ea-a744-005056827e51 -option:nickname=postural-defects -indent-errors
+```
+
+#### Parameters
+
+
+| parameter  | explanation  |
+|---|---|
+| Morgana.sh | main script that runs XProc pipeline |
+| -config=/config/config.xml | base configuration used by MorganaXProc-IIIse engine |
+| /la/run/client.xpl | main pipeline for request processing |
+| -option:library-code=mzk | abbreviation of digital library where publications are stored |
+| -option:api-version=7 | version of Kramerius (API) used by digital library |
+| -option:output-directory=/data/tei-conference | where final data and reports are stored (should be in /data/ directory) |
+| -option:document-resources="MODS DC FOXML"| which metadata for the entire document should be downloaded |
+| -option:page-resources="ALTO TEXT FOXML DC MODS IMAGE" | which metadata for individual pages should be downloaded |
+| -option:document-id=uuid:de87a0e0-643b-11ea-a744-005056827e51 | identifier of the digital book to be downloaded |
+| -option:nickname=postural-defects | nick name for the book (report and directory with this name will be created) |
+
+
+
 ## Technical documentation
 
 Detailed documentation of the code is in the [doc](./doc/) directory in [XML](./doc/README.xml), [HMTL](./doc/README.html) and [Markdown](./doc/README.md) format.
