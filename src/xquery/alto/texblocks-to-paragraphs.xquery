@@ -54,7 +54,7 @@ for $block in $blocks
    string="{count($line/alto2:String)}"
    sp="{count($line/alto2:SP)}"
    length="{sum($line/alto2:String/string-length(@CONTENT))}"
-   hyphen="{if(ends-with($line/alto2:String[last()]/@CONTENT, '-') or $line/*[last()][self::alto2:HYP]) then 1 else 0}"
+   hyphen="{if(matches($line/alto2:String[last()]/@CONTENT, '[=\-¬⸗]$') or $line/*[last()][self::alto2:HYP]) then 1 else 0}"
    uppercase="{if(matches($line/alto2:String[1]/@CONTENT, '^\p{P}?\p{Lu}'))  then 1 else 0}"
    id="{$line/@ID}"
    text="{$text}"
